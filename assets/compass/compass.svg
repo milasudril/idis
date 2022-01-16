@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46667"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (1:1.1+202109281949+c3084ef5ed)"
+   sodipodi:docname="compass.svg"
+   inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="true"
+     units="px"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-page="false"
+     inkscape:snap-bbox="false"
+     inkscape:snap-nodes="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-text-baseline="false"
+     inkscape:snap-grids="true"
+     inkscape:zoom="4"
+     inkscape:cx="394"
+     inkscape:cy="215.125"
+     inkscape:window-width="1426"
+     inkscape:window-height="859"
+     inkscape:window-x="375"
+     inkscape:window-y="330"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     inkscape:snap-to-guides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid115147"
+       originx="0"
+       originy="0"
+       spacingx="1.0583333"
+       spacingy="1.0583333"
+       empspacing="16" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Lager 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:4.9389px;line-height:1.25;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;stroke-width:1.05833332;fill:none;stroke-miterlimit:4;stroke-dasharray:none"
+       x="76.920616"
+       y="16.848499"
+       id="text5732"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan5730"
+         style="stroke-width:1.05833332;fill:none;stroke-miterlimit:4;stroke-dasharray:none"
+         x="76.920616"
+         y="16.848499">W</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;line-height:1.25;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;stroke-width:1.05833332;stroke-miterlimit:4;stroke-dasharray:none"
+       x="67.73333"
+       y="29.633331"
+       id="text23503-3"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan23501-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif Bold';text-align:center;text-anchor:middle;stroke-width:1.05833332;stroke-miterlimit:4;stroke-dasharray:none"
+         x="67.73333"
+         y="29.633331">N</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;line-height:1.25;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;stroke-width:1.05833332;stroke-miterlimit:4;stroke-dasharray:none"
+       x="-67.73333"
+       y="-105.87926"
+       id="text23503-3-6"
+       transform="scale(-1)"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan23501-6-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif Bold';text-align:center;text-anchor:middle;stroke-width:1.05833332;stroke-miterlimit:4;stroke-dasharray:none"
+         x="-67.73333"
+         y="-105.87926">S</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;line-height:1.25;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       x="67.73333"
+       y="-105.8563"
+       id="text23503-3-7"
+       transform="rotate(90)"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan23501-6-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="67.73333"
+         y="-105.8563">E</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;line-height:1.25;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;stroke-width:1.05833332;stroke-miterlimit:4;stroke-dasharray:none"
+       x="-67.73333"
+       y="29.610365"
+       id="text23503-3-7-3"
+       transform="rotate(-90)"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan23501-6-5-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif Bold';text-align:center;text-anchor:middle;stroke-width:1.05833332;stroke-miterlimit:4;stroke-dasharray:none"
+         x="-67.73333"
+         y="29.610365">W</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="fill:none;stroke:#000000;stroke-width:3.70021322;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path116785"
+       inkscape:flatsided="true"
+       sodipodi:sides="96"
+       sodipodi:cx="256"
+       sodipodi:cy="256"
+       sodipodi:r1="192"
+       sodipodi:r2="191.8972"
+       sodipodi:arg1="0"
+       sodipodi:arg2="0.032724923"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 448,256 -0.41109,12.5574 -1.2315,12.50363 -2.04664,12.39631 -2.85301,12.23592 -3.64718,12.02312 -4.42571,11.75884 -5.1853,11.44421 -5.92269,11.08057 -6.63471,10.66948 -7.31833,10.21271 -7.9706,9.71221 -8.58874,9.1701 -9.1701,8.58874 -9.71221,7.9706 -10.21271,7.31833 -10.66948,6.63471 -11.08057,5.92269 -11.44421,5.1853 -11.75884,4.42571 -12.02312,3.64718 -12.23592,2.85301 -12.39631,2.04664 -12.50363,1.2315 L 256,448 l -12.5574,-0.41109 -12.50363,-1.2315 -12.39631,-2.04664 -12.23592,-2.85301 -12.02312,-3.64718 -11.75884,-4.42571 -11.44421,-5.1853 L 160,422.27688 l -10.66948,-6.63471 -10.21271,-7.31833 -9.71221,-7.9706 -9.1701,-8.58874 -8.58874,-9.1701 -7.9706,-9.71221 L 96.357834,362.66948 89.723122,352 83.800434,340.91943 78.61513,329.47522 74.189415,317.71638 70.542241,305.69326 67.689226,293.45734 65.642587,281.06103 64.411087,268.5574 64,256 l 0.411087,-12.5574 1.2315,-12.50363 2.046639,-12.39631 2.853015,-12.23592 3.647174,-12.02312 4.425715,-11.75884 5.185304,-11.44421 L 89.723122,160 l 6.634712,-10.66948 7.318326,-10.21271 7.9706,-9.71221 8.58874,-9.1701 9.1701,-8.58874 9.71221,-7.9706 10.21271,-7.318326 L 160,89.723122 l 11.08057,-5.922688 11.44421,-5.185304 11.75884,-4.425715 12.02312,-3.647174 12.23592,-2.853015 12.39631,-2.046639 12.50363,-1.2315 L 256,64 l 12.5574,0.411087 12.50363,1.2315 12.39631,2.046639 12.23592,2.853015 12.02312,3.647174 11.75884,4.425715 11.44421,5.185304 11.08057,5.922688 10.66948,6.634712 10.21271,7.318326 9.71221,7.9706 9.1701,8.58874 8.58874,9.1701 7.9706,9.71221 7.31833,10.21271 6.63471,10.66948 5.92269,11.08057 5.1853,11.44421 4.42571,11.75884 3.64718,12.02312 2.85301,12.23592 2.04664,12.39631 1.2315,12.50363 z"
+       transform="matrix(0.28601955,0,0,0.28601955,-5.4876698,-5.4876698)"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 79.803944,22.685191 81.946577,14.68879"
+       id="path117026"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 91.051964,27.344274 4.139247,-7.169377"
+       id="path117028"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 100.71086,34.755804 5.85378,-5.853771"
+       id="path117030"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 108.12239,44.414699 7.16938,-4.13924"
+       id="path117032"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 112.78147,55.662718 7.99641,-2.142625"
+       id="path117034"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 112.78147,79.803944 7.99641,2.142633"
+       id="path117036"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 108.12239,91.051964 7.16938,4.139247"
+       id="path117073"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 100.71086,100.71086 5.85378,5.85378"
+       id="path117075"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 91.051964,108.12239 4.139247,7.16938"
+       id="path117077"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 79.803944,112.78147 2.142633,7.99641"
+       id="path117079"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 55.662718,112.78147 -2.142625,7.99641"
+       id="path117081"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 44.414699,108.12239 -4.13924,7.16938"
+       id="path117083"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 34.755804,100.71086 -5.853771,5.85378"
+       id="path117085"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 27.344274,91.051964 -7.169377,4.139247"
+       id="path117087"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 22.685191,79.803944 14.68879,81.946577"
+       id="path117089"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 22.685191,55.662718 14.68879,53.520093"
+       id="path117093"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 27.344274,44.414699 -7.169377,-4.13924"
+       id="path117095"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 34.755804,34.755804 28.902033,28.902033"
+       id="path117097"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 44.414699,27.344274 -4.13924,-7.169377"
+       id="path117099"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 55.662718,22.685191 53.520093,14.68879"
+       id="path117101"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 77.729174,17.480858 0.717693,-3.608086"
+       id="path117350"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 74.421102,16.934693 0.480177,-3.6473"
+       id="path117352"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 84.202922,19.215493 1.182503,-3.48354"
+       id="path117354"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 87.340878,20.396536 1.407806,-3.398742"
+       id="path117356"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 90.394874,21.780283 1.627079,-3.299391"
+       id="path117358"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 71.084394,16.606056 71.324998,12.93516"
+       id="path117360"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 96.199078,25.131342 2.043816,-3.058787"
+       id="path117362"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 98.924434,27.084305 2.239496,-2.918566"
+       id="path117364"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 101.51622,29.211333 2.42559,-2.765848"
+       id="path117366"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 106.25534,33.950447 2.76585,-2.425584"
+       id="path117368"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 108.38236,36.542236 2.91857,-2.239494"
+       id="path117370"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 110.33533,39.267593 3.05879,-2.043817"
+       id="path117372"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 113.68639,45.071797 3.29939,-1.627079"
+       id="path117374"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 115.07013,48.125792 3.39875,-1.407805"
+       id="path117376"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 116.25118,51.263748 3.48354,-1.182502"
+       id="path117378"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 117.98581,57.737496 3.60809,-0.717693"
+       id="path117380"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 118.53198,61.045568 3.6473,-0.480176"
+       id="path117382"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 118.86061,64.382276 3.6709,-0.240604"
+       id="path117384"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 67.733335,12.817581 v 3.678772"
+       id="path117421"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 118.97032,67.733335 h 3.67877"
+       id="path117423"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 118.86061,71.084394 3.6709,0.240604"
+       id="path117425"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 118.53198,74.421102 3.6473,0.480177"
+       id="path117427"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 117.98581,77.729174 3.60809,0.717693"
+       id="path117429"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 116.25118,84.202922 3.48354,1.182503"
+       id="path117431"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 115.07013,87.340878 3.39875,1.407806"
+       id="path117433"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 113.68639,90.394874 3.29939,1.627079"
+       id="path117435"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 110.33533,96.199078 3.05879,2.043816"
+       id="path117437"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 108.38236,98.924434 2.91857,2.239496"
+       id="path117439"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 109.02119,103.94181 -2.76585,-2.42559"
+       id="path117441"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 103.94181,109.02119 -2.42559,-2.76585"
+       id="path117443"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 101.16393,111.30093 -2.239496,-2.91857"
+       id="path117445"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 98.242894,113.39412 -2.043816,-3.05879"
+       id="path117447"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 92.021953,116.98578 -1.627079,-3.29939"
+       id="path117449"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 88.748684,118.46888 -1.407806,-3.39875"
+       id="path117451"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 85.385425,119.73472 -1.182503,-3.48354"
+       id="path117453"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 78.446867,121.5939 -0.717693,-3.60809"
+       id="path117455"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 74.901279,122.17928 -0.480177,-3.6473"
+       id="path117457"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 71.324998,122.53151 -0.240604,-3.6709"
+       id="path117459"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 67.733335,122.64909 v -3.67877"
+       id="path117461"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 64.141672,122.53151 0.240604,-3.6709"
+       id="path117463"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 60.565392,122.17928 0.480176,-3.6473"
+       id="path117465"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 57.019803,121.5939 0.717693,-3.60809"
+       id="path117467"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 50.081246,119.73472 1.182502,-3.48354"
+       id="path117469"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 46.717987,118.46888 1.407805,-3.39875"
+       id="path117471"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 43.444718,116.98578 1.627079,-3.29939"
+       id="path117473"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 37.223776,113.39412 2.043817,-3.05879"
+       id="path117475"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 34.302742,111.30093 2.239494,-2.91857"
+       id="path117477"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 31.524863,109.02119 2.425584,-2.76585"
+       id="path117479"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 26.445485,103.94181 2.765848,-2.42559"
+       id="path117481"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 24.165739,101.16393 2.918566,-2.239496"
+       id="path117483"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 22.072555,98.242894 3.058787,-2.043816"
+       id="path117485"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 18.480892,92.021953 3.299391,-1.627079"
+       id="path117487"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 16.997794,88.748684 3.398742,-1.407806"
+       id="path117489"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 15.731953,85.385425 3.48354,-1.182503"
+       id="path117491"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 13.872772,78.446867 3.608086,-0.717693"
+       id="path117493"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 13.287393,74.901279 3.6473,-0.480177"
+       id="path117495"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 12.93516,71.324998 3.670896,-0.240604"
+       id="path117497"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 12.817581,67.733335 h 3.678772"
+       id="path117499"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 12.93516,64.141672 3.670896,0.240604"
+       id="path117501"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 13.287393,60.565392 3.6473,0.480176"
+       id="path117503"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 13.872772,57.019803 3.608086,0.717693"
+       id="path117505"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 15.731953,50.081246 3.48354,1.182502"
+       id="path117507"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 16.997794,46.717987 3.398742,1.407805"
+       id="path117509"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 18.480892,43.444718 3.299391,1.627079"
+       id="path117511"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 22.072555,37.223776 3.058787,2.043817"
+       id="path117513"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 24.165739,34.302742 2.918566,2.239494"
+       id="path117515"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 26.445485,31.524863 2.765848,2.425584"
+       id="path117517"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 31.524863,26.445485 2.425584,2.765848"
+       id="path117519"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 34.302742,24.165739 2.239494,2.918566"
+       id="path117521"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 37.223776,22.072555 2.043817,3.058787"
+       id="path117523"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 43.444718,18.480892 1.627079,3.299391"
+       id="path117525"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 46.717987,16.997794 1.407805,3.398742"
+       id="path117527"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 50.081246,15.731953 1.182502,3.48354"
+       id="path117529"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 57.019803,13.872772 0.717693,3.608086"
+       id="path117531"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 60.565392,13.287393 0.480176,3.6473"
+       id="path117533"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 64.141672,12.93516 0.240604,3.670896"
+       id="path117535"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 67.733331,33.866666 V 101.6"
+       id="path117924"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.05833332;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 101.6,67.733331 H 33.866666"
+       id="path117924-2"
+       inkscape:export-filename="/home/torbjorr/Skrivbord/compass/compass.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>
