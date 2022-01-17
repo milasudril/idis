@@ -51,10 +51,11 @@ namespace idis
 
 		~window_manager() noexcept
 		{
-			if(m_instance_count == 0) { return; }
+			if(m_instance_count == 1)
+			{ glfwTerminate(); }
 
-			glfwTerminate();
-			--m_instance_count;
+			if(m_instance_count != 0)
+			{ --m_instance_count; }
 		}
 
 	private:
