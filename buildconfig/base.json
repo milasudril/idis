@@ -17,6 +17,7 @@
                             "-mavx2",
                             "-ffast-math"
                         ],
+                        "actions":["sanitize"],
                         "std_revision":{
 							"min":"c++20"
                         }
