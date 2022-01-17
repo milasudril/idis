@@ -71,7 +71,8 @@
 							"min":"c++20"
                         },
                         "iquote": [
-                            "engine"
+                            "engine",
+                            "."
                         ]
                     },
                     "recipe": "cxx_compiler.py",
