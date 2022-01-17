@@ -9,3 +9,7 @@ debug:
 .PHONY: clean
 clean:
 	rm -rf __targets*
+
+.PHONY: format
+format:
+	find \( -name '*.hpp' -or -name '*.cpp' \) -and -not -path './__targets*' | xargs clang-format-12 -i
