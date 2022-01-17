@@ -23,6 +23,10 @@ namespace idis
 			}
 		}
 
+		char const* version_string() const { return glfwGetVersionString(); }
+
+		static constexpr char const* driver() { return "GLFW"; }
+
 		window_manager(window_manager const&) = delete;
 		window_manager(window_manager&&)      = delete;
 		window_manager& operator=(window_manager const&) = delete;
