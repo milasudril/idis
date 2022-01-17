@@ -21,6 +21,7 @@ namespace idis
 				throw exception{"initialize the window manager",
 				                cause != nullptr ? cause : "Unknown error"};
 			}
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		}
 
 		char const* version_string() const { return glfwGetVersionString(); }
