@@ -14,7 +14,11 @@ namespace idis
 	public:
 		window_manager()
 		{
-			if(m_instance_count != 0) { return; }
+			if(m_instance_count != 0)
+			{
+				++m_instance_count;
+				return;
+			}
 
 			if(glfwInit() != GLFW_TRUE) [[unlikely]]
 			{

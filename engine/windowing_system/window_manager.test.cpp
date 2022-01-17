@@ -22,3 +22,19 @@ TESTCASE(window_manager_copy)
 	}
 	EXPECT_EQ(wm::instance_count(), 0);
 }
+
+TESTCASE(window_manager_create_two)
+{
+	using wm = idis::window_manager;
+	EXPECT_EQ(wm::instance_count(), 0);
+	{
+		wm wm_a;
+		EXPECT_EQ(wm::instance_count(), 1);
+		{
+			wm wm_b;
+			EXPECT_EQ(wm::instance_count(), 2);
+		}
+		EXPECT_EQ(wm::instance_count(), 1);
+	}
+	EXPECT_EQ(wm::instance_count(), 0);
+}
