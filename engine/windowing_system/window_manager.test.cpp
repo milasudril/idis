@@ -1,4 +1,4 @@
-//@{"target":{"name":"window_manager.test"}}
+//@	{"target":{"name":"window_manager.test"}}
 
 #include "./window_manager.hpp"
 

@@ -33,10 +33,7 @@ namespace idis
 
 		static size_t instance_count() { return m_instance_count; }
 
-		window_manager(window_manager const&)
-		{
-			++m_instance_count;
-		}
+		window_manager(window_manager const&) { ++m_instance_count; }
 
 		window_manager(window_manager&&) noexcept = default;
 
@@ -50,8 +47,7 @@ namespace idis
 
 		~window_manager() noexcept
 		{
-			if(m_instance_count == 0)
-			{ return; }
+			if(m_instance_count == 0) { return; }
 
 			glfwTerminate();
 			--m_instance_count;
