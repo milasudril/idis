@@ -31,15 +31,14 @@ namespace idis
 
 		static constexpr char const* driver() { return "GLFW"; }
 
+		static size_t instance_count() { return m_instance_count; }
+
 		window_manager(window_manager const&)
 		{
 			++m_instance_count;
 		}
 
-		window_manager(window_manager&&) noexcept
-		{
-			++m_instance_count;
-		}
+		window_manager(window_manager&&) noexcept = default;
 
 		window_manager& operator=(window_manager const&)
 		{
@@ -47,11 +46,7 @@ namespace idis
 			return *this;
 		}
 
-		window_manager& operator=(window_manager&&) noexcept
-		{
-			++m_instance_count;
-			return *this;
-		}
+		window_manager& operator=(window_manager&&) noexcept = default;
 
 		~window_manager() noexcept
 		{
