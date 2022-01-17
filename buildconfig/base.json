@@ -17,7 +17,6 @@
                             "-mavx2",
                             "-ffast-math"
                         ],
-                        "actions":["sanitize"],
                         "std_revision":{
 							"min":"c++20"
                         }
@@ -31,6 +30,9 @@
             "cxx": {
                 "compiler": {
                     "config": {
+                        "actions": [
+                            "sanitize"
+                        ],
                         "cflags": [
                             "-g",
                             "-Wall",
@@ -57,7 +59,8 @@
                     "config": {
                         "actions": [
                             "link",
-                            "run"
+                            "run",
+                            "sanitize"
                         ],
                         "cflags": [
                             "-g",
