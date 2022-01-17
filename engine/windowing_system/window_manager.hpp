@@ -14,6 +14,8 @@ namespace idis
 	public:
 		window_manager()
 		{
+			if(m_instance_count != 0) { return; }
+
 			if(glfwInit() != GLFW_TRUE) [[unlikely]]
 			{
 				char const* cause = nullptr;
@@ -22,19 +24,49 @@ namespace idis
 				                cause != nullptr ? cause : "Unknown error"};
 			}
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+			++m_instance_count;
 		}
 
 		char const* version_string() const { return glfwGetVersionString(); }
 
 		static constexpr char const* driver() { return "GLFW"; }
 
-		window_manager(window_manager const&) = delete;
-		window_manager(window_manager&&)      = delete;
-		window_manager& operator=(window_manager const&) = delete;
-		window_manager& operator=(window_manager&&) = delete;
+		window_manager(window_manager const&)
+		{
+			++m_instance_count;
+		}
 
-		~window_manager() { glfwTerminate(); }
+		window_manager(window_manager&&) noexcept
+		{
+			++m_instance_count;
+		}
+
+		window_manager& operator=(window_manager const&)
+		{
+			++m_instance_count;
+			return *this;
+		}
+
+		window_manager& operator=(window_manager&&) noexcept
+		{
+			++m_instance_count;
+			return *this;
+		}
+
+		~window_manager() noexcept
+		{
+			if(m_instance_count == 0)
+			{ return; }
+
+			glfwTerminate();
+			--m_instance_count;
+		}
+
+	private:
+		static size_t m_instance_count;
 	};
+
+	inline size_t window_manager::m_instance_count{0};
 }
 
 #endif
