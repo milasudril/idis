@@ -6,12 +6,14 @@
 
 namespace idis
 {
-	class exception : public std::runtime_error
+	class exception: public std::runtime_error
 	{
 	public:
-		explicit exception(std::string_view trigger, std::string_view cause):
-		std::runtime_error{std::string{"Failed to "}.append(trigger).append(": ").append(cause)}
-		{}
+		explicit exception(std::string_view trigger, std::string_view cause)
+		    : std::runtime_error{
+		        std::string{"Failed to "}.append(trigger).append(": ").append(cause)}
+		{
+		}
 	};
 }
 

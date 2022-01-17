@@ -1,13 +1,13 @@
 //@	{"target":{"name":"idis.o"}}
 
-#include "./error_handler/exception.hpp"
+#include "./windowing_system/window_manager.hpp"
 
 #include <cstdio>
 
 int main(int, char**)
 try
 {
-	throw idis::exception{"start idis", "Not implemented"};
+	idis::window_manager wm;
 }
 catch(std::exception const& e)
 {

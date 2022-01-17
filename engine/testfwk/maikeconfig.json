@@ -10,17 +10,8 @@
                 "compiler": {
                     "config": {
                         "cflags": [
-                            "-g",
-                            "-Wall",
-                            "-Wextra",
-                            "-Werror",
-                            "-mavx2",
-                            "-ffast-math"
-                        ],
-                        "actions":["sanitize"],
-                        "std_revision":{
-							"min":"c++20"
-                        }
+                            "-g"
+                        ]
                     },
                     "recipe": "cxx_linker.py",
                     "use_get_tags": 0
@@ -35,13 +26,8 @@
                             "-g",
                             "-Wall",
                             "-Wextra",
-                            "-Werror",
-                            "-mavx2",
-                            "-ffast-math"
+                            "-Werror"
                         ],
-						"std_revision":{
-							"min":"c++20"
-                        },
                         "iquote": [
                             "."
                         ]
@@ -55,24 +41,16 @@
             "cxx_test": {
                 "compiler": {
                     "config": {
-                        "actions": [
-                            "link",
-                            "run"
-                        ],
                         "cflags": [
                             "-g",
                             "-Wall",
                             "-Wextra",
-                            "-Werror",
-                            "-mavx2",
-                            "-ffast-math"
+                            "-Werror"
                         ],
-						"std_revision":{
-							"min":"c++20"
-                        },
                         "iquote": [
                             "."
-                        ]
+                        ],
+                        "actions":["link", "run"]
                     },
                     "recipe": "cxx_compiler.py",
                     "use_get_tags": 0
@@ -88,6 +66,18 @@
                 },
                 "config": {},
                 "loader": "extension"
+            },
+            "generic_example": {
+                "compiler": {
+                    "config": {},
+                    "recipe": "",
+                    "use_get_tags": 0
+                },
+                "config": {
+                    "filename_ext_replacement_mode": "append",
+                    "target_filename_ext": ""
+                },
+                "loader": "generic"
             },
             "identity": {
                 "compiler": {
@@ -109,35 +99,22 @@
                 },
                 "config": {},
                 "loader": "lib"
-            },
-            "sass2css": {
-                "compiler": {
-                    "config": {},
-                    "recipe": "sass2css.py",
-                    "use_get_tags": 0
-                },
-                "config": {
-                    "filename_ext_replacement_mode": "replace",
-                    "target_filename_ext": ".css"
-                },
-                "loader": "generic"
             }
         },
         "source_tree_loader": {
             "file_info_loaders": {
                 ".app.maikerule": "app",
                 ".cpp": "cxx",
+                ".test.cpp": "cxx_test",
                 ".hpp": "cxx",
                 ".lib.maikerule": "lib",
-                ".py": "extension",
-                ".sass": "sass2css",
-                ".test.cpp": "cxx_test"
+                ".py": "extension"
             },
             "input_filter": [
                 "^\\.",
                 "^__"
             ],
-            "recursive": 1
+            "recursive": 0
         }
     }
 }
