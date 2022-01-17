@@ -12,5 +12,5 @@ TESTCASE(idis_errorhandler_exception_create)
 {
 	idis::exception e{"foo", "bar"};
 	auto const what = e.what();
-	EXPECT_EQ(strcmp(what, "foo: bar"), 0)
+	EXPECT_EQ(strcmp(what, "Failed to foo: bar"), 0)
 }
