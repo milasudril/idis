@@ -11,5 +11,5 @@ try
 }
 catch(std::exception const& e)
 {
-	fprintf(stderr, "idis: %s", e.what());
+	fprintf(stderr, "idis: %s\n", e.what());
 }
