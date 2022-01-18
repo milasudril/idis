@@ -51,11 +51,9 @@ namespace idis::wm
 
 		~initializer() noexcept
 		{
-			if(m_instance_count == 1)
-			{ glfwTerminate(); }
+			if(m_instance_count == 1) { glfwTerminate(); }
 
-			if(m_instance_count != 0)
-			{ --m_instance_count; }
+			if(m_instance_count != 0) { --m_instance_count; }
 		}
 
 	private:
