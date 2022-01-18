@@ -34,10 +34,12 @@ namespace TestFwk
 	extern Testcase* currentTestcase;
 }
 
+#define MAKE_TC_NAME(name) name
+
 #define TESTCASE(name)                                                                             \
 	namespace Testcases                                                                            \
 	{                                                                                              \
-		class name: public TestFwk::Testcase                                                       \
+		class MAKE_TC_NAME(name): public TestFwk::Testcase                                         \
 		{                                                                                          \
 		public:                                                                                    \
 			using Testcase::Testcase;                                                              \

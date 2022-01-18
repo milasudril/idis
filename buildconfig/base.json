@@ -48,7 +48,7 @@
                             "."
                         ]
                     },
-                    "recipe": "cxx_compiler.py",
+                    "recipe": "build_scripts/cxx_compiler.py",
                     "use_get_tags": 0
                 },
                 "config": {},
@@ -77,7 +77,7 @@
                             "."
                         ]
                     },
-                    "recipe": "cxx_compiler.py",
+                    "recipe": "build_scripts/cxx_compiler.py",
                     "use_get_tags": 0
                 },
                 "config": {},

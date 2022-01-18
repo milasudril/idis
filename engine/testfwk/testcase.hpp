@@ -17,7 +17,7 @@ namespace TestFwk
 		{
 		}
 
-		virtual ~Testcase() {}
+		virtual ~Testcase() = default;
 
 		void testcaseFailed() { m_failed = true; }
 

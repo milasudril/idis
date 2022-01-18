@@ -6,9 +6,25 @@
 
 #include "testfwk/testfwk.hpp"
 
+#include <cstring>
+
 TESTCASE(idis_wm_window_create)
 {
-	idis::wm::glfw_stub::overrides.init = []() { return GLFW_TRUE; };
+	idis::wm::glfw_stub::overrides.init      = []() { return GLFW_TRUE; };
 	idis::wm::glfw_stub::overrides.terminate = []() {};
-	idis::wm::window win;
+	idis::wm::glfw_stub::overrides.create_window =
+	    [](int width, int height, char const* title, GLFWmonitor* monitor, GLFWwindow* share)
+	{
+		EXPECT_EQ(width, 800);
+		EXPECT_EQ(height, 500);
+		EXPECT_EQ(strcmp(title, "Foobar"), 0);
+		EXPECT_EQ(monitor, nullptr);
+		EXPECT_EQ(share, nullptr);
+
+		return new GLFWwindow{};
+	};
+
+	idis::wm::window win{800, 500, "Foobar"};
+
+	idis::wm::glfw_stub::overrides.destroy_window = [](GLFWwindow* window) { delete window; };
 }
