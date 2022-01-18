@@ -1,13 +1,17 @@
 //@	{"target":{"name":"idis.o"}}
 
-#include "./window_manager/initializer.hpp"
+#include "./window_manager/window.hpp"
 
 #include <cstdio>
 
 int main(int, char**)
 try
 {
-	idis::wm::initializer init;
+	idis::wm::window idis_window{800, 500, "Idis"};
+	while(true)
+	{
+		glfwPollEvents();
+	}
 }
 catch(std::exception const& e)
 {
