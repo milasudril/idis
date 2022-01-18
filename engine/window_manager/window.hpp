@@ -19,8 +19,14 @@ namespace idis::wm
 		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 			m_handle = glfwCreateWindow(width, height, title, nullptr, nullptr);
+			if(m_handle == nullptr) [[unlikely]]
+			{
+				char const* cause = nullptr;
+				glfwGetError(&cause);
+				throw exception{"Failed to create a new window",
+				                cause != nullptr ? cause : "Unknown error"};
+			}
 		}
-
 
 		window(window&& other) noexcept { m_handle = std::exchange(other.m_handle, nullptr); }
 
