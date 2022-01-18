@@ -62,7 +62,7 @@ namespace idis::wm
 		static size_t m_instance_count;
 	};
 
-	inline size_t initializer::m_instance_count{0};
+	inline constinit size_t initializer::m_instance_count{0};
 }
 
 #endif
