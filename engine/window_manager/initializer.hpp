@@ -31,10 +31,6 @@ namespace idis::wm
 			++m_instance_count;
 		}
 
-		char const* version_string() const { return glfwGetVersionString(); }
-
-		static constexpr char const* driver() { return "GLFW"; }
-
 		static size_t instance_count() { return m_instance_count; }
 
 		initializer(initializer const&) { ++m_instance_count; }
