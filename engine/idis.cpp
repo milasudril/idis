@@ -1,14 +1,14 @@
 //@	{"target":{"name":"idis.o"}}
 
-#include "./windowing_system/window_manager.hpp"
+#include "./window_manager/initializer.hpp"
 
 #include <cstdio>
 
 int main(int, char**)
 try
 {
-	idis::window_manager wm;
-	printf("Initialized %s %s\n", wm.driver(), wm.version_string());
+	idis::wm::initializer init;
+	printf("Initialized %s %s\n", init.driver(), init.version_string());
 }
 catch(std::exception const& e)
 {

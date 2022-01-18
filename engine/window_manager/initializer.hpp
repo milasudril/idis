@@ -1,18 +1,18 @@
 //@{"dependencies_extra":[{"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}]}
 
-#ifndef IDIS_WINDOWINGSYSTEM_WINDOWMANAGER_HPP
-#define IDIS_WINDOWINGSYSTEM_WINDOWMANAGER_HPP
+#ifndef IDIS_WINDOWMANAGER_INITIALIZER_HPP
+#define IDIS_WINDOWMANAGER_INITIALIZER_HPP
 
 #include "error_handler/exception.hpp"
 
 #include <GLFW/glfw3.h>
 
-namespace idis
+namespace idis::wm
 {
-	class window_manager
+	class initializer
 	{
 	public:
-		window_manager()
+		initializer()
 		{
 			if(m_instance_count != 0)
 			{
@@ -37,19 +37,19 @@ namespace idis
 
 		static size_t instance_count() { return m_instance_count; }
 
-		window_manager(window_manager const&) { ++m_instance_count; }
+		initializer(initializer const&) { ++m_instance_count; }
 
-		window_manager(window_manager&&) noexcept = default;
+		initializer(initializer&&) noexcept = default;
 
-		window_manager& operator=(window_manager const&)
+		initializer& operator=(initializer const&)
 		{
 			++m_instance_count;
 			return *this;
 		}
 
-		window_manager& operator=(window_manager&&) noexcept = default;
+		initializer& operator=(initializer&&) noexcept = default;
 
-		~window_manager() noexcept
+		~initializer() noexcept
 		{
 			if(m_instance_count == 1)
 			{ glfwTerminate(); }
@@ -62,7 +62,7 @@ namespace idis
 		static size_t m_instance_count;
 	};
 
-	inline size_t window_manager::m_instance_count{0};
+	inline size_t initializer::m_instance_count{0};
 }
 
 #endif
