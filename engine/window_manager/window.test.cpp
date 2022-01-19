@@ -12,6 +12,10 @@ TESTCASE(idis_wm_window_create)
 {
 	idis::wm::glfw_stub::overrides.init      = []() { return GLFW_TRUE; };
 	idis::wm::glfw_stub::overrides.terminate = []() {};
+	idis::wm::glfw_stub::overrides.window_hint = [](int key, int value) {
+		EXPECT_EQ(key, GLFW_CLIENT_API);
+		EXPECT_EQ(value, GLFW_NO_API);
+	};
 	idis::wm::glfw_stub::overrides.create_window =
 	    [](int width, int height, char const* title, GLFWmonitor* monitor, GLFWwindow* share)
 	{

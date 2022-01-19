@@ -45,6 +45,7 @@ namespace idis::wm::glfw_stub
 		decltype(&glfwGetError) get_error;
 		decltype(&glfwCreateWindow) create_window;
 		decltype(&glfwDestroyWindow) destroy_window;
+		decltype(&glfwWindowHint) window_hint;
 	};
 
 	inline constinit function_overrides overrides{};
@@ -88,6 +89,12 @@ extern "C"
 	{
 		auto fptr = std::ref(idis::wm::glfw_stub::overrides.destroy_window);
 		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "destroy_window"}, window);
+	}
+
+	inline void glfwWindowHint(int key, int value)
+	{
+		auto fptr = std::ref(idis::wm::glfw_stub::overrides.window_hint);
+		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "window_hint"}, key, value);
 	}
 }
 
