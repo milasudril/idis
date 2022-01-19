@@ -4,7 +4,7 @@
 
 #include "./glfw_stub.hpp"
 
-#include "testfwk/testfwk.hpp"
+#include "ext_proj/testfwk/testfwk.hpp"
 
 #include <cstring>
 
