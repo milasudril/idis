@@ -10,9 +10,10 @@
 
 TESTCASE(idis_wm_window_create)
 {
-	idis::wm::glfw_stub::overrides.init      = []() { return GLFW_TRUE; };
-	idis::wm::glfw_stub::overrides.terminate = []() {};
-	idis::wm::glfw_stub::overrides.window_hint = [](int key, int value) {
+	idis::wm::glfw_stub::overrides.init        = []() { return GLFW_TRUE; };
+	idis::wm::glfw_stub::overrides.terminate   = []() {};
+	idis::wm::glfw_stub::overrides.window_hint = [](int key, int value)
+	{
 		EXPECT_EQ(key, GLFW_CLIENT_API);
 		EXPECT_EQ(value, GLFW_NO_API);
 	};
@@ -35,9 +36,10 @@ TESTCASE(idis_wm_window_create)
 
 TESTCASE(idis_wm_window_create_fail)
 {
-	idis::wm::glfw_stub::overrides.init      = []() { return GLFW_TRUE; };
-	idis::wm::glfw_stub::overrides.terminate = []() {};
-	idis::wm::glfw_stub::overrides.window_hint = [](int key, int value) {
+	idis::wm::glfw_stub::overrides.init        = []() { return GLFW_TRUE; };
+	idis::wm::glfw_stub::overrides.terminate   = []() {};
+	idis::wm::glfw_stub::overrides.window_hint = [](int key, int value)
+	{
 		EXPECT_EQ(key, GLFW_CLIENT_API);
 		EXPECT_EQ(value, GLFW_NO_API);
 	};
@@ -52,7 +54,8 @@ TESTCASE(idis_wm_window_create_fail)
 
 		return static_cast<GLFWwindow*>(nullptr);
 	};
-	idis::wm::glfw_stub::overrides.get_error = [](char const** msg) {
+	idis::wm::glfw_stub::overrides.get_error = [](char const** msg)
+	{
 		*msg = "Some error";
 		return 0;
 	};
