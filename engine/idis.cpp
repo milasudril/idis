@@ -4,29 +4,25 @@
 
 #include <cstdio>
 
-template<class Function, class... Args>
-void with_window(Function&& f, Args&&... args)
+void present(std::exception const& e)
 try
 {
 	idis::wm::window window{800, 500, "Idis"};
-	f(window, std::forward<Args>(args)...);
+	throw idis::exception{"show error message", "not implemented"};
 }
-catch(std::exception const& e)
+catch(...)
 {
 	fprintf(stderr, "idis: %s\n", e.what());
 }
 
 int main(int, char**)
+try
 {
-	with_window(
-	    [](auto&)
-	    {
-		    try
-		    {
-		    }
-		    catch(std::exception const& e)
-		    {
-			    with_window([](auto&, char const*) {}, e.what());
-		    }
-	    });
+	idis::wm::window window{800, 500, "Idis"};
+	throw idis::exception{"start app", "not implemented"};
+}
+catch(std::exception const& e)
+{
+	present(e);
+	return -1;
 }
