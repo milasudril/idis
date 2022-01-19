@@ -8,7 +8,12 @@ void present(std::exception const& e)
 try
 {
 	idis::wm::window window{800, 500, "Idis"};
-	throw idis::exception{"show error message", "not implemented"};
+	window.show_pixels();
+	for(size_t k = 0; k != 10000; ++k)
+	{
+		glfwPollEvents();
+	}
+	//	throw idis::exception{"show error message", "not implemented"};
 }
 catch(...)
 {

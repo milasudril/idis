@@ -1,4 +1,9 @@
-//@{"dependencies_extra":[{"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}]}
+//@	{
+//@ "dependencies_extra":[
+//@ 	 {"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}
+//@ 	,{"ref":"./window.o", "rel":"implementation"}
+//@		]
+//@	}
 
 #ifndef IDIS_WINDOWMANAGER_WINDOW_HPP
 #define IDIS_WINDOWMANAGER_WINDOW_HPP
@@ -44,6 +49,8 @@ namespace idis::wm
 			m_handle = std::exchange(other.m_handle, nullptr);
 			return *this;
 		}
+
+		window& show_pixels();
 
 	private:
 		[[no_unique_address]] initializer m_init;
