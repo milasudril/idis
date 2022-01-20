@@ -25,15 +25,9 @@ namespace idis::seq
 
 	constexpr int64_t operator-(timepoint a, timepoint b) { return a.value() - b.value(); }
 
-	constexpr auto operator+(timepoint a, int64_t t)
-	{
-		return timepoint{a.value() + t};
-	}
+	constexpr auto operator+(timepoint a, int64_t t) { return timepoint{a.value() + t}; }
 
-	constexpr auto operator-(timepoint a, int64_t t)
-	{
-		return timepoint{a.value() - t};
-	}
+	constexpr auto operator-(timepoint a, int64_t t) { return timepoint{a.value() - t}; }
 
 	inline std::string to_string(timepoint t) { return std::to_string(t.value()); }
 
@@ -42,10 +36,7 @@ namespace idis::seq
 		return static_cast<double>(a - b) / static_cast<double>(timepoints_per_second);
 	}
 
-	inline double seconds_since_start(timepoint a)
-	{
-		return seconds_between(timepoint{0}, a);
-	}
+	inline double seconds_since_start(timepoint a) { return seconds_between(timepoint{0}, a); }
 }
 
 #endif

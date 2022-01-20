@@ -1,25 +1,10 @@
 #ifndef IDIS_EVENTDISPATCHER_EVENT_HPP
 #define IDIS_EVENTDISPATCHER_EVENT_HPP
 
-namespace idis::event_dispatcher
+#include "./timestamp.hpp"
+
+namespace idis::seq
 {
-	class Timestamp
-	{
-	public:
-		static constexpr seq_max = 0xffff;
-
-		explicit Timestamp(uint64_t frame, uint16_t seq): m_value{(frame << 16) | seq} {}
-
-		uint64_t frame() const { return m_value >> 16; }
-
-		uint16_t sequence() const { return m_value & 0xffff; }
-
-		auto operator<=>(Timestamp const&) = default;
-
-	private:
-		uint64_t m_value;
-	};
-
 	class Event
 	{
 	public:
