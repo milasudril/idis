@@ -29,5 +29,10 @@ namespace idis::seq
 	private:
 		int64_t m_value;
 	};
+
+	inline std::string to_string(timestamp t)
+	{
+		return to_string(t.frame()).append(":").append(to_string(t.index()));
+	}
 }
 #endif
