@@ -9,7 +9,7 @@ try
 {
 	idis::wm::window window{800, 500, "Idis"};
 	window.show_pixels();
-	for(size_t k = 0; k != 10000; ++k)
+	while(true)
 	{
 		glfwPollEvents();
 	}
