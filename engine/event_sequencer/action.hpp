@@ -1,8 +1,6 @@
 #ifndef IDIS_EVENTSEQUENCER_ACTION_HPP
 #define IDIS_EVENTSEQUENCER_ACTION_HPP
 
-#include "./timestamp.hpp"
-
 #include "error_handler/exception.hpp"
 
 #include <memory>
