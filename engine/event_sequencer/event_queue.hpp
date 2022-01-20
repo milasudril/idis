@@ -26,17 +26,22 @@ namespace idis::seq
 		bool operator()(timepoint t)
 		{
 			m_pre_peek_callback();
+
 			while(!m_pending_events.empty() && m_pending_events.top().has_expired(t))
 			{
 				m_pending_events.top().fire();
 				m_pending_events.pop();
 			}
+
 			m_post_peek_callback();
+
+			return m_should_exit;
 		}
 
 	private:
-		event_queue m_pending_events;
+		bool m_should_exit;
 		action m_pre_peek_callback;
+		event_queue m_pending_events;
 		action m_post_peek_callback;
 	};
 }
