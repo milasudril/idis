@@ -3,25 +3,19 @@
 
 #include "./timestamp.hpp"
 
+#include "error_handler/exception.hpp"
+
 namespace idis::seq
 {
 	namespace detail
 	{
 		struct action_data
 		{
-			action_data():
-			{
-				nullptr,
-				    [](void const*)
-				{
-					throw exception { "Called failed", "empty action" }
-				},
-				    [](void*) {}
-			}
-
-			void* pointer;
-			void (*callback)(void const*);
-			void (*dtor)(void*);
+			void* pointer{nullptr};
+			void (*callback)(void const*){[](void const*) {
+				    throw exception{"Called failed", "empty action"};
+			    }};
+			void (*dtor)(void*){[](void*) {}};
 		};
 	}
 
@@ -29,14 +23,14 @@ namespace idis::seq
 	{
 	public:
 		template<class Payload>
-		explicit action(Payload&& data)
-		    : m_data{new Paiload{std::move(data)},
+		explicit action(Payload&& data, std::enable_if_t<!std::is_same_v<std::decay_t<Payload>, action>, int> = 0)
+		    : m_data{new Payload{std::forward<Payload>(data)},
 		             [](void const* data)
 		             {
 			             auto& obj = *static_cast<Payload const*>(data);
 			             obj();
 		             },
-		             [](void* obj)
+		             [](void* data)
 		             {
 			             auto obj = static_cast<Payload*>(data);
 			             delete obj;
@@ -48,23 +42,23 @@ namespace idis::seq
 
 		action(action&& other) noexcept
 		{
-			m_data = other.m_data;
-			other.data = detail::action_data{};
+			m_data     = other.m_data;
+			other.m_data = detail::action_data{};
 		}
 
 		action& operator=(action const&) = delete;
 
 		action& operator=(action&& other) noexcept
 		{
-			m_dtor(m_data);
-			m_data = other.m_data;
-			other.data = detail::action_data{};
+			m_data.dtor(m_data.pointer);
+			m_data     = other.m_data;
+			other.m_data = detail::action_data{};
 			return *this;
 		}
 
-		~Event() noexcept { m_dtor(m_data); }
+		~action() noexcept { m_data.dtor(m_data.pointer); }
 
-		void operator()() const { m_callback(m_data); }
+		void operator()() const { m_data.callback(m_data.pointer); }
 
 	private:
 		detail::action_data m_data;
