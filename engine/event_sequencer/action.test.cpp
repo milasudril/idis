@@ -7,7 +7,7 @@
 TESTCASE(idis_seq_action_create_and_call)
 {
 	bool called = false;
-	idis::seq::action action{[&called](){called = true;}};
+	idis::seq::action action{[&called]() { called = true; }};
 	action();
 	EXPECT_EQ(called, true);
 }
