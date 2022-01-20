@@ -14,8 +14,8 @@ namespace idis::seq
 		{
 		}
 
-		bool has_expired(timestamp t) const
-		{ return m_expire_time < t; }
+		bool has_expired(timepoint t) const
+		{ return m_expire_time.frame() < t; }
 
 		void fire() const { m_action(); }
 
