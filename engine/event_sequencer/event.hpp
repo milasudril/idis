@@ -9,13 +9,11 @@ namespace idis::seq
 	class event
 	{
 	public:
-		explicit event(timestamp t, action&& action)
-		    : m_expire_time{t},m_action{std::move(action)}
+		explicit event(timestamp t, action&& action): m_expire_time{t}, m_action{std::move(action)}
 		{
 		}
 
-		bool has_expired(timepoint t) const
-		{ return m_expire_time.frame() < t; }
+		bool has_expired(timepoint t) const { return m_expire_time.frame() < t; }
 
 		void fire() const { m_action(); }
 
