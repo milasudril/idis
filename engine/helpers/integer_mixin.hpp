@@ -13,7 +13,7 @@ namespace idis
 
 		constexpr auto value() const { return m_value; }
 
-		static constexpr auto zero() { return static_cast<UserClass>(integer_mixin{0}); }
+		static constexpr auto zero() { return UserClass{0}; }
 
 		constexpr auto operator<=>(integer_mixin const& other) const = default;
 
@@ -63,7 +63,7 @@ namespace idis
 
 		constexpr auto& operator/=(rep value)
 		{
-			m_value/=value;
+			m_value /= value;
 			return static_cast<UserClass&>(*this);
 		}
 
