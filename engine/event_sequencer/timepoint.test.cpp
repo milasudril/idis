@@ -7,15 +7,29 @@
 TESTCASE(idis_seq_tick_to_string_neg)
 {
 	auto const time_difference = idis::seq::tick{-70};
-	auto const str = to_string(time_difference);
+	auto const str             = to_string(time_difference);
 	EXPECT_EQ(str, "-1:10");
 }
 
 TESTCASE(idis_seq_tick_to_string_rem_less_than_ten)
 {
 	auto const time_difference = idis::seq::tick{5};
-	auto const str = to_string(time_difference);
+	auto const str             = to_string(time_difference);
 	EXPECT_EQ(str, "0:05");
+}
+
+TESTCASE(idis_seq_ticks_to_seconds)
+{
+	auto const ticks   = idis::seq::tick{15};
+	auto const seconds = to_seconds(ticks);
+	EXPECT_EQ(seconds.count(), std::chrono::duration<double>{0.25}.count());
+}
+
+TESTCASE(idis_seq_ticks_from_seconds)
+{
+	auto const seconds = std::chrono::duration<double>{0.25};
+	auto const ticks   = from(idis::empty<idis::seq::tick>{}, seconds);
+	EXPECT_EQ(ticks, idis::seq::tick{15});
 }
 
 TESTCASE(idis_seq_timepoint_step)
