@@ -4,6 +4,12 @@
 
 #include "ext_proj/testfwk/testfwk.hpp"
 
+TESTCASE(idis_seq_tick_to_string)
+{
+	auto const time_difference = idis::seq::tick{-70};
+	printf("%s\n", to_string(time_difference).c_str());
+}
+
 TESTCASE(idis_seq_timepoint_step)
 {
 	idis::seq::timepoint start{1};

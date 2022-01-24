@@ -2,6 +2,8 @@
 #define IDIS_HELPERS_INTEGERMIXIN_HPP
 
 #include <type_traits>
+#include <cmath>
+#include <cstdlib>
 
 namespace idis
 {
@@ -115,6 +117,14 @@ namespace idis
 	operator/(UserClass a, typename UserClass::rep c)
 	{
 		return a /= c;
+	}
+
+	template<class UserClass>
+	requires(std::is_base_of_v<integer_mixin<typename UserClass::rep, UserClass>,
+	                           UserClass>) constexpr auto abs(UserClass a)
+	{
+		using std::abs;
+		return UserClass{abs(a.value())};
 	}
 }
 #endif
