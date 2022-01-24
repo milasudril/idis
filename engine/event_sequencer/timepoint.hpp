@@ -17,11 +17,14 @@ namespace idis::seq
 		using base::base;
 	};
 
-	std::string to_string(tick val)
+	inline std::string to_string(tick val)
 	{
 		auto const secs  = val / ticks_per_sec;
 		auto const ticks = abs(val - ticks_per_sec * secs);
-		return std::to_string(secs.value()).append(":").append(std::to_string(ticks.value()));
+		if(ticks < tick{10})
+		{ return std::to_string(secs.value()).append(":0").append(std::to_string(ticks.value())); }
+		else
+		{ return std::to_string(secs.value()).append(":").append(std::to_string(ticks.value())); }
 	}
 
 	class timepoint

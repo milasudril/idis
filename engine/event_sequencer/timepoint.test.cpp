@@ -4,10 +4,18 @@
 
 #include "ext_proj/testfwk/testfwk.hpp"
 
-TESTCASE(idis_seq_tick_to_string)
+TESTCASE(idis_seq_tick_to_string_neg)
 {
 	auto const time_difference = idis::seq::tick{-70};
-	printf("%s\n", to_string(time_difference).c_str());
+	auto const str = to_string(time_difference);
+	EXPECT_EQ(str, "-1:10");
+}
+
+TESTCASE(idis_seq_tick_to_string_rem_less_than_ten)
+{
+	auto const time_difference = idis::seq::tick{5};
+	auto const str = to_string(time_difference);
+	EXPECT_EQ(str, "0:05");
 }
 
 TESTCASE(idis_seq_timepoint_step)
