@@ -22,7 +22,7 @@ namespace idis::seq
 	{
 	public:
 		template<class T>
-		void push(T&& event_data, timepoint expire_time)
+		void push(timepoint expire_time, T&& event_data)
 		{
 			m_queue.push(event{timestamp{expire_time, m_event_index}, std::forward<T>(event_data)});
 			m_event_index.next();
