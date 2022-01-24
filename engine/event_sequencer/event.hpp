@@ -9,19 +9,22 @@ namespace idis::seq
 	class event
 	{
 	public:
-		explicit event(timestamp t, action&& action): m_expire_time{t}, m_action{std::move(action)}
+		template<class T>
+		explicit event(timestamp t, T&& action_data)
+		    : m_expire_time{t}
+		    , m_action{std::make_unique<action<T>>(std::forward<T>(action_data))}
 		{
 		}
 
-		bool has_expired(timepoint t) const { return m_expire_time.frame() < t; }
+		bool has_expired(timepoint t) const { return m_expire_time.frame() <= t; }
 
-		void fire() const { m_action(); }
+		void fire() const { (*m_action)(); }
 
 		auto expire_time() const { return m_expire_time; }
 
 	private:
 		timestamp m_expire_time;
-		action m_action;
+		std::unique_ptr<abstract_action> m_action;
 	};
 }
 

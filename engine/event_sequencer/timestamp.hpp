@@ -9,17 +9,11 @@ namespace idis::seq
 	class timestamp
 	{
 	public:
-		constexpr explicit timestamp(timepoint frame, event_index i)
-		    : m_frame{frame}, m_index{i}
-		{
-		}
+		constexpr explicit timestamp(timepoint frame, event_index i): m_frame{frame}, m_index{i} {}
 
 		constexpr auto frame() const { return m_frame; }
 
-		constexpr auto index() const
-		{
-			return m_index;
-		}
+		constexpr auto index() const { return m_index; }
 
 		constexpr auto operator<=>(timestamp const&) const = default;
 
