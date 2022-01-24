@@ -14,7 +14,6 @@
                             "-Wall",
                             "-Wextra",
                             "-Werror",
-                            "-mavx2",
                             "-ffast-math"
                         ],
                         "std_revision":{

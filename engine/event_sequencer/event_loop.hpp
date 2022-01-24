@@ -1,5 +1,5 @@
-#ifndef IDIS_EVENTSEQUENCER_EVENTQUEUE_HPP
-#define IDIS_EVENTSEQUENCER_EVENTQUEUE_HPP
+#ifndef IDIS_EVENTSEQUENCER_EVENTLOOP_HPP
+#define IDIS_EVENTSEQUENCER_EVENTLOOP_HPP
 
 #include "./event.hpp"
 
@@ -20,22 +20,32 @@ namespace idis::seq
 
 	using event_queue = std::priority_queue<event, std::vector<event>, detail::event_comparator>;
 
-	class frame_processor
+	inline void drain(evnet_queue& queue, timepoint until)
+	{
+		while(!m_pending_events.empty() && m_pending_events.top().has_expired(until))
+		{
+			m_pending_events.top().fire();
+			m_pending_events.pop();
+		}
+	}
+
+	class event_loop
 	{
 	public:
-		bool operator()(timepoint t)
+		void run()
+		{
+			while(!m_should_exit)
+			{
+				do_iteration();
+			}
+		}
+
+		void do_iteration()
 		{
 			m_pre_peek_callback();
-
-			while(!m_pending_events.empty() && m_pending_events.top().has_expired(t))
-			{
-				m_pending_events.top().fire();
-				m_pending_events.pop();
-			}
-
+			drain(m_pending_events, m_now);
 			m_post_peek_callback();
-
-			return m_should_exit;
+			m_now.next();
 		}
 
 	private:
@@ -43,6 +53,7 @@ namespace idis::seq
 		action m_pre_peek_callback;
 		event_queue m_pending_events;
 		action m_post_peek_callback;
+		timepoint m_now;
 	};
 }
 
