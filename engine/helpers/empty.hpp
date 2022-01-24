@@ -1,7 +1,7 @@
 #ifndef IDIS_HELPERS_EMPTY_HPP
 #define IDIS_HELPERS_EMPTY_HPP
 
-	#include <type_traits>
+#include <type_traits>
 
 namespace idis
 {

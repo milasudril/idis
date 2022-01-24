@@ -9,10 +9,9 @@
 TESTCASE(idis_seq_event_create_and_verify)
 {
 	int val = 0;
-	auto const t_exp = idis::seq::timestamp{idis::seq::timepoint{idis::seq::tick{1}}, idis::seq::event_index{2}};
-	idis::seq::event e1{t_exp
-	    ,
-	    [x = std::ref(val)]() { ++x.get(); }};
+	auto const t_exp =
+	    idis::seq::timestamp{idis::seq::timepoint{idis::seq::tick{1}}, idis::seq::event_index{2}};
+	idis::seq::event e1{t_exp, [x = std::ref(val)]() { ++x.get(); }};
 
 	EXPECT_EQ(val, 0);
 	EXPECT_EQ(e1.expire_time(), t_exp);
