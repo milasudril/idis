@@ -34,30 +34,30 @@ TESTCASE(idis_seq_ticks_from_seconds)
 
 TESTCASE(idis_seq_timepoint_step)
 {
-	idis::seq::timepoint start{1};
-	EXPECT_EQ(start.value(), 1);
-	start.step();
-	EXPECT_EQ(start, (idis::seq::timepoint{2}));
+	idis::seq::timepoint start{idis::seq::tick{1}};
+	EXPECT_EQ(start.time_since_epoch(), idis::seq::tick{1});
+	start.next();
+	EXPECT_EQ(start, idis::seq::timepoint{idis::seq::tick{2}});
 }
 
 TESTCASE(idis_seq_timepoint_add_offset)
 {
-	idis::seq::timepoint start{1};
-	EXPECT_EQ(start.value(), 1);
-	EXPECT_EQ(start + 50, (idis::seq::timepoint{51}));
+	idis::seq::timepoint start{idis::seq::tick{1}};
+	EXPECT_EQ(start.time_since_epoch(), idis::seq::tick{1});
+	EXPECT_EQ(start + idis::seq::tick{50}, idis::seq::timepoint{idis::seq::tick{51}});
 }
 
 TESTCASE(idis_seq_timepoint_subtract_offset)
 {
-	idis::seq::timepoint start{1};
-	EXPECT_EQ(start.value(), 1);
-	EXPECT_EQ(start - 50, (idis::seq::timepoint{-49}));
+	idis::seq::timepoint start{idis::seq::tick{1}};
+	EXPECT_EQ(start.time_since_epoch(), idis::seq::tick{1});
+	EXPECT_EQ(start - idis::seq::tick{50}, idis::seq::timepoint{idis::seq::tick{-49}});
 }
 
 TESTCASE(idis_seq_timepoint_difference)
 {
-	idis::seq::timepoint a{5};
-	idis::seq::timepoint b{2};
+	idis::seq::timepoint a{idis::seq::tick{5}};
+	idis::seq::timepoint b{idis::seq::tick{2}};
 	auto delta = a - b;
-	EXPECT_EQ(delta, 3);
+	EXPECT_EQ(delta, idis::seq::tick{3});
 }

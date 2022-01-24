@@ -48,34 +48,50 @@ namespace idis::seq
 	class timepoint
 	{
 	public:
-		constexpr explicit timepoint(int64_t val): m_value{val} {}
+		constexpr timepoint(): m_time_since_epoch{tick::zero()} {}
+
+		constexpr explicit timepoint(tick val): m_time_since_epoch{val} {}
 
 		constexpr auto operator<=>(timepoint const& other) const = default;
 
-		constexpr auto value() const { return m_value; }
+		constexpr auto next()
+		{
+			++m_time_since_epoch;
+			return *this;
+		}
 
-		constexpr void step() { ++m_value; }
+		constexpr auto time_since_epoch() const { return m_time_since_epoch; }
+
+		constexpr auto& operator+=(tick amount)
+		{
+			m_time_since_epoch += amount;
+			return *this;
+		}
+
+		constexpr auto& operator-=(tick amount)
+		{
+			m_time_since_epoch -= amount;
+			return *this;
+		}
 
 	private:
-		int64_t m_value;
+		tick m_time_since_epoch;
 	};
 
-	constexpr int64_t timepoints_per_second = 60;
-
-	constexpr int64_t operator-(timepoint a, timepoint b) { return a.value() - b.value(); }
-
-	constexpr auto operator+(timepoint a, int64_t t) { return timepoint{a.value() + t}; }
-
-	constexpr auto operator-(timepoint a, int64_t t) { return timepoint{a.value() - t}; }
-
-	inline std::string to_string(timepoint t) { return std::to_string(t.value()); }
-
-	inline double seconds_between(timepoint a, timepoint b)
+	constexpr auto operator-(timepoint a, timepoint b)
 	{
-		return static_cast<double>(a - b) / static_cast<double>(timepoints_per_second);
+		return a.time_since_epoch() - b.time_since_epoch();
 	}
 
-	inline double seconds_since_start(timepoint a) { return seconds_between(timepoint{0}, a); }
+	constexpr auto operator+(timepoint a, tick val) { return a += val; }
+
+	constexpr auto operator-(timepoint a, tick val) { return a -= val; }
+
+	inline std::string to_string(timepoint t) { return to_string(t.time_since_epoch()); }
+
+	inline auto seconds_between(timepoint a, timepoint b) { return to_seconds(b - a); }
+
+	inline auto seconds_since_start(timepoint a) { return seconds_between(timepoint{}, a); }
 }
 
 #endif

@@ -13,11 +13,11 @@ namespace idis::seq
 		static constexpr uint64_t event_index_bits = 24;
 
 		constexpr explicit timestamp(timepoint frame, event_index i)
-		    : m_value{(frame.value() << event_index_bits) | i.value()}
+		    : m_value{(frame.time_since_epoch().count() << event_index_bits) | i.value()}
 		{
 		}
 
-		constexpr timepoint frame() const { return timepoint{m_value >> event_index_bits}; }
+		constexpr timepoint frame() const { return timepoint{tick{m_value >> event_index_bits}}; }
 
 		constexpr event_index index() const
 		{
