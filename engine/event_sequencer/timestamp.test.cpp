@@ -12,5 +12,5 @@ TESTCASE(idis_seq_timestamp_create)
 	EXPECT_EQ(t.frame(), idis::seq::timepoint{idis::seq::tick{123}});
 	EXPECT_EQ(t.index(), idis::seq::event_index{0xffffff});
 	auto str = to_string(t);
-	EXPECT_EQ(str, "123:16777215");
+	EXPECT_EQ(str, "2:03:16777215");
 }

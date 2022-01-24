@@ -61,3 +61,25 @@ TESTCASE(idis_seq_timepoint_difference)
 	auto delta = a - b;
 	EXPECT_EQ(delta, idis::seq::tick{3});
 }
+
+TESTCASE(idis_seq_timepoint_seconds_between)
+{
+	idis::seq::timepoint a{idis::seq::tick{45}};
+	idis::seq::timepoint b{idis::seq::tick{60}};
+	auto delta = seconds_between(a, b);
+	EXPECT_EQ(delta.count(), 0.25);
+}
+
+TESTCASE(idis_seq_timepoint_seconds_since_start)
+{
+	idis::seq::timepoint a{idis::seq::tick{45}};
+	auto delta = seconds_since_start(a);
+	EXPECT_EQ(delta.count(), 0.75);
+}
+
+TESTCASE(idis_seq_timepoint_to_string)
+{
+	idis::seq::timepoint a{idis::seq::tick{123}};
+	auto const str = to_string(a);
+	EXPECT_EQ(str, "2:03");
+}
