@@ -9,30 +9,28 @@ namespace idis::seq
 	class timestamp
 	{
 	public:
-		static constexpr uint64_t events_per_frame = 0xffffff;
-		static constexpr uint64_t event_index_bits = 24;
-
 		constexpr explicit timestamp(timepoint frame, event_index i)
-		    : m_value{(frame.time_since_epoch().count() << event_index_bits) | i.value()}
+		    : m_frame{frame}, m_index{i}
 		{
 		}
 
-		constexpr timepoint frame() const { return timepoint{tick{m_value >> event_index_bits}}; }
+		constexpr auto frame() const { return m_frame; }
 
-		constexpr event_index index() const
+		constexpr auto index() const
 		{
-			return event_index{static_cast<int>(m_value & events_per_frame)};
+			return m_index;
 		}
 
 		constexpr auto operator<=>(timestamp const&) const = default;
 
 	private:
-		int64_t m_value;
+		timepoint m_frame;
+		event_index m_index;
 	};
 
 	inline std::string to_string(timestamp t)
 	{
-		return to_string(t.frame()).append(":").append(to_string(t.index()));
+		return to_string(t.frame()).append(" (").append(to_string(t.index())).append(")");
 	}
 }
 #endif
