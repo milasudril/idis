@@ -31,14 +31,12 @@
                 "compiler": {
                     "config": {
                         "actions": [
-                            "sanitize"
                         ],
                         "cflags": [
                             "-g",
                             "-Wall",
                             "-Wextra",
                             "-Werror",
-                            "-mavx2",
                             "-ffast-math"
                         ],
 						"std_revision":{
@@ -59,15 +57,13 @@
                     "config": {
                         "actions": [
                             "link",
-                            "run",
-                            "sanitize"
+                            "run"
                         ],
                         "cflags": [
                             "-g",
                             "-Wall",
                             "-Wextra",
                             "-Werror",
-                            "-mavx2",
                             "-ffast-math"
                         ],
 						"std_revision":{

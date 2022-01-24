@@ -98,3 +98,33 @@ TESTCASE(integer_mixin_mul_assign)
 	EXPECT_EQ(a *= 2, my_special_integer{6});
 	EXPECT_EQ(a, my_special_integer{6});
 }
+
+TESTCASE(integer_mixin_add)
+{
+	my_special_integer a{1};
+	my_special_integer b{2};
+	auto c = a + b;
+	EXPECT_EQ(c, my_special_integer{3});
+}
+
+TESTCASE(integer_mixin_sub)
+{
+	my_special_integer a{1};
+	my_special_integer b{2};
+	auto c = a - b;
+	EXPECT_EQ(c, my_special_integer{-1});
+}
+
+TESTCASE(integer_mixin_mul)
+{
+	my_special_integer a{2};
+	auto c = 3*a;
+	EXPECT_EQ(c, my_special_integer{6});
+}
+
+TESTCASE(integer_mixin_div)
+{
+	my_special_integer a{3};
+	auto c = a/2;
+	EXPECT_EQ(c, my_special_integer{1});
+}

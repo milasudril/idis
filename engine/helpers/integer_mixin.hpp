@@ -49,7 +49,19 @@ namespace idis
 			return static_cast<UserClass&>(*this);
 		}
 
+		constexpr auto& operator+=(integer_mixin other)
+		{
+			m_value += other.m_value;
+			return static_cast<UserClass&>(*this);
+		}
+
 		constexpr auto& operator-=(UserClass other)
+		{
+			m_value -= other.m_value;
+			return static_cast<UserClass&>(*this);
+		}
+
+		constexpr auto& operator-=(integer_mixin other)
 		{
 			m_value -= other.m_value;
 			return static_cast<UserClass&>(*this);
@@ -71,5 +83,29 @@ namespace idis
 	private:
 		rep m_value;
 	};
+
+	template<class Rep, class UserClass>
+	constexpr auto operator+(integer_mixin<Rep, UserClass> a, integer_mixin<Rep, UserClass> b)
+	{
+		return a+=b;
+	}
+
+	template<class Rep, class UserClass>
+	constexpr auto operator-(integer_mixin<Rep, UserClass> a, integer_mixin<Rep, UserClass> b)
+	{
+		return a-=b;
+	}
+
+	template<class Rep, class UserClass>
+	constexpr auto operator*(Rep c, integer_mixin<Rep, UserClass> b)
+	{
+		return b*=c;
+	}
+
+	template<class Rep, class UserClass>
+	constexpr auto operator/(integer_mixin<Rep, UserClass> a, Rep c)
+	{
+		return a/=c;
+	}
 }
 #endif
