@@ -8,7 +8,7 @@ namespace idis::seq
 	class event_index
 	{
 	public:
-		constexpr event_index():m_value{0}{}
+		constexpr event_index(): m_value{0} {}
 
 		constexpr explicit event_index(int64_t val): m_value{val} {}
 
