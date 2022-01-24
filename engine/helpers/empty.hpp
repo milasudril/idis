@@ -1,5 +1,5 @@
 #ifndef IDIS_HELPERS_EMPTY_HPP
-	#define IDIS_HELPERS_EMPTY_HPP_HPP
+#define IDIS_HELPERS_EMPTY_HPP
 
 	#include <type_traits>
 

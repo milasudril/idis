@@ -4,6 +4,8 @@
 #include "./timestamp.hpp"
 #include "./action.hpp"
 
+#include <memory>
+
 namespace idis::seq
 {
 	class event
