@@ -16,6 +16,9 @@ namespace
 	std::string to_string(my_special_integer val) { return std::to_string(val.value()); }
 }
 
+constexpr auto compile_time_val = my_special_integer{1} + my_special_integer{2};
+static_assert(compile_time_val == my_special_integer{3});
+
 TESTCASE(integer_mixin_value)
 {
 	my_special_integer n{1};
@@ -118,13 +121,13 @@ TESTCASE(integer_mixin_sub)
 TESTCASE(integer_mixin_mul)
 {
 	my_special_integer a{2};
-	auto c = 3*a;
+	auto c = 3 * a;
 	EXPECT_EQ(c, my_special_integer{6});
 }
 
 TESTCASE(integer_mixin_div)
 {
 	my_special_integer a{3};
-	auto c = a/2;
+	auto c = a / 2;
 	EXPECT_EQ(c, my_special_integer{1});
 }

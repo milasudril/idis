@@ -1,6 +1,8 @@
 #ifndef IDIS_HELPERS_INTEGERMIXIN_HPP
 #define IDIS_HELPERS_INTEGERMIXIN_HPP
 
+#include <type_traits>
+
 namespace idis
 {
 	template<class Rep, class UserClass>
@@ -84,28 +86,35 @@ namespace idis
 		rep m_value;
 	};
 
-	template<class Rep, class UserClass>
-	constexpr auto operator+(integer_mixin<Rep, UserClass> a, integer_mixin<Rep, UserClass> b)
+	template<class UserClass>
+	constexpr auto operator+(UserClass a, UserClass b) requires(
+	    std::is_base_of_v<integer_mixin<typename UserClass::rep, UserClass>, UserClass>)
 	{
-		return a+=b;
+
+		return a += b;
 	}
 
-	template<class Rep, class UserClass>
-	constexpr auto operator-(integer_mixin<Rep, UserClass> a, integer_mixin<Rep, UserClass> b)
+	template<class UserClass>
+	constexpr auto operator-(UserClass a, UserClass b) requires(
+	    std::is_base_of_v<integer_mixin<typename UserClass::rep, UserClass>, UserClass>)
 	{
-		return a-=b;
+		return a -= b;
 	}
 
-	template<class Rep, class UserClass>
-	constexpr auto operator*(Rep c, integer_mixin<Rep, UserClass> b)
+	template<class UserClass>
+	requires(std::is_base_of_v<integer_mixin<typename UserClass::rep, UserClass>,
+	                           UserClass>) constexpr auto
+	operator*(typename UserClass::rep c, UserClass b)
 	{
-		return b*=c;
+		return b *= c;
 	}
 
-	template<class Rep, class UserClass>
-	constexpr auto operator/(integer_mixin<Rep, UserClass> a, Rep c)
+	template<class UserClass>
+	requires(std::is_base_of_v<integer_mixin<typename UserClass::rep, UserClass>,
+	                           UserClass>) constexpr auto
+	operator/(UserClass a, typename UserClass::rep c)
 	{
-		return a/=c;
+		return a /= c;
 	}
 }
 #endif
