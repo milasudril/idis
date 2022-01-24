@@ -18,7 +18,35 @@ namespace idis::seq
 		};
 	}
 
-	using event_queue = std::priority_queue<event, std::vector<event>, detail::event_comparator>;
+	class event_queue
+	{
+	public:
+		template<class T>
+		void push(T&& event_data, timepoint expire_time)
+		{
+			m_pending_events.push(event{timestamp{expire_time, m_event_index}, std::forward<T>(event_data)});
+			++m_event_index;
+		}
+
+		decltype(auto) top() const
+		{
+			return m_queue.top();
+		}
+
+		void pop()
+		{
+			m_queue.pop();
+		}
+
+		bool empty() const
+		{
+			return m_queue.empty();
+		}
+
+	private:
+		std::priority_queue<event, std::vector<event>, detail::event_comparator> m_queue;
+		event_index m_event_index;
+	};
 
 	inline void drain(evnet_queue& queue, timepoint until)
 	{

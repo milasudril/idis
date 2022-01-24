@@ -8,7 +8,9 @@ namespace idis::seq
 	class event_index
 	{
 	public:
-		constexpr explicit event_index(int val): m_value{val} {}
+		constexpr event_index():m_value{0}{}
+
+		constexpr explicit event_index(int64_t val): m_value{val} {}
 
 		constexpr auto operator<=>(event_index const& other) const = default;
 
@@ -17,7 +19,7 @@ namespace idis::seq
 		constexpr void next() { ++m_value; }
 
 	private:
-		int m_value;
+		int64_t m_value;
 	};
 
 	inline std::string to_string(event_index t) { return std::to_string(t.value()); }
