@@ -4,89 +4,88 @@
 
 #include "ext_proj/testfwk/testfwk.hpp"
 
-
-
-#ifndef IDIS_EVENTSEQUENCER_EVENTLOOP_HPP
-#define IDIS_EVENTSEQUENCER_EVENTLOOP_HPP
-
-#include "./event_queue.hpp"
-
-namespace idis::seq
+TESTCASE(idis_seq_event_loop_state_set_exit_flag)
 {
-
-	class event_loop_state
-	{
-	public:
-		bool should_exit() const { return m_should_exit; }
-
-		void set_exit_flag() { m_should_exit = true; }
-
-		template<class T>
-		void push_event(timepoint expire_time, T&& event_data)
-		{
-			m_queue.queue.push(expire_time, std::forward<T>(event_data));
-		}
-
-		timepoint now() const { return m_now; }
-
-	protected:
-		timepoint m_now;
-		bool m_should_exit{false};
-		event_queue m_queue;
-	};
-
-	class event_loop
-	{
-	public:
-		event_loop()
-		{
-			set_pre_drain_callback([]() {});
-			set_post_drain_callback([]() {});
-		}
-
-		void run()
-		{
-			while(!m_should_exit)
-			{
-				do_iteration();
-			}
-		}
-
-		void do_iteration()
-		{
-			m_pre_peek_callback();
-			internal_state.drain_queue();
-			m_post_peek_callback();
-			m_state.tick();
-		}
-
-		event_loop_state& state() const { return m_state; }
-
-		template<class T>
-		void set_pre_drain_callback(T&& action_data)
-		{
-			m_pre_drain_callback = std::make_unique<action<T>>(std::forward<T>(action_data));
-		}
-
-		template<class T>
-		void set_post_drain_callback(T&& action_data)
-		{
-			m_post_drain_callback = std::make_unique<action<T>>(std::forward<T>(action_data));
-		}
-
-	private:
-		class internal_state: public event_loop_state
-		{
-		public:
-			void tick() { m_now.next(); }
-
-			void drain_queue() { drain(m_queue, m_now); }
-		};
-
-		internal_state m_state;
-		std::unique_ptr<abstract_action> m_pre_drain_callback;
-		std::unique_ptr<abstract_action> m_post_drain_callback;
-	};
+	idis::seq::event_loop_state state;
+	EXPECT_EQ(state.should_exit(), false);
+	state.set_exit_flag();
+	EXPECT_EQ(state.should_exit(), true);
 }
 
-#endif
+TESTCASE(idis_seq_event_loop_state_push_event)
+{
+	idis::seq::event_loop_state state;
+	EXPECT_EQ(state.queue_is_empty(), true);
+	state.push_event(idis::seq::timepoint{}, []() {});
+	EXPECT_EQ(state.queue_is_empty(), false);
+}
+
+TESTCASE(idis_seq_event_loop_state_initial_time)
+{
+	idis::seq::event_loop_state state;
+	EXPECT_EQ(state.now().time_since_epoch().count(), 0);
+}
+
+TESTCASE(idis_seq_event_loop_do_iteration_no_cb)
+{
+	idis::seq::event_loop loop;
+	auto t0 = loop.state().now();
+	loop.do_iteration();
+	auto t1 = loop.state().now();
+	EXPECT_EQ(t1 - t0, idis::seq::tick{1});
+}
+
+TESTCASE(idis_seq_event_loop_do_iteration_with_cb)
+{
+	idis::seq::event_loop loop;
+	int a = 0;
+	int b = 0;
+	loop.set_pre_drain_callback([&a]() { a = 1; });
+	loop.set_post_drain_callback([&b, &a]() { b = a + 1; });
+	auto t0 = loop.state().now();
+	loop.do_iteration();
+	auto t1 = loop.state().now();
+	EXPECT_EQ(t1 - t0, idis::seq::tick{1});
+	EXPECT_EQ(a, 1);
+	EXPECT_EQ(b, 2);
+}
+
+TESTCASE(idis_seq_event_loop_three_iterations)
+{
+	idis::seq::event_loop loop;
+	int iter_count = 0;
+	loop.set_post_drain_callback(
+	    [&state = loop.state(), &iter_count]()
+	    {
+		    if(state.now().time_since_epoch() == idis::seq::tick{2}) { state.set_exit_flag(); }
+		    ++iter_count;
+	    });
+	auto t0 = loop.state().now();
+	loop.run();
+	EXPECT_EQ(iter_count, 3);
+	auto t1 = loop.state().now();
+	EXPECT_EQ(t1 - t0, idis::seq::tick{3});
+}
+
+TESTCASE(idis_seq_event_loop_three_iterations_one_event_left)
+{
+	idis::seq::event_loop loop;
+	auto a = false;
+	auto b = false;
+	loop.state().push_event(idis::seq::timepoint{idis::seq::tick{1}}, [&a]() { a = true; });
+	loop.state().push_event(idis::seq::timepoint{idis::seq::tick{3}}, [&b]() { b = true; });
+	int iter_count = 0;
+	loop.set_post_drain_callback(
+	    [&state = loop.state(), &iter_count]()
+	    {
+		    if(state.now().time_since_epoch() == idis::seq::tick{2}) { state.set_exit_flag(); }
+		    ++iter_count;
+	    });
+	auto t0 = loop.state().now();
+	loop.run();
+	EXPECT_EQ(iter_count, 3);
+	auto t1 = loop.state().now();
+	EXPECT_EQ(t1 - t0, idis::seq::tick{3});
+	EXPECT_EQ(a, true);
+	EXPECT_EQ(b, false);
+}

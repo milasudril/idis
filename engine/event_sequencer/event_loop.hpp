@@ -19,6 +19,8 @@ namespace idis::seq
 			m_queue.push(expire_time, std::forward<T>(event_data));
 		}
 
+		bool queue_is_empty() const { return m_queue.empty(); }
+
 		timepoint now() const { return m_now; }
 
 	protected:
@@ -52,7 +54,7 @@ namespace idis::seq
 			m_state.tick();
 		}
 
-		event_loop_state const& state() const { return m_state; }
+		event_loop_state& state() { return m_state; }
 
 		template<class T>
 		void set_pre_drain_callback(T&& action_data)
