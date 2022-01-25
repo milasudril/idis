@@ -29,7 +29,7 @@ TESTCASE(idis_wm_window_create)
 		return new GLFWwindow{};
 	};
 
-	idis::wm::window win{800, 500, "Foobar"};
+	idis::wm::window<int> win{800, 500, "Foobar"};
 
 	idis::wm::glfw_stub::overrides.destroy_window = [](GLFWwindow* window) { delete window; };
 }
@@ -62,7 +62,7 @@ TESTCASE(idis_wm_window_create_fail)
 
 	try
 	{
-		idis::wm::window win{800, 500, "Foobar"};
+		idis::wm::window<int> win{800, 500, "Foobar"};
 		TestFwk::currentTestcase->testcaseFailed();
 	}
 	catch(idis::exception const& e)
