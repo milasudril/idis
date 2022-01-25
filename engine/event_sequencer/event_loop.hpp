@@ -30,6 +30,12 @@ namespace idis::seq
 	class event_loop
 	{
 	public:
+		event_loop()
+		{
+			set_pre_drain_callback([]() {});
+			set_post_drain_callback([]() {});
+		}
+
 		void run()
 		{
 			while(!m_should_exit)
@@ -48,6 +54,18 @@ namespace idis::seq
 
 		event_loop_state& state() const { return m_state; }
 
+		template<class T>
+		void set_pre_drain_callback(T&& action_data)
+		{
+			m_pre_drain_callback = std::make_unique<action<T>>(std::forward<T>(action_data));
+		}
+
+		template<class T>
+		void set_post_drain_callback(T&& action_data)
+		{
+			m_post_drain_callback = std::make_unique<action<T>>(std::forward<T>(action_data));
+		}
+
 	private:
 		class internal_state: public event_loop_state
 		{
@@ -58,8 +76,8 @@ namespace idis::seq
 		};
 
 		internal_state m_state;
-		action m_pre_peek_callback;
-		action m_post_peek_callback;
+		std::unique_ptr<abstract_action> m_pre_drain_callback;
+		std::unique_ptr<abstract_action> m_post_drain_callback;
 	};
 }
 
