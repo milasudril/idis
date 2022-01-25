@@ -1,3 +1,11 @@
+//@	{"target":{"name":"event_loop.test"}}
+
+#include "./event_loop.hpp"
+
+#include "ext_proj/testfwk/testfwk.hpp"
+
+
+
 #ifndef IDIS_EVENTSEQUENCER_EVENTLOOP_HPP
 #define IDIS_EVENTSEQUENCER_EVENTLOOP_HPP
 
@@ -16,7 +24,7 @@ namespace idis::seq
 		template<class T>
 		void push_event(timepoint expire_time, T&& event_data)
 		{
-			m_queue.push(expire_time, std::forward<T>(event_data));
+			m_queue.queue.push(expire_time, std::forward<T>(event_data));
 		}
 
 		timepoint now() const { return m_now; }
@@ -38,7 +46,7 @@ namespace idis::seq
 
 		void run()
 		{
-			while(!m_state.should_exit())
+			while(!m_should_exit)
 			{
 				do_iteration();
 			}
@@ -46,13 +54,13 @@ namespace idis::seq
 
 		void do_iteration()
 		{
-			(*m_pre_drain_callback)();
-			m_state.drain_queue();
-			(*m_post_drain_callback)();
+			m_pre_peek_callback();
+			internal_state.drain_queue();
+			m_post_peek_callback();
 			m_state.tick();
 		}
 
-		event_loop_state const& state() const { return m_state; }
+		event_loop_state& state() const { return m_state; }
 
 		template<class T>
 		void set_pre_drain_callback(T&& action_data)
