@@ -9,7 +9,7 @@
 #include <GLFW/glfw3native.h>
 #include <cstring>
 #include <memory>
-#if 0
+
 namespace
 {
 	struct XImageDeleter
@@ -49,4 +49,3 @@ idis::wm::window& idis::wm::window::show_pixels()
 	          256);
 	return *this;
 }
-#endif

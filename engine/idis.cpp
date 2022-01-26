@@ -5,24 +5,23 @@
 
 #include <cstdio>
 
-struct event_handler
+struct window_action_tag
 {
-	std::reference_wrapper<idis::seq::event_loop_state> loop_state;
 };
 
-void window_closed(event_handler eh)
+void window_closed(idis::seq::event_loop_state& loop_state, window_action_tag)
 {
-	eh.loop_state.get().set_exit_flag();
+	loop_state.set_exit_flag();
 }
 
 void present(std::exception const& e)
 try
 {
 	idis::seq::event_loop loop;
-	idis::wm::window<event_handler> window{800, 500, "Idis", event_handler{loop.state()}};
-	window.enable_close_callback();
+	idis::wm::window window{800, 500, "Idis"};
 	loop.set_pre_drain_callback(glfwPollEvents);
-//	window.show_pixels();
+	window.show_pixels();
+	window.set_event_handler(loop.state()).set_close_callback<window_action_tag>();
 	loop.run();
 }
 catch(...)
@@ -33,7 +32,7 @@ catch(...)
 int main(int, char**)
 try
 {
-	idis::wm::window<int> window{800, 500, "Idis"};
+	idis::wm::window window{800, 500, "Idis"};
 	throw idis::exception{"start app", "not implemented"};
 }
 catch(std::exception const& e)

@@ -17,12 +17,36 @@
 
 namespace idis::wm
 {
-	template<class EventHandler>
+	template<class T>
+	class callback_registrator
+	{
+	public:
+		explicit callback_registrator(GLFWwindow* handle, T& obj): m_handle{handle}
+		{
+			glfwSetWindowUserPointer(handle, &obj);
+		}
+
+		template<class Tag>
+		callback_registrator& set_close_callback()
+		{
+			glfwSetWindowCloseCallback(m_handle,
+			                           [](GLFWwindow* handle)
+			                           {
+				                           auto& obj =
+				                               *static_cast<T*>(glfwGetWindowUserPointer(handle));
+				                           window_closed(obj, Tag{});
+			                           });
+			return *this;
+		}
+
+	private:
+		GLFWwindow* m_handle;
+	};
+
 	class window
 	{
 	public:
-		explicit window(int width, int height, char const* title, EventHandler&& event_handler = EventHandler{})
-		:m_event_handler{std::move(event_handler)}
+		explicit window(int width, int height, char const* title)
 		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 			m_handle = glfwCreateWindow(width, height, title, nullptr, nullptr);
@@ -33,44 +57,37 @@ namespace idis::wm
 				throw exception{"Failed to create a new window",
 				                cause != nullptr ? cause : "Unknown error"};
 			}
-			glfwSetWindowUserPointer(m_handle, &m_event_handler);
 		}
 
-		window(window&& other) noexcept = delete;
+		window(window&& other) noexcept { m_handle = std::exchange(other.m_handle, nullptr); }
+
 		window(window const&) = delete;
 		window& operator=(window const&) = delete;
-		window& operator=(window&& other) noexcept = delete;
 
 		~window() noexcept
 		{
 			if(m_handle != nullptr) { glfwDestroyWindow(m_handle); }
 		}
-/*
-//TODO
+
+		window& operator=(window&& other) noexcept
+		{
+			glfwDestroyWindow(m_handle);
+			m_handle = std::exchange(other.m_handle, nullptr);
+			return *this;
+		}
+
 		window& show_pixels();
-*/
-		window& set_callback_data(EventHandler&& callback_data)
-		{
-			m_event_handler = std::move(callback_data);
-			return *this;
-		}
 
-		window& enable_close_callback()
+		template<class T>
+		[[nodiscard]] auto set_event_handler(T& obj)
 		{
-			glfwSetWindowCloseCallback(m_handle, [](GLFWwindow* window){
-				auto data = static_cast<EventHandler*>(glfwGetWindowUserPointer(window));
-				window_closed(*data);
-			});
-			return *this;
+			return callback_registrator{m_handle, obj};
 		}
-
 
 	private:
 		[[no_unique_address]] initializer m_init;
 		GLFWwindow* m_handle;
-		EventHandler m_event_handler;
 	};
-
 }
 
 #endif
