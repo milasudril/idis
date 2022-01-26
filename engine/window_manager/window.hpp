@@ -17,6 +17,29 @@
 
 namespace idis::wm
 {
+	template<class T>
+	class callback_registrator
+	{
+	public:
+		explicit callback_registrator(GLFWwindow* handle, T& obj):m_handle{handle}
+		{
+			glfwSetWindowUserPointer(handle, &obj);
+		}
+
+		template<class Tag>
+		callback_registrator& set_close_callback()
+		{
+			glfwSetWindowCloseCallback(m_handle, [](GLFWwindow* handle){
+				auto& obj = *static_cast<T*>(glfwGetWindowUserPointer(handle));
+				window_closed(obj, Tag{});
+			});
+			return *this;
+		}
+
+	private:
+		GLFWwindow* m_handle;
+	};
+
 	class window
 	{
 	public:
@@ -51,6 +74,12 @@ namespace idis::wm
 		}
 
 		window& show_pixels();
+
+		template<class T>
+		[[nodiscard]] auto set_event_handler(T& obj)
+		{
+			return callback_registrator{m_handle, obj};
+		}
 
 	private:
 		[[no_unique_address]] initializer m_init;

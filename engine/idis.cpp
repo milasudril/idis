@@ -5,6 +5,13 @@
 
 #include <cstdio>
 
+struct window_action_tag{};
+
+void window_closed(idis::seq::event_loop_state& loop_state, window_action_tag)
+{
+	loop_state.set_exit_flag();
+}
+
 void present(std::exception const& e)
 try
 {
@@ -12,6 +19,8 @@ try
 	idis::seq::event_loop loop;
 	loop.set_pre_drain_callback(glfwPollEvents);
 	window.show_pixels();
+	window.set_event_handler(loop.state())
+		.set_close_callback<window_action_tag>();
 	loop.run();
 }
 catch(...)
