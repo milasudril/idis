@@ -2,7 +2,7 @@
 
 #include "./cairo_surface.hpp"
 
-idis::wm::cairo_surface::cairo_surface(window& target)
+idis::wm::cairo_surface::cairo_surface(window_base& target)
 {
 	auto x11_disp = glfwGetX11Display();
 	auto x11_win  = glfwGetX11Window(target.handle());

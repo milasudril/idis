@@ -61,12 +61,12 @@ namespace idis::wm
 		int height;
 	};
 
-	class window
+	class window_base
 	{
 		using handle_type = std::unique_ptr<GLFWwindow, detail::window_deleter>;
 
 	public:
-		explicit window(int width, int height, char const* title)
+		explicit window_base(int width, int height, char const* title)
 		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 			m_handle = handle_type{glfwCreateWindow(width, height, title, nullptr, nullptr)};

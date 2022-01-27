@@ -19,10 +19,10 @@ void present(std::exception const& e)
 try
 {
 	idis::seq::event_loop loop;
-	idis::wm::window window{800, 500, "Idis"};
+	idis::wm::window_base mainwin{800, 500, "Idis"};
 	loop.set_pre_drain_callback(glfwPollEvents);
-	idis::wm::cairo_surface surface{window};
-	window.set_event_handler(loop.state()).set_close_callback<window_action_tag>();
+	idis::wm::cairo_surface surface{mainwin};
+	mainwin.set_event_handler(loop.state()).set_close_callback<window_action_tag>();
 	loop.run();
 }
 catch(...)
@@ -33,7 +33,7 @@ catch(...)
 int main(int, char**)
 try
 {
-	idis::wm::window window{800, 500, "Idis"};
+	idis::wm::window_base window{800, 500, "Idis"};
 	throw idis::exception{"start app", "not implemented"};
 }
 catch(std::exception const& e)

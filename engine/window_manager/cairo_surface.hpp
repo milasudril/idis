@@ -39,7 +39,7 @@ namespace idis::wm
 		using surface_type = std::unique_ptr<cairo_surface_t, detail::cairo_deleter>;
 
 	public:
-		explicit cairo_surface(window& target_window);
+		explicit cairo_surface(window_base& target_window);
 
 	private:
 		surface_type m_surface;
