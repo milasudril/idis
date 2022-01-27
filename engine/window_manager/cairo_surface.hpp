@@ -39,18 +39,26 @@ namespace idis::wm
 		using surface_type = std::unique_ptr<cairo_surface_t, detail::cairo_deleter>;
 
 	public:
+		cairo_surface() = default;
+
 		explicit cairo_surface(window_base& target_window);
 
 		cairo_surface& fill(uint8_t r, uint8_t g, uint8_t b)
 		{
-			cairo_set_source_rgba(m_ctxt.get(), r/255.0, g/255.0, b/255.0, 1.0);
+			cairo_set_source_rgba(m_ctxt.get(), r / 255.0, g / 255.0, b / 255.0, 1.0);
 			cairo_rectangle(m_ctxt.get(), 0, 0, m_dim.width, m_dim.height);
 			cairo_fill(m_ctxt.get());
 			return *this;
 		}
 
-		dimensions get_dimensions() const
-		{ return m_dim; }
+		cairo_surface& set_dimensions(dimensions dim)
+		{
+			cairo_xlib_surface_set_size(m_surface.get(), dim.width, dim.height);
+			m_dim = dim;
+			return *this;
+		}
+
+		dimensions get_dimensions() const { return m_dim; }
 
 	private:
 		surface_type m_surface;

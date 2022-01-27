@@ -84,6 +84,19 @@ namespace idis::wm
 			                           });
 			return *this;
 		}
+
+		template<class Tag>
+		window& set_size_callback()
+		{
+			glfwSetWindowSizeCallback(handle(),
+			                          [](GLFWwindow* handle, int width, int height)
+			                          {
+				                          auto& eh = *static_cast<EventHandler*>(
+				                              glfwGetWindowUserPointer(handle));
+				                          window_size_changed(eh, Tag{}, dimensions{width, height});
+			                          });
+			return *this;
+		}
 	};
 }
 
