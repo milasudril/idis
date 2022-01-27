@@ -1,3 +1,5 @@
+//@	{"dependencies_extra":[{"ref":"./glfw_stub.o", "rel":"implementation"}]}
+
 #ifndef IDIS_WINDOWMANAGER_GLFWSTUB_HPP
 #define IDIS_WINDOWMANAGER_GLFWSTUB_HPP
 
@@ -8,7 +10,6 @@
 
 namespace idis::wm::glfw_stub
 {
-
 	template<class T>
 	T make_default()
 	{
@@ -49,53 +50,6 @@ namespace idis::wm::glfw_stub
 	};
 
 	inline constinit function_overrides overrides{};
-}
-
-extern "C"
-{
-	inline int glfwInit()
-	{
-		auto fptr = std::ref(idis::wm::glfw_stub::overrides.init);
-		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "init"});
-	}
-
-	inline void glfwTerminate()
-	{
-		auto fptr = std::ref(idis::wm::glfw_stub::overrides.terminate);
-		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "terminate"});
-	}
-
-	inline char const* glfwGetVersionString()
-	{
-		auto fptr = std::ref(idis::wm::glfw_stub::overrides.get_version_string);
-		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "get_version_string"});
-	}
-
-	inline int glfwGetError(char const** msg)
-	{
-		auto fptr = std::ref(idis::wm::glfw_stub::overrides.get_error);
-		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "get_error"}, msg);
-	}
-
-	inline GLFWwindow* glfwCreateWindow(
-	    int width, int height, char const* title, GLFWmonitor* monitor, GLFWwindow* share)
-	{
-		auto fptr = std::ref(idis::wm::glfw_stub::overrides.create_window);
-		return idis::wm::glfw_stub::call_if_not_nullptr(
-		    std::pair{fptr, "create_window"}, width, height, title, monitor, share);
-	}
-
-	inline void glfwDestroyWindow(GLFWwindow* window)
-	{
-		auto fptr = std::ref(idis::wm::glfw_stub::overrides.destroy_window);
-		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "destroy_window"}, window);
-	}
-
-	inline void glfwWindowHint(int key, int value)
-	{
-		auto fptr = std::ref(idis::wm::glfw_stub::overrides.window_hint);
-		return idis::wm::glfw_stub::call_if_not_nullptr(std::pair{fptr, "window_hint"}, key, value);
-	}
 }
 
 struct GLFWwindow

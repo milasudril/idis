@@ -1,12 +1,13 @@
 //@	{"target":{"name":"window.test"}}
 
-#include "./window.hpp"
-
 #include "./glfw_stub.hpp"
+#include "./window.hpp"
 
 #include "ext_proj/testfwk/testfwk.hpp"
 
 #include <cstring>
+
+// FIXME: Link order breaks glfw stub
 
 TESTCASE(idis_wm_window_create)
 {

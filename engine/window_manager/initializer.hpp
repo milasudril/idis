@@ -1,4 +1,4 @@
-//@{"dependencies_extra":[{"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}]}
+//@	{"dependencies_extra":[{"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}]}
 
 #ifndef IDIS_WINDOWMANAGER_INITIALIZER_HPP
 #define IDIS_WINDOWMANAGER_INITIALIZER_HPP

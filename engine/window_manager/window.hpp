@@ -1,7 +1,8 @@
 //@	{
-//@ "dependencies_extra":[
-//@ 	 {"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}
-//@ 	,{"ref":"./window.o", "rel":"implementation"}
+//@ "dependencies_extra":
+//@		[
+//@		{"ref":"./window.o", "rel":"implementation"},
+//@		{"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}
 //@		]
 //@	}
 
@@ -9,7 +10,6 @@
 #define IDIS_WINDOWMANAGER_WINDOW_HPP
 
 #include "./initializer.hpp"
-#include "error_handler/exception.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -40,18 +40,7 @@ namespace idis::wm
 		using handle_type = std::unique_ptr<GLFWwindow, detail::window_deleter>;
 
 	public:
-		explicit window_base(int width, int height, char const* title)
-		{
-			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-			m_handle = handle_type{glfwCreateWindow(width, height, title, nullptr, nullptr)};
-			if(m_handle == nullptr) [[unlikely]]
-			{
-				char const* cause = nullptr;
-				glfwGetError(&cause);
-				throw exception{"Failed to create a new window",
-				                cause != nullptr ? cause : "Unknown error"};
-			}
-		}
+		explicit window_base(int width, int height, char const* title);
 
 		auto handle() { return m_handle.get(); }
 
@@ -68,11 +57,11 @@ namespace idis::wm
 	};
 
 	template<class EventHandler>
-	class window final : public window_base
+	class window final: public window_base
 	{
 	public:
-		template<class ... Args>
-		window(EventHandler& eh, Args&& ... args): window_base{std::forward<Args>(args)...}
+		template<class... Args>
+		window(EventHandler& eh, Args&&... args): window_base{std::forward<Args>(args)...}
 		{
 			set_event_handler(eh);
 		}
@@ -86,10 +75,13 @@ namespace idis::wm
 		template<class Tag>
 		window& set_close_callback()
 		{
-			glfwSetWindowCloseCallback(handle(), [](GLFWwindow* handle){
-				auto& eh = *static_cast<EventHandler*>(glfwGetWindowUserPointer(handle));
-				window_closed(eh, Tag{});
-			});
+			glfwSetWindowCloseCallback(handle(),
+			                           [](GLFWwindow* handle)
+			                           {
+				                           auto& eh = *static_cast<EventHandler*>(
+				                               glfwGetWindowUserPointer(handle));
+				                           window_closed(eh, Tag{});
+			                           });
 			return *this;
 		}
 	};

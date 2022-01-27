@@ -1,11 +1,20 @@
 //@	{
-//@ "target":{"name":"window.o", "pkgconfig_libs":["x11"]}
+//@ "target":{"name":"window.o"}
 //@	}
 
 #include "./window.hpp"
 
-#define GLFW_EXPOSE_NATIVE_X11
+#include "error_handler/exception.hpp"
 
-#include <GLFW/glfw3native.h>
-#include <cstring>
-#include <memory>
+idis::wm::window_base::window_base(int width, int height, char const* title)
+{
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	m_handle = handle_type{glfwCreateWindow(width, height, title, nullptr, nullptr)};
+	if(m_handle == nullptr) [[unlikely]]
+	{
+		char const* cause = nullptr;
+		glfwGetError(&cause);
+		throw exception{"Failed to create a new window",
+		                cause != nullptr ? cause : "Unknown error"};
+	}
+}
