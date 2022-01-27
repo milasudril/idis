@@ -1,4 +1,8 @@
-//@	{"dependencies_extra":[{"ref":"./cairo_surface.o", "rel":"implementation"}]}
+//@	{
+//@	 "dependencies_extra":
+//@		[{"ref":"./cairo_surface.o", "rel":"implementation"},
+//@		{"ref":"cairo", "rel":"implementation", "origin":"pkg-config"}]
+//@	}
 
 #ifndef IDIS_WINDOWMANAGER_CAIROSURFACE_HPP
 #define IDIS_WINDOWMANAGER_CAIROSURFACE_HPP

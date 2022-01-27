@@ -1,6 +1,7 @@
 //@	{"target":{"name":"idis.o"}}
 
 #include "./window_manager/window.hpp"
+#include "./window_manager/cairo_surface.hpp"
 #include "./event_sequencer/event_loop.hpp"
 
 #include <cstdio>
@@ -20,6 +21,7 @@ try
 	idis::seq::event_loop loop;
 	idis::wm::window window{800, 500, "Idis"};
 	loop.set_pre_drain_callback(glfwPollEvents);
+	idis::wm::cairo_surface surface{window};
 	window.set_event_handler(loop.state()).set_close_callback<window_action_tag>();
 	loop.run();
 }
