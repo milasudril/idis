@@ -27,6 +27,7 @@ void window_size_changed(message_display& obj, window_action_tag, idis::wm::dime
 	obj.event_loop.state().push_event(idis::seq::timepoint{idis::seq::tick{0}},
 	                                  [&surface = obj.draw_surface]()
 	                                  { surface.fill(0x00, 0x00, 0xaa); });
+	glfwPostEmptyEvent();
 }
 
 void present(std::exception const& e)
@@ -35,7 +36,7 @@ try
 	message_display md;
 	idis::wm::window mainwin{md, 800, 500, "Idis"};
 	mainwin.set_close_callback<window_action_tag>().set_size_callback<window_action_tag>();
-	md.event_loop.set_pre_drain_callback(glfwPollEvents);
+	md.event_loop.set_pre_drain_callback(glfwWaitEvents);
 	md.draw_surface = idis::wm::cairo_surface{mainwin};
 	md.draw_surface.fill(0x00, 0x00, 0xaa);
 	md.event_loop.run();
