@@ -14,6 +14,7 @@
 #include <GLFW/glfw3.h>
 
 #include <utility>
+#include <memory>
 
 namespace idis::wm
 {
@@ -43,13 +44,26 @@ namespace idis::wm
 		GLFWwindow* m_handle;
 	};
 
+	namespace detail
+	{
+		struct window_deleter
+		{
+			void operator()(GLFWwindow* window) const
+			{
+				if(window != nullptr) { glfwDestroyWindow(window); }
+			}
+		};
+	}
+
 	class window
 	{
+		using handle_type = std::unique_ptr<GLFWwindow, detail::window_deleter>;
+
 	public:
 		explicit window(int width, int height, char const* title)
 		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-			m_handle = glfwCreateWindow(width, height, title, nullptr, nullptr);
+			m_handle = handle_type{glfwCreateWindow(width, height, title, nullptr, nullptr)};
 			if(m_handle == nullptr) [[unlikely]]
 			{
 				char const* cause = nullptr;
@@ -59,34 +73,15 @@ namespace idis::wm
 			}
 		}
 
-		window(window&& other) noexcept { m_handle = std::exchange(other.m_handle, nullptr); }
-
-		window(window const&) = delete;
-		window& operator=(window const&) = delete;
-
-		~window() noexcept
-		{
-			if(m_handle != nullptr) { glfwDestroyWindow(m_handle); }
-		}
-
-		window& operator=(window&& other) noexcept
-		{
-			glfwDestroyWindow(m_handle);
-			m_handle = std::exchange(other.m_handle, nullptr);
-			return *this;
-		}
-
-		window& show_pixels();
-
 		template<class T>
 		[[nodiscard]] auto set_event_handler(T& obj)
 		{
-			return callback_registrator{m_handle, obj};
+			return callback_registrator{m_handle.get(), obj};
 		}
 
 	private:
 		[[no_unique_address]] initializer m_init;
-		GLFWwindow* m_handle;
+		handle_type m_handle;
 	};
 }
 

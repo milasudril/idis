@@ -20,7 +20,6 @@ try
 	idis::seq::event_loop loop;
 	idis::wm::window window{800, 500, "Idis"};
 	loop.set_pre_drain_callback(glfwPollEvents);
-	window.show_pixels();
 	window.set_event_handler(loop.state()).set_close_callback<window_action_tag>();
 	loop.run();
 }
