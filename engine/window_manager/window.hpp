@@ -18,32 +18,6 @@
 
 namespace idis::wm
 {
-	template<class T>
-	class callback_registrator
-	{
-	public:
-		explicit callback_registrator(GLFWwindow* handle, T& obj): m_handle{handle}
-		{
-			glfwSetWindowUserPointer(handle, &obj);
-		}
-
-		template<class Tag>
-		callback_registrator& set_close_callback()
-		{
-			glfwSetWindowCloseCallback(m_handle,
-			                           [](GLFWwindow* handle)
-			                           {
-				                           auto& obj =
-				                               *static_cast<T*>(glfwGetWindowUserPointer(handle));
-				                           window_closed(obj, Tag{});
-			                           });
-			return *this;
-		}
-
-	private:
-		GLFWwindow* m_handle;
-	};
-
 	namespace detail
 	{
 		struct window_deleter
@@ -79,12 +53,6 @@ namespace idis::wm
 			}
 		}
 
-		template<class T>
-		[[nodiscard]] auto set_event_handler(T& obj)
-		{
-			return callback_registrator{m_handle.get(), obj};
-		}
-
 		auto handle() { return m_handle.get(); }
 
 		dimensions get_dimensions() const
@@ -97,6 +65,33 @@ namespace idis::wm
 	private:
 		[[no_unique_address]] initializer m_init;
 		handle_type m_handle;
+	};
+
+	template<class EventHandler>
+	class window final : public window_base
+	{
+	public:
+		template<class ... Args>
+		window(EventHandler& eh, Args&& ... args): window_base{std::forward<Args>(args)...}
+		{
+			set_event_handler(eh);
+		}
+
+		window& set_event_handler(EventHandler& eh)
+		{
+			glfwSetWindowUserPointer(handle(), &eh);
+			return *this;
+		}
+
+		template<class Tag>
+		window& set_close_callback()
+		{
+			glfwSetWindowCloseCallback(handle(), [](GLFWwindow* handle){
+				auto& eh = *static_cast<EventHandler*>(glfwGetWindowUserPointer(handle));
+				window_closed(eh, Tag{});
+			});
+			return *this;
+		}
 	};
 }
 
