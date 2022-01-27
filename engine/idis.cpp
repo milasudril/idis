@@ -20,9 +20,10 @@ try
 {
 	idis::seq::event_loop loop;
 	idis::wm::window mainwin{loop.state(), 800, 500, "Idis"};
+	mainwin.set_close_callback<window_action_tag>();
 	loop.set_pre_drain_callback(glfwPollEvents);
 	idis::wm::cairo_surface surface{mainwin};
-	mainwin.set_close_callback<window_action_tag>();
+	surface.fill(0x00, 0x00, 0xaa);
 	loop.run();
 }
 catch(...)

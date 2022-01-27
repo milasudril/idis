@@ -41,9 +41,21 @@ namespace idis::wm
 	public:
 		explicit cairo_surface(window_base& target_window);
 
+		cairo_surface& fill(uint8_t r, uint8_t g, uint8_t b)
+		{
+			cairo_set_source_rgba(m_ctxt.get(), r/255.0, g/255.0, b/255.0, 1.0);
+			cairo_rectangle(m_ctxt.get(), 0, 0, m_dim.width, m_dim.height);
+			cairo_fill(m_ctxt.get());
+			return *this;
+		}
+
+		dimensions get_dimensions() const
+		{ return m_dim; }
+
 	private:
 		surface_type m_surface;
 		ctxt_type m_ctxt;
+		dimensions m_dim;
 	};
 }
 
