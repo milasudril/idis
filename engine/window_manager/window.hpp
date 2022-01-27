@@ -79,6 +79,9 @@ namespace idis::wm
 			return callback_registrator{m_handle.get(), obj};
 		}
 
+		auto handle()
+		{ return m_handle.get(); }
+
 	private:
 		[[no_unique_address]] initializer m_init;
 		handle_type m_handle;
