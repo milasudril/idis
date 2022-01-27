@@ -55,6 +55,12 @@ namespace idis::wm
 		};
 	}
 
+	struct dimensions
+	{
+		int width;
+		int height;
+	};
+
 	class window
 	{
 		using handle_type = std::unique_ptr<GLFWwindow, detail::window_deleter>;
@@ -79,8 +85,14 @@ namespace idis::wm
 			return callback_registrator{m_handle.get(), obj};
 		}
 
-		auto handle()
-		{ return m_handle.get(); }
+		auto handle() { return m_handle.get(); }
+
+		dimensions get_dimensions() const
+		{
+			dimensions ret{};
+			glfwGetWindowSize(m_handle.get(), &ret.width, &ret.height);
+			return ret;
+		}
 
 	private:
 		[[no_unique_address]] initializer m_init;
