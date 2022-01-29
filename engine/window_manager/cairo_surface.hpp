@@ -9,8 +9,10 @@
 
 #include "./window.hpp"
 
-#define GLFW_EXPOSE_NATIVE_X11
+#include "pixel_store/image.hpp"
+#include "pixel_store/rgba_value.hpp"
 
+#define GLFW_EXPOSE_NATIVE_X11
 #include <GLFW/glfw3native.h>
 #include <cairo/cairo.h>
 #include <cairo/cairo-xlib.h>
@@ -32,6 +34,20 @@ namespace idis::wm
 			}
 		};
 	}
+
+	class cairo_image_surface
+	{
+		using surface_type = std::unique_ptr<cairo_surface_t, detail::cairo_deleter>;
+
+	public:
+		explicit cairo_image_surface(
+		    pixel_store::image_span<pixel_store::rgba_value<> const> buffer);
+
+		auto handle() const { return m_handle.get(); }
+
+	private:
+		surface_type m_handle;
+	};
 
 	class cairo_surface
 	{

@@ -20,9 +20,7 @@ struct message_display
 	idis::seq::event_loop event_loop;
 	idis::wm::cairo_surface draw_surface;
 
-	message_display(std::reference_wrapper<fruit::FontFace const> font):
-		message{font}
-	{}
+	message_display(std::reference_wrapper<fruit::FontFace const> font): message{font} {}
 
 	fruit::TextLine message;
 };
