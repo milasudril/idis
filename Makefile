@@ -12,4 +12,4 @@ clean:
 
 .PHONY: format
 format:
-	find \( -name '*.hpp' -or -name '*.cpp' \) -and -not -path './__targets*' | xargs clang-format-12 -i
+	find \( -name '*.hpp' -or -name '*.cpp' \) -and -not -path './__targets*' -and -not -path './fruit*' -and -not -path './pixel_store*' | xargs clang-format-12 -i
