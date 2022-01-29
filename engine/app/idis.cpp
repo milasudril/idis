@@ -1,8 +1,8 @@
 //@	{"target":{"name":"idis.o"}}
 
-#include "./window_manager/window.hpp"
-#include "./window_manager/cairo_surface.hpp"
-#include "./event_sequencer/event_loop.hpp"
+#include "engine/window_manager/window.hpp"
+#include "engine/window_manager/cairo_surface.hpp"
+#include "engine/event_sequencer/event_loop.hpp"
 
 #include <cstdio>
 
