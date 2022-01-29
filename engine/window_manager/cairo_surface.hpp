@@ -73,7 +73,7 @@ namespace idis::wm
 		cairo_surface& fill(cairo_image_surface const& surface, pixel_store::vec4_t<int> location)
 		{
 			auto const dim = surface.get_dimensions();
-			cairo_set_source_surface(m_ctxt.get(), surface.handle(), location[0], location[1]);
+			cairo_set_source_surface(m_ctxt.get(), surface.handle(), 0, 0);
 			cairo_rectangle(m_ctxt.get(), location[0], location[1], dim.width, dim.height);
 			cairo_set_operator(m_ctxt.get(), CAIRO_OPERATOR_OVER);
 			cairo_fill(m_ctxt.get());
