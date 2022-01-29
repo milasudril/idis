@@ -23,11 +23,7 @@ void window_closed(message_display& obj, window_action_tag)
 
 void window_size_changed(message_display& obj, window_action_tag, idis::wm::dimensions dim)
 {
-	obj.draw_surface.set_dimensions(dim);
-	obj.event_loop.state().push_event(idis::seq::timepoint{idis::seq::tick{0}},
-	                                  [&surface = obj.draw_surface]()
-	                                  { surface.fill(0x00, 0x00, 0xaa); });
-	glfwPostEmptyEvent();
+	obj.draw_surface.set_dimensions(dim).fill(0x00, 0x00, 0xaa);
 }
 
 void present(std::exception const& e)
