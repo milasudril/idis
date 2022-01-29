@@ -36,7 +36,8 @@
                             "-Wall",
                             "-Wextra",
                             "-Werror",
-                            "-ffast-math"
+                            "-ffast-math",
+                            "-mavx"
                         ],
 						"std_revision":{
 							"min":"c++20"
@@ -63,7 +64,8 @@
                             "-Wall",
                             "-Wextra",
                             "-Werror",
-                            "-ffast-math"
+                            "-ffast-math",
+                            "-mavx2"
                         ],
 						"std_revision":{
 							"min":"c++20"
@@ -133,7 +135,9 @@
             },
             "input_filter": [
                 "^\\.",
-                "^__"
+                "^__",
+                "^basic_example.*",
+                "^skeleton.*"
             ],
             "recursive": 1
         }

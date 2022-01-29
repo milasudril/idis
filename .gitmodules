@@ -1,3 +1,9 @@
 [submodule "testfwk"]
 	path = testfwk
 	url = git@github.com:milasudril/testfwk.git
+[submodule "fruit"]
+	path = fruit
+	url = git@github.com:milasudril/fruit.git
+[submodule "pixel_store"]
+	path = pixel_store
+	url = git@github.com:milasudril/pixel_store.git
