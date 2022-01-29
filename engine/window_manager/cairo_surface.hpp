@@ -45,8 +45,11 @@ namespace idis::wm
 
 		auto handle() const { return m_handle.get(); }
 
+		auto get_dimensions() const { return m_dim; }
+
 	private:
 		surface_type m_handle;
+		dimensions m_dim;
 	};
 
 	class cairo_surface
@@ -63,6 +66,16 @@ namespace idis::wm
 		{
 			cairo_set_source_rgba(m_ctxt.get(), r / 255.0, g / 255.0, b / 255.0, 1.0);
 			cairo_rectangle(m_ctxt.get(), 0, 0, m_dim.width, m_dim.height);
+			cairo_fill(m_ctxt.get());
+			return *this;
+		}
+
+		cairo_surface& fill(cairo_image_surface const& surface, pixel_store::vec4_t<int> location)
+		{
+			auto const dim = surface.get_dimensions();
+			cairo_set_source_surface(m_ctxt.get(), surface.handle(), location[0], location[1]);
+			cairo_rectangle(m_ctxt.get(), location[0], location[1], dim.width, dim.height);
+			cairo_set_operator(m_ctxt.get(), CAIRO_OPERATOR_OVER);
 			cairo_fill(m_ctxt.get());
 			return *this;
 		}

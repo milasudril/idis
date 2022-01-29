@@ -6,6 +6,7 @@ idis::wm::cairo_image_surface::cairo_image_surface(
     pixel_store::image_span<pixel_store::rgba_value<> const> img)
     : m_handle{cairo_image_surface_create(
         CAIRO_FORMAT_ARGB32, static_cast<int>(img.width()), static_cast<int>(img.height()))}
+        , m_dim{static_cast<int>(img.width()), static_cast<int>(img.height())}
 {
 	auto const stride = cairo_image_surface_get_stride(handle());
 	cairo_surface_flush(handle());
