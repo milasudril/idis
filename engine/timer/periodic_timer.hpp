@@ -39,7 +39,7 @@ namespace idis::timer
 			timerfd_settime(m_fd.get(), 0, &spec, nullptr);
 		}
 
-		size_t wait() const
+		size_t wait()
 		{
 			size_t expire_count{};
 			unused(read(m_fd.get(), &expire_count, sizeof(expire_count)));

@@ -21,6 +21,8 @@ namespace idis::seq
 
 	constexpr auto ticks_per_sec = static_cast<tick::rep>(60);
 
+	constexpr auto seconds_per_tick = std::chrono::duration<int64_t, std::ratio<1, 60>>{1};
+
 	inline std::string to_string(tick val)
 	{
 		auto const secs  = val / ticks_per_sec;

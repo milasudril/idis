@@ -3,6 +3,7 @@
 #include "engine/window_manager/window.hpp"
 #include "engine/window_manager/cairo_surface.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
+#include "engine/timer/periodic_timer.hpp"
 
 #include "fruit/lib/text_line.hpp"
 #include "fruit/lib/font_mapper.hpp"
@@ -65,9 +66,12 @@ try
 	md.message.text(reinterpret_cast<char8_t const*>(md.msg.c_str()));
 	idis::wm::window mainwin{md, 800, 500, "Idis"};
 	mainwin.set_close_callback<window_action_tag>().set_size_callback<window_action_tag>();
-	md.event_loop.set_pre_drain_callback(glfwWaitEvents);
+	md.event_loop.set_pre_drain_callback(glfwPollEvents);
 	md.draw_surface = idis::wm::cairo_surface{mainwin};
 	render(md, mainwin.get_dimensions());
+	md.event_loop.set_post_drain_callback(
+	    [timer = idis::timer::periodic_timer{idis::seq::seconds_per_tick}]() mutable
+	    { timer.wait(); });
 	md.event_loop.run();
 }
 catch(...)
