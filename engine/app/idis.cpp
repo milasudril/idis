@@ -32,7 +32,7 @@ void window_closed(message_display& obj, window_action_tag)
 
 void render(message_display& obj, idis::wm::dimensions dim)
 {
-	obj.draw_surface.fill(0x00, 0x00, 0x00);
+	obj.draw_surface.fill(0x00, 0x00, 0x66);
 	pixel_store::image<pixel_store::rgba_value<>> img{static_cast<uint32_t>(dim.width), static_cast<uint32_t>(dim.height)};
 
 	// TODO: This is currently broken (need fix in fruit)
@@ -61,6 +61,7 @@ try
 	fruit::FontfaceLoader font_loader;
 	fruit::FontFace font_face{font_loader, fruit::io_utils::load(font_file)};
 	message_display md{font_face};
+	md.message.char_height(500/25);
 	md.message.text(reinterpret_cast<char8_t const*>(e.what()));
 	idis::wm::window mainwin{md, 800, 500, "Idis"};
 	mainwin.set_close_callback<window_action_tag>().set_size_callback<window_action_tag>();
