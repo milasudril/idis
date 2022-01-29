@@ -17,8 +17,6 @@ idis::wm::cairo_image_surface::cairo_image_surface(
 		auto write_ptr = output_buffer + k * stride;
 		for(size_t l = 0; l != img.width(); ++l)
 		{
-			write_ptr += 4;
-
 			// TODO: Use look-up table for gamma correction
 			// TODO: Handle out-of-range values
 
@@ -30,6 +28,7 @@ idis::wm::cairo_image_surface::cairo_image_surface(
 			write_ptr[3] = v[3];
 
 			++read_ptr;
+			write_ptr += 4;
 		}
 	}
 	cairo_surface_mark_dirty(handle());
