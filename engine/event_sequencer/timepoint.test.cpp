@@ -2,7 +2,7 @@
 
 #include "./timepoint.hpp"
 
-#include "ext_proj/testfwk/testfwk.hpp"
+#include "testfwk/testfwk.hpp"
 
 TESTCASE(idis_seq_tick_to_string_neg)
 {

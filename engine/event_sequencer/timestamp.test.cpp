@@ -2,7 +2,7 @@
 
 #include "./timestamp.hpp"
 
-#include "ext_proj/testfwk/testfwk.hpp"
+#include "testfwk/testfwk.hpp"
 
 TESTCASE(idis_seq_timestamp_create)
 {

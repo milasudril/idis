@@ -1,8 +1,8 @@
 #ifndef IDIS_EVENTSEQUENCER_TIMEPOINT_HPP
 #define IDIS_EVENTSEQUENCER_TIMEPOINT_HPP
 
-#include "helpers/integer_mixin.hpp"
-#include "helpers/empty.hpp"
+#include "engine/helpers/integer_mixin.hpp"
+#include "engine/helpers/empty.hpp"
 
 #include <cstdint>
 #include <string>

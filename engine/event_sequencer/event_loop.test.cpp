@@ -2,7 +2,7 @@
 
 #include "./event_loop.hpp"
 
-#include "ext_proj/testfwk/testfwk.hpp"
+#include "testfwk/testfwk.hpp"
 
 TESTCASE(idis_seq_event_loop_state_set_exit_flag)
 {

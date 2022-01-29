@@ -2,7 +2,7 @@
 
 #include "./integer_mixin.hpp"
 
-#include "ext_proj/testfwk/testfwk.hpp"
+#include "testfwk/testfwk.hpp"
 
 namespace
 {

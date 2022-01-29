@@ -5,8 +5,8 @@
 
 #include <GLFW/glfw3.h>
 
-#include "ext_proj/testfwk/validation.hpp"
-#include "ext_proj/testfwk/testsuite.hpp"
+#include "testfwk/validation.hpp"
+#include "testfwk/testsuite.hpp"
 
 namespace idis::wm::glfw_stub
 {

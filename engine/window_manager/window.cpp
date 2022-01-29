@@ -4,7 +4,7 @@
 
 #include "./window.hpp"
 
-#include "error_handler/exception.hpp"
+#include "engine/error_handler/exception.hpp"
 
 idis::wm::window_base::window_base(int width, int height, char const* title)
 {

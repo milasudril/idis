@@ -2,7 +2,7 @@
 
 #include "./event_queue.hpp"
 
-#include "ext_proj/testfwk/testfwk.hpp"
+#include "testfwk/testfwk.hpp"
 
 #include <array>
 #include <algorithm>
