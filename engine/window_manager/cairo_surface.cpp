@@ -6,12 +6,12 @@ idis::wm::cairo_image_surface::cairo_image_surface(
     pixel_store::image_span<pixel_store::rgba_value<> const> img)
     : m_handle{cairo_image_surface_create(
         CAIRO_FORMAT_ARGB32, static_cast<int>(img.width()), static_cast<int>(img.height()))}
-        , m_dim{static_cast<int>(img.width()), static_cast<int>(img.height())}
+    , m_dim{static_cast<int>(img.width()), static_cast<int>(img.height())}
 {
 	auto const stride = cairo_image_surface_get_stride(handle());
 	cairo_surface_flush(handle());
- 	auto const output_buffer = cairo_image_surface_get_data(handle());
-	auto read_ptr = img.data();
+	auto const output_buffer = cairo_image_surface_get_data(handle());
+	auto read_ptr            = img.data();
 	for(size_t k = 0; k != img.height(); ++k)
 	{
 		auto write_ptr = output_buffer + k * stride;
@@ -20,7 +20,7 @@ idis::wm::cairo_image_surface::cairo_image_surface(
 			// TODO: Use look-up table for gamma correction
 			// TODO: Handle out-of-range values
 
-			auto const v = pixel_store::vector_cast<uint8_t>(255.0f*img(l, k).value());
+			auto const v = pixel_store::vector_cast<uint8_t>(255.0f * img(l, k).value());
 
 			write_ptr[0] = v[2];
 			write_ptr[1] = v[1];
