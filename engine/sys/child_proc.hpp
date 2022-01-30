@@ -50,11 +50,7 @@ namespace idis::sys
 		int m_value;
 	};
 
-	inline auto to_string(proc_term_signal val)
-	{
-		// TODO: Translate val into name
-		return std::to_string(val.value());
-	}
+	std::string to_string(proc_term_signal val);
 
 	inline std::variant<proc_exit_status, proc_term_signal> extract_proc_wait_status(int value)
 	{

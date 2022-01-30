@@ -2,6 +2,26 @@
 
 #include "./child_proc.hpp"
 
+#define SIGCASE(signal)                                                                            \
+	case signal: return #signal
+
+std::string idis::sys::to_string(proc_term_signal val)
+{
+	switch(val.value())
+	{
+		SIGCASE(SIGABRT);
+		SIGCASE(SIGBUS);
+		SIGCASE(SIGILL);
+		SIGCASE(SIGSEGV);
+		SIGCASE(SIGXCPU);
+		SIGCASE(SIGXFSZ);
+		SIGCASE(SIGFPE);
+		SIGCASE(SIGSYS);
+
+		default: return "<UNKNOWN>";
+	}
+}
+
 void idis::sys::child_proc::fetch_result() const
 {
 	std::vector<std::byte> errmsg;
