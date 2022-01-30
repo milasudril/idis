@@ -4,6 +4,7 @@
 #include "engine/window_manager/cairo_surface.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
+#include "engine/sys/child_proc.hpp"
 
 #include "fruit/lib/text_line.hpp"
 #include "fruit/lib/font_mapper.hpp"
@@ -11,6 +12,7 @@
 #include "fruit/lib/io_utils.hpp"
 
 #include <cstdio>
+#include <cassert>
 
 struct window_action_tag
 {
@@ -53,6 +55,20 @@ void window_size_changed(message_display& obj, window_action_tag, idis::wm::dime
 	render(obj, dim);
 }
 
+std::string get_error_message(idis::sys::process_result const& res)
+{
+	std::string ret{};
+	auto const& data = res.error_log();
+	auto ptr         = std::begin(data);
+	auto const end   = std::end(data);
+	while(ptr != end && *ptr != static_cast<std::byte>(0))
+	{
+		ret += static_cast<char>(*ptr);
+		++ptr;
+	}
+	return ret;
+}
+
 void present(std::exception const& e)
 try
 {
@@ -62,7 +78,6 @@ try
 	fruit::FontFace font_face{font_loader, fruit::io_utils::load(font_file)};
 	message_display md{font_face};
 	md.msg = e.what();
-	md.message.char_height(500 / 25);
 	md.message.text(reinterpret_cast<char8_t const*>(md.msg.c_str()));
 	idis::wm::window mainwin{md, 800, 500, "Idis"};
 	mainwin.set_close_callback<window_action_tag>().set_size_callback<window_action_tag>();
@@ -82,8 +97,17 @@ catch(...)
 int main(int, char**)
 try
 {
-	idis::wm::window_base window{800, 500, "Idis"};
-	throw idis::exception{"start app", "not implemented"};
+	auto res = idis::sys::child_proc{
+	    "idis",
+	    []()
+	    {
+		    idis::wm::window_base window{800, 500, "Idis"};
+		    throw idis::exception{"start app", "not implemented"};
+
+		    return 0;
+	    }}.get_result();
+
+	if(has_error(res)) { throw std::runtime_error{get_error_message(res)}; }
 }
 catch(std::exception const& e)
 {

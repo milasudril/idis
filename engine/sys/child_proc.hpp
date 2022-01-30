@@ -34,6 +34,8 @@ namespace idis::sys
 
 	inline auto to_string(proc_exit_status val) { return std::to_string(val.value()); }
 
+	inline auto has_error(proc_exit_status val) { return val.value() != 0; }
+
 	class proc_term_signal
 	{
 	public:
@@ -51,6 +53,8 @@ namespace idis::sys
 	};
 
 	std::string to_string(proc_term_signal val);
+
+	inline auto has_error(proc_term_signal) { return true; }
 
 	inline std::variant<proc_exit_status, proc_term_signal> extract_proc_wait_status(int value)
 	{
@@ -91,6 +95,11 @@ namespace idis::sys
 		    status.value());
 	}
 
+	inline auto has_error(proc_wait_status status)
+	{
+		return std::visit([](auto value) { return has_error(value); }, status.value());
+	}
+
 	class process_result
 	{
 	public:
@@ -110,6 +119,8 @@ namespace idis::sys
 		proc_wait_status m_status;
 		std::vector<std::byte> m_stderr;
 	};
+
+	inline auto has_error(process_result const& res) { return has_error(res.status()); }
 
 	class child_proc
 	{
@@ -135,12 +146,12 @@ namespace idis::sys
 				}
 				catch(std::exception const& e)
 				{
-					fprintf(stderr, "error: %s", e.what());
+					fprintf(stderr, "%s: %s", name.c_str(), e.what());
 					retval = -1;
 				}
 				catch(...)
 				{
-					fprintf(stderr, "error: Unknown exception");
+					fprintf(stderr, "%s: Unknown exception", name.c_str());
 					retval = -1;
 				}
 				m_stderr.close_write_fd();
