@@ -5,6 +5,7 @@
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/sys/child_proc.hpp"
+#include "engine/window_manager/vulkan_surface.hpp"
 
 #include "fruit/lib/text_line.hpp"
 #include "fruit/lib/font_mapper.hpp"
@@ -102,8 +103,7 @@ try
 	    []()
 	    {
 		    idis::wm::window_base window{800, 500, "Idis"};
-		    throw idis::exception{"start app", "not implemented"};
-
+		    idis::wm::vulkan_surface surface{window};
 		    return 0;
 	    }}.get_result();
 

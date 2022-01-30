@@ -4,7 +4,6 @@
 #define IDIS_WINDOWMANAGER_INITIALIZER_HPP
 
 #include "engine/error_handler/exception.hpp"
-
 #include <GLFW/glfw3.h>
 
 namespace idis::wm

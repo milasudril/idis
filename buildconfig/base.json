@@ -14,7 +14,9 @@
                             "-Wall",
                             "-Wextra",
                             "-Werror",
-                            "-ffast-math"
+                            "-ffast-math",
+                            "-mavx2",
+                            "-DGLFW_INCLUDE_VULKAN"
                         ],
                         "std_revision":{
 							"min":"c++20"
@@ -37,7 +39,8 @@
                             "-Wextra",
                             "-Werror",
                             "-ffast-math",
-                            "-mavx"
+                            "-mavx",
+                            "-DGLFW_INCLUDE_VULKAN"
                         ],
 						"std_revision":{
 							"min":"c++20"
@@ -65,7 +68,8 @@
                             "-Wextra",
                             "-Werror",
                             "-ffast-math",
-                            "-mavx2"
+                            "-mavx2",
+                            "-DGLFW_INCLUDE_VULKAN"
                         ],
 						"std_revision":{
 							"min":"c++20"
