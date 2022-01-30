@@ -1,7 +1,7 @@
 #ifndef IDIS_TIMER_PERIODICTIMER_HPP
 #define IDIS_TIMER_PERIODICTIMER_HPP
 
-#include "engine/helpers/fd.hpp"
+#include "./fd.hpp"
 #include "engine/error_handler/exception.hpp"
 
 #include <chrono>
@@ -10,7 +10,7 @@
 #include <cstring>
 #include <unistd.h>
 
-namespace idis::timer
+namespace idis::sys
 {
 	template<class Rep, class Period>
 	timespec to_timespec(std::chrono::duration<Rep, Period> period)
@@ -47,7 +47,7 @@ namespace idis::timer
 		}
 
 	private:
-		std::unique_ptr<void, fd_deleter> m_fd;
+		fd_handle m_fd;
 		static_assert(sizeof(m_fd) == sizeof(int));
 	};
 }

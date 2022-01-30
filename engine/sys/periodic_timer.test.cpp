@@ -8,7 +8,7 @@
 
 TESTCASE(idis_timer_duration_to_timespec)
 {
-	auto res = idis::timer::to_timespec(std::chrono::duration<double>{1.75});
+	auto res = idis::sys::to_timespec(std::chrono::duration<double>{1.75});
 
 	EXPECT_EQ(res.tv_sec, 1);
 	EXPECT_EQ(res.tv_nsec, 750'000'000);
@@ -16,7 +16,7 @@ TESTCASE(idis_timer_duration_to_timespec)
 
 TESTCASE(idis_timer_periodic_timer_expire_twice_before_read)
 {
-	idis::timer::periodic_timer timer{std::chrono::seconds{1}};
+	idis::sys::periodic_timer timer{std::chrono::seconds{1}};
 	timer.wait();  // wait for initial expire event
 	std::this_thread::sleep_for(std::chrono::duration<double>{2.25});
 	auto t0 = std::chrono::steady_clock::now();
@@ -28,7 +28,7 @@ TESTCASE(idis_timer_periodic_timer_expire_twice_before_read)
 
 TESTCASE(idis_timer_periodic_timer_check_period)
 {
-	idis::timer::periodic_timer timer{std::chrono::seconds{1}};
+	idis::sys::periodic_timer timer{std::chrono::seconds{1}};
 	timer.wait();
 	auto t0 = std::chrono::steady_clock::now();
 	auto n  = timer.wait();

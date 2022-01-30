@@ -3,7 +3,7 @@
 #include "engine/window_manager/window.hpp"
 #include "engine/window_manager/cairo_surface.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
-#include "engine/timer/periodic_timer.hpp"
+#include "engine/sys/periodic_timer.hpp"
 
 #include "fruit/lib/text_line.hpp"
 #include "fruit/lib/font_mapper.hpp"
@@ -70,7 +70,7 @@ try
 	md.draw_surface = idis::wm::cairo_surface{mainwin};
 	render(md, mainwin.get_dimensions());
 	md.event_loop.set_post_drain_callback(
-	    [timer = idis::timer::periodic_timer{idis::seq::seconds_per_tick}]() mutable
+	    [timer = idis::sys::periodic_timer{idis::seq::seconds_per_tick}]() mutable
 	    { timer.wait(); });
 	md.event_loop.run();
 }

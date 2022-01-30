@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <unistd.h>
+#include <memory>
 
 namespace idis
 {
@@ -30,6 +31,8 @@ namespace idis
 		using pointer = fd;
 		void operator()(fd descriptor) const { close(descriptor); }
 	};
+
+	using fd_handle = std::unique_ptr<void, fd_deleter>;
 
 	template<class T>
 	void unused(T&&)
