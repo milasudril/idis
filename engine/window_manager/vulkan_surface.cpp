@@ -8,11 +8,6 @@
 
 idis::wm::vulkan_surface::vulkan_surface(window_base& window)
 {
-	if(glfwVulkanSupported() == GLFW_FALSE)
-	{
-		throw exception{"create vulkan surface", "No driver is available"};
-	}
-
 	{
 		VkInstance instance{};
 		VkApplicationInfo app_info{};
