@@ -5,7 +5,7 @@
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/sys/child_proc.hpp"
-//#include "engine/window_manager/vulkan_surface.hpp"
+#include "engine/window_manager/vulkan_surface.hpp"
 #include "engine/window_manager/vk_instance.hpp"
 
 #include "fruit/lib/text_line.hpp"
@@ -103,9 +103,24 @@ try
 	    "idis",
 	    []()
 	    {
+		    printf("# Initiating vulkan\n");
 		    idis::wm::vk_instance eyafjallajökull;
+		    printf("\n");
+
+		    auto& system_info = eyafjallajökull.system_info();
+		    auto devices      = system_info.devices();
+		    printf("## Found %zu devices:\n\n", std::size(devices));
+		    std::ranges::for_each(
+		        devices, [](auto const& device) { printf("%s\n", to_string(device).c_str()); });
+
+		    auto queue_families = system_info.queue_families();
+		    printf("\n## Found %zu queue families:\n\n", std::size(queue_families));
+		    std::ranges::for_each(queue_families,
+		                          [](auto const& queue_family)
+		                          { printf("%s\n", to_string(queue_family).c_str()); });
+
+
 		    idis::wm::window_base window{800, 500, "Idis"};
-		    //		    idis::wm::vulkan_surface surface{window};
 		    return 0;
 	    }}.get_result();
 
