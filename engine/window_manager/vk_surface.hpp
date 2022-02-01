@@ -44,6 +44,12 @@ namespace idis::wm
 	private:
 		handle_type m_handle;
 	};
+
+
+	//  vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
+	/*	vk_queue_family_info const* find_surface_queue(VkPhysicalDevice,
+												std::span<vk_queue_family_info const> queues,
+												vk_surface const& surface)*/
 }
 
 #endif

@@ -89,7 +89,9 @@ std::string idis::wm::to_string(vk_device_info const& dev_info)
 
 std::string idis::wm::to_string(vk_queue_family_info const& family_info)
 {
-	return std::string{"device_index="}
+	return std::string{"device="}
+	    .append(std::to_string(reinterpret_cast<intptr_t>(family_info.device)))
+	    .append("; device_index=")
 	    .append(std::to_string(family_info.device_index))
 	    .append("; family_index=")
 	    .append(std::to_string(family_info.family_index))
@@ -131,10 +133,11 @@ idis::wm::vk_system_info::vk_system_info(VkInstance instance)
 		    std::ranges::transform(
 		        qfs,
 		        std::back_inserter(queue_families),
-		        [dev_index    = std::as_const(device_index),
+		        [dev          = std::as_const(device),
+		         dev_index    = std::as_const(device_index),
 		         family_index = 0](auto const& props) mutable
 		        {
-			        auto ret = vk_queue_family_info{dev_index, family_index, props};
+			        auto ret = vk_queue_family_info{dev, dev_index, family_index, props};
 			        ++family_index;
 			        return ret;
 		        });

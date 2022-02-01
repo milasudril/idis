@@ -26,6 +26,7 @@ namespace idis::wm
 
 	struct vk_queue_family_info
 	{
+		VkPhysicalDevice device;
 		int device_index;
 		int family_index;
 		VkQueueFamilyProperties properties;
