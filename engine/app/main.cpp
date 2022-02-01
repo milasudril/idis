@@ -3,6 +3,7 @@
 #include "./main.hpp"
 
 #include "engine/window_manager/vk_instance.hpp"
+#include "engine/window_manager/vk_surface.hpp"
 #include "engine/window_manager/window.hpp"
 
 #include <algorithm>
@@ -28,5 +29,7 @@ int idis::app::main(int, char**)
 
 
 	idis::wm::window_base window{800, 500, "Idis"};
+	idis::wm::vk_surface surface{eyafjallajökull, window};
+
 	return 0;
 }
