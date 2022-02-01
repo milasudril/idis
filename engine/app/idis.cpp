@@ -41,7 +41,7 @@ void render(message_display& obj, idis::wm::dimensions dim)
 	pixel_store::image<pixel_store::rgba_value<>> img{static_cast<uint32_t>(dim.width),
 	                                                  static_cast<uint32_t>(dim.height)};
 
-	obj.message.char_height(dim.height / 25);
+	obj.message.char_height(dim.height / 50);
 	// TODO: Wordwrap
 	// auto res = obj.message.handle(fruit::SizeRequestEvent{});
 	obj.message.compose(
