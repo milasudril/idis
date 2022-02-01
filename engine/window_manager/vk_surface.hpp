@@ -21,8 +21,11 @@ namespace idis::wm
 		{
 			void operator()(VkSurfaceKHR obj) const
 			{
-				assert(instance != nullptr);
-				vkDestroySurfaceKHR(instance, obj, nullptr);
+				if(obj != nullptr)
+				{
+					assert(instance != nullptr);
+					vkDestroySurfaceKHR(instance, obj, nullptr);
+				}
 			}
 
 			VkInstance instance{};

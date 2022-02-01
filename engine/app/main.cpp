@@ -5,6 +5,7 @@
 #include "engine/window_manager/vk_instance.hpp"
 #include "engine/window_manager/vk_surface.hpp"
 #include "engine/window_manager/window.hpp"
+#include "engine/window_manager/vk_device.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -49,7 +50,7 @@ int idis::app::main(int, char**)
 	                      { printf("%s\n", to_string(queue_family).c_str()); });
 
 
-	idis::wm::window_base window{800, 500, "Idis"};
+	idis::wm::window_base window{1024, 640, "Idis"};
 	idis::wm::vk_surface surface{eyafjallajökull, window};
 	auto usable_devices = collect_usable_devices(queue_families, surface);
 
@@ -73,6 +74,8 @@ int idis::app::main(int, char**)
 
 	printf("\n## Selected device:\n\n%s\n\n",
 	       to_string(devices[usable_devices[0].device_index]).c_str());
+
+	idis::wm::vk_device device{usable_devices[0]};
 
 	return 0;
 }

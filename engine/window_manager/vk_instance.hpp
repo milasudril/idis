@@ -48,18 +48,22 @@ namespace idis::wm
 		std::vector<vk_queue_family_info> m_queue_families;
 	};
 
-	struct instance_deleter
+	namespace detail
 	{
-		void operator()(VkInstance inst) const
+		struct vk_instance_deleter
 		{
-			if(inst != nullptr) { vkDestroyInstance(inst, nullptr); }
-		}
-	};
+			void operator()(VkInstance inst) const
+			{
+				if(inst != nullptr) { vkDestroyInstance(inst, nullptr); }
+			}
+		};
+	}
 
 	class vk_instance
 	{
 	public:
-		using handle_type = std::unique_ptr<std::remove_pointer_t<VkInstance>, instance_deleter>;
+		using handle_type =
+		    std::unique_ptr<std::remove_pointer_t<VkInstance>, detail::vk_instance_deleter>;
 
 		vk_instance();
 

@@ -41,7 +41,7 @@ void render(message_display& obj, idis::wm::dimensions dim)
 	pixel_store::image<pixel_store::rgba_value<>> img{static_cast<uint32_t>(dim.width),
 	                                                  static_cast<uint32_t>(dim.height)};
 
-	obj.message.char_height(dim.height / 50);
+	obj.message.char_height(dim.height / 32);
 	// TODO: Wordwrap
 	// auto res = obj.message.handle(fruit::SizeRequestEvent{});
 	obj.message.compose(
@@ -80,7 +80,7 @@ try
 	message_display md{font_face};
 	md.msg = e.what();
 	md.message.text(reinterpret_cast<char8_t const*>(md.msg.c_str()));
-	idis::wm::window mainwin{md, 800, 500, "Idis"};
+	idis::wm::window mainwin{md, 1024, 640, "Idis"};
 	mainwin.set_close_callback<window_action_tag>().set_size_callback<window_action_tag>();
 	md.event_loop.set_pre_drain_callback(glfwPollEvents);
 	md.draw_surface = idis::wm::cairo_surface{mainwin};
