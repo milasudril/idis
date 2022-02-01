@@ -45,11 +45,21 @@ namespace idis::wm
 		handle_type m_handle;
 	};
 
+	struct vk_render_device
+	{
+		VkPhysicalDevice device;
+		int device_index;
+		int graphics_queue_family;
+		int surface_queue_family;
+	};
 
-	//  vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
-	/*	vk_queue_family_info const* find_surface_queue(VkPhysicalDevice,
-												std::span<vk_queue_family_info const> queues,
-												vk_surface const& surface)*/
+	std::string to_string(vk_render_device const& device);
+
+	/**
+	 * \note queue families must be sorted by the device they belong to.
+	 */
+	std::vector<vk_render_device> collect_usable_devices(
+	    std::span<vk_queue_family_info const> queues, vk_surface const& surface);
 }
 
 #endif

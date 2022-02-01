@@ -30,6 +30,12 @@ int idis::app::main(int, char**)
 
 	idis::wm::window_base window{800, 500, "Idis"};
 	idis::wm::vk_surface surface{eyafjallajökull, window};
+	auto usable_devices = collect_usable_devices(queue_families, surface);
+
+	printf("\n## Found %zu usable devices:\n\n", std::size(usable_devices));
+	std::ranges::for_each(usable_devices,
+	                      [](auto const& device) { printf("%s\n", to_string(device).c_str()); });
+
 
 	return 0;
 }
