@@ -37,6 +37,12 @@ int idis::app::main(int, char**)
 	                      [](auto const& device) { printf("%s\n", to_string(device).c_str()); });
 
 	auto queue_families = system_info.queue_families();
+
+	if(std::size(queue_families) == 0)
+	{
+		throw exception{"select graphics devices", "No render queue families are available"};
+	}
+
 	printf("\n## Found %zu queue families:\n\n", std::size(queue_families));
 	std::ranges::for_each(queue_families,
 	                      [](auto const& queue_family)
@@ -47,7 +53,13 @@ int idis::app::main(int, char**)
 	idis::wm::vk_surface surface{eyafjallajökull, window};
 	auto usable_devices = collect_usable_devices(queue_families, surface);
 
+	if(std::size(usable_devices) == 0)
+	{
+		throw exception{"select graphics devices", "No usable graphics device found"};
+	}
+
 	printf("\n## Found %zu usable devices:\n\n", std::size(usable_devices));
+
 	std::ranges::for_each(usable_devices,
 	                      [](auto const& device) { printf("%s\n", to_string(device).c_str()); });
 
