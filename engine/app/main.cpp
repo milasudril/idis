@@ -77,5 +77,11 @@ int idis::app::main(int, char**)
 
 	idis::wm::vk_device device{usable_devices[0]};
 
+	auto graphics_queue = device.get_graphics_queue();
+	assert(graphics_queue != nullptr);
+
+	auto surface_queue = device.get_surface_queue();
+	assert(surface_queue != nullptr);
+
 	return 0;
 }
