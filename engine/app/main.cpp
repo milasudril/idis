@@ -84,6 +84,5 @@ int idis::app::main(int, char**)
 
 	auto surface_queue = device.get_surface_queue();
 	assert(surface_queue != nullptr);
-
 	return 0;
 }

@@ -36,7 +36,9 @@ idis::wm::vk_device::vk_device(vk_render_device const& device_info)
 	create_info.queueCreateInfoCount  = static_cast<uint32_t>(num_queues);
 	create_info.pQueueCreateInfos     = std::data(create_infos);
 	create_info.pEnabledFeatures      = &dev_features;
-	create_info.enabledExtensionCount = 0;
+	create_info.enabledExtensionCount = 1;
+	constexpr char const* swapchain_name = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
+	create_info.ppEnabledExtensionNames = &swapchain_name;
 
 	VkDevice device{};
 	if(vkCreateDevice(device_info.device, &create_info, nullptr, &device) != VK_SUCCESS)

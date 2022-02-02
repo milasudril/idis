@@ -144,6 +144,7 @@ idis::wm::vk_system_info::vk_system_info(VkInstance instance)
 		        });
 		    ++device_index;
 	    });
+
 	m_queue_families = queue_family_list{std::move(qf)};
 }
 
