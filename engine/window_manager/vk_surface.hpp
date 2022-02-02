@@ -58,11 +58,8 @@ namespace idis::wm
 
 	std::string to_string(vk_render_device const& device);
 
-	/**
-	 * \note queue families must be sorted by the device they belong to.
-	 */
 	std::vector<vk_render_device> collect_usable_devices(
-	    std::span<vk_queue_family_info const> queues, vk_surface const& surface);
+	   vk_system_info::queue_family_list_view queue_families, vk_surface const& surface);
 }
 
 #endif

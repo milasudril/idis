@@ -17,18 +17,18 @@ idis::wm::vk_surface::vk_surface(vk_instance& instance, window_base& window)
 }
 
 std::vector<idis::wm::vk_render_device> idis::wm::collect_usable_devices(
-    std::span<vk_queue_family_info const> queues, vk_surface const& surface)
+    vk_system_info::queue_family_list_view queue_families, vk_surface const& surface)
 {
 	std::vector<idis::wm::vk_render_device> ret{};
-	if(std::size(queues) == 0) { return ret; }
+	if(std::size(queue_families) == 0) { return ret; }
 
 	auto const surf = surface.handle();
 
-	auto ptr                   = std::begin(queues);
+	auto ptr                   = std::begin(queue_families);
 	auto dev_current           = ptr->device;
 	auto graphics_queue_family = -1;
 	auto surface_queue_family  = -1;
-	while(ptr != std::end(queues))
+	while(ptr != std::end(queue_families))
 	{
 		if(ptr->device != dev_current)
 		{

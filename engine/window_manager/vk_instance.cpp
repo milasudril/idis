@@ -122,9 +122,10 @@ idis::wm::vk_system_info::vk_system_info(VkInstance instance)
 		                       return dev_info;
 	                       });
 
+	std::vector<vk_queue_family_info> qf;
 	std::ranges::for_each(
 	    devices,
-	    [&queue_families = m_queue_families, device_index = 0](auto device) mutable
+	    [&queue_families = qf, device_index = 0](auto device) mutable
 	    {
 		    uint32_t qf_count{};
 		    vkGetPhysicalDeviceQueueFamilyProperties(device, &qf_count, nullptr);
@@ -143,6 +144,7 @@ idis::wm::vk_system_info::vk_system_info(VkInstance instance)
 		        });
 		    ++device_index;
 	    });
+	m_queue_families = queue_family_list{std::move(qf)};
 }
 
 idis::wm::vk_instance::vk_instance(): m_handle{make_vk_instance()}, m_system_info{m_handle.get()} {}

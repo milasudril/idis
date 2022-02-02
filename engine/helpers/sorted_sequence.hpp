@@ -17,9 +17,11 @@ namespace idis
 		using size_type      = Container::size_type;
 		using const_iterator = Container::const_iterator;
 
-		template<class First, class ... Args>
-		requires(!std::is_same_v<std::decay_t<First>, sorted_sequence>)
-		explicit sorted_sequence(First&& first, Args&&... args)
+		sorted_sequence() = default;
+
+		template<class First, class... Args>
+		requires(!std::is_same_v<std::decay_t<First>, sorted_sequence>) explicit sorted_sequence(
+		    First&& first, Args&&... args)
 		    : m_container{std::forward<First>(first), std::forward<Args>(args)...}
 		{
 			std::ranges::sort(m_container, Compare{});
@@ -31,6 +33,8 @@ namespace idis
 
 		decltype(auto) size() const { return std::size(m_container); }
 
+		decltype(auto) data() const { return std::data(m_container); }
+
 		decltype(auto) operator[](size_t index) const { return m_container[index]; }
 
 		auto operator<=>(sorted_sequence const&) const = default;
@@ -39,35 +43,42 @@ namespace idis
 		Container m_container;
 	};
 
-	template<class T,
-	         class Container = std::vector<T>,
-	         class Compare   = std::less<typename Container::value_type>>
+	template<class T, class Compare = std::less<T>>
 	class sorted_view
 	{
 	public:
-		using container_type = Container;
 		using value_compare  = Compare;
-		using value_type     = Container::value_type;
-		using size_type      = Container::size_type;
-		using const_iterator = Container::const_iterator;
+		using value_type     = T;
+		using size_type      = size_t;
+		using const_iterator = T const*;
 
-		sorted_view(std::reference_wrapper<sorted_sequence<T, Container, Compare>> src)
-		    : m_begin{std::begin(src.get())}
-		    , m_end{std::end(src.get())}
+		template<class Container>
+		sorted_view(std::reference_wrapper<sorted_sequence<T, Container, Compare> const> src)
+		    : m_begin{std::data(src.get())}
+		    , m_size{std::size(src.get())}
+		{
+		}
+
+		template<class Container>
+		sorted_view(sorted_sequence<T, Container, Compare>& src)
+		    : m_begin{std::data(src)}
+		    , m_size{std::size(src)}
 		{
 		}
 
 		auto begin() const { return m_begin; }
 
-		auto end() const { return m_end; }
+		auto end() const { return m_begin + m_size; }
 
-		auto size() const { return m_end - m_begin; }
+		auto size() const { return m_size; }
+
+		auto data() const { return m_begin; }
 
 		auto const& operator[](size_t index) const { return m_begin[index]; }
 
 	private:
-		const_iterator m_begin;
-		const_iterator m_end;
+		T const* m_begin;
+		size_t m_size;
 	};
 }
 

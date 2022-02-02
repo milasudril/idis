@@ -8,6 +8,7 @@
 #define IDIS_VKINIT_INSTANCE_HPP
 
 #include "./initializer.hpp"
+#include "engine/helpers/sorted_sequence.hpp"
 
 #include <memory>
 #include <vector>
@@ -30,22 +31,38 @@ namespace idis::wm
 		int device_index;
 		int family_index;
 		VkQueueFamilyProperties properties;
+
+		struct cmp_dev_index
+		{
+			bool operator()(vk_queue_family_info const& a, vk_queue_family_info const& b) const
+			{
+				return a.device_index < b.device_index;
+			}
+		};
 	};
+
 
 	std::string to_string(vk_queue_family_info const&);
 
 	class vk_system_info
 	{
 	public:
+		using queue_family_list = sorted_sequence<vk_queue_family_info,
+		                                          std::vector<vk_queue_family_info>,
+		                                          vk_queue_family_info::cmp_dev_index>;
+
+		using queue_family_list_view =
+		    sorted_view<vk_queue_family_info, vk_queue_family_info::cmp_dev_index>;
+
 		explicit vk_system_info(VkInstance instance);
 
 		std::span<vk_device_info const> devices() const { return m_devices; }
 
-		std::span<vk_queue_family_info const> queue_families() const { return m_queue_families; }
+		auto queue_families() const { return queue_family_list_view{std::ref(m_queue_families)}; }
 
 	private:
 		std::vector<vk_device_info> m_devices;
-		std::vector<vk_queue_family_info> m_queue_families;
+		queue_family_list m_queue_families;
 	};
 
 	namespace detail
