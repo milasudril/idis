@@ -11,24 +11,26 @@
 #include "./vk_instance.hpp"
 
 #include <type_traits>
-#include <cassert>
 
 namespace idis::wm
 {
 	namespace detail
 	{
-		struct vk_surface_deleter
+		class vk_surface_deleter
 		{
+		public:
+			explicit vk_surface_deleter(VkInstance instance):m_instance{instance}{}
+
 			void operator()(VkSurfaceKHR obj) const
 			{
 				if(obj != nullptr)
 				{
-					assert(instance != nullptr);
-					vkDestroySurfaceKHR(instance, obj, nullptr);
+					vkDestroySurfaceKHR(m_instance, obj, nullptr);
 				}
 			}
 
-			VkInstance instance{};
+		private:
+			VkInstance m_instance;
 		};
 	}
 

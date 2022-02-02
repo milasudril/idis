@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <cstdio>
 
+#include <cassert>
+
 namespace
 {
 	size_t rank(VkPhysicalDeviceType value)
