@@ -39,3 +39,35 @@ void idis::sys::child_proc::fetch_result() const
 	m_res = process_result{proc_wait_status{wres}, std::move(errmsg)};
 	m_pid = -1;
 }
+
+std::string idis::sys::get_error_message(process_result const& res)
+{
+	std::string ret{};
+	auto const& data = res.error_log();
+	auto ptr         = std::begin(data);
+	auto const end   = std::end(data);
+	while(ptr != end && *ptr != static_cast<std::byte>(0))
+	{
+		ret += static_cast<char>(*ptr);
+		++ptr;
+	}
+	return ret;
+}
+
+std::string idis::sys::to_string(process_result const& res)
+{
+	if(has_signal(res.status()))
+	{
+		return std::string{"Process was terminated by a "}
+		    .append(to_string(res.status()))
+		    .append("\n\n")
+		    .append(get_error_message(res));
+	}
+	else
+	{
+		return std::string{"Process returned "}
+		    .append(to_string(res.status()))
+		    .append("\n\n")
+		    .append(get_error_message(res));
+	}
+}

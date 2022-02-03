@@ -11,17 +11,20 @@ namespace
 	auto create_vk_surface(idis::wm::vk_instance& instance, idis::wm::window_base& window)
 	{
 		VkSurfaceKHR surface{};
-		if(glfwCreateWindowSurface(instance.handle(), window.handle(), nullptr, &surface) != VK_SUCCESS)
+		if(glfwCreateWindowSurface(instance.handle(), window.handle(), nullptr, &surface)
+		   != VK_SUCCESS)
 		{
 			throw idis::exception{"create vulkan surface", ""};
 		}
 
-		return idis::wm::vk_surface::handle_type{surface, idis::wm::detail::vk_surface_deleter{instance.handle()}};
+		return idis::wm::vk_surface::handle_type{
+		    surface, idis::wm::detail::vk_surface_deleter{instance.handle()}};
 	}
 }
 
 
-idis::wm::vk_surface::vk_surface(vk_instance& instance, window_base& window):m_handle{create_vk_surface(instance, window)}
+idis::wm::vk_surface::vk_surface(vk_instance& instance, window_base& window)
+    : m_handle{create_vk_surface(instance, window)}
 {
 }
 

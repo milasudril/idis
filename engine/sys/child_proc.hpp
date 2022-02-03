@@ -100,6 +100,11 @@ namespace idis::sys
 		return std::visit([](auto value) { return has_error(value); }, status.value());
 	}
 
+	inline auto has_signal(proc_wait_status status)
+	{
+		return std::holds_alternative<proc_term_signal>(status.value());
+	}
+
 	class process_result
 	{
 	public:
@@ -121,6 +126,10 @@ namespace idis::sys
 	};
 
 	inline auto has_error(process_result const& res) { return has_error(res.status()); }
+
+	std::string to_string(process_result const& res);
+
+	std::string get_error_message(process_result const& res);
 
 	class child_proc
 	{

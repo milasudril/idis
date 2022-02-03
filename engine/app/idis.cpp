@@ -56,20 +56,6 @@ void window_size_changed(message_display& obj, window_action_tag, idis::wm::dime
 	render(obj, dim);
 }
 
-std::string get_error_message(idis::sys::process_result const& res)
-{
-	std::string ret{};
-	auto const& data = res.error_log();
-	auto ptr         = std::begin(data);
-	auto const end   = std::end(data);
-	while(ptr != end && *ptr != static_cast<std::byte>(0))
-	{
-		ret += static_cast<char>(*ptr);
-		++ptr;
-	}
-	return ret;
-}
-
 void present(std::exception const& e)
 try
 {
@@ -100,7 +86,7 @@ try
 {
 	auto res = idis::sys::child_proc{"idis", idis::app::main, argc, argv}.get_result();
 
-	if(has_error(res)) { throw std::runtime_error{get_error_message(res)}; }
+	if(has_error(res)) { throw std::runtime_error{to_string(res)}; }
 }
 catch(std::exception const& e)
 {

@@ -74,10 +74,18 @@ int idis::app::main(int, char**)
 		                  return rank(type_a) < rank(type_b);
 	                  });
 
-	printf("\n## Selected device:\n\n%s\n\n",
-	       to_string(devices[usable_devices[0].device_index]).c_str());
+	auto const& device_info = usable_devices[0];
 
-	idis::wm::vk_device device{usable_devices[0]};
+	printf("\n## Selected device:\n\n%s\n\n", to_string(devices[device_info.device_index]).c_str());
+
+	auto surface_caps = get_surface_capabilities(devices[device_info.device_index].device, surface);
+	(void)surface_caps;  // Contains surface size
+
+	auto formats = get_surface_formats(devices[device_info.device_index].device, surface);
+	auto present_modes =
+	    get_surface_present_modes(devices[device_info.device_index].device, surface);
+
+	idis::wm::vk_device device{device_info};
 
 	auto graphics_queue = device.get_graphics_queue();
 	assert(graphics_queue != nullptr);
