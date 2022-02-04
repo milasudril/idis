@@ -7,8 +7,9 @@
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/sys/child_proc.hpp"
+#include "engine/helpers/algext.hpp"
 
-#include "fruit/lib/text_line.hpp"
+#include "fruit/lib/text_box.hpp"
 #include "fruit/lib/font_mapper.hpp"
 #include "fruit/lib/font_face.hpp"
 #include "fruit/lib/io_utils.hpp"
@@ -27,7 +28,7 @@ struct message_display
 	message_display(std::reference_wrapper<fruit::FontFace const> font): message{font} {}
 
 	std::string msg;
-	fruit::TextLine message;
+	fruit::TextBox message;
 };
 
 void window_closed(message_display& obj, window_action_tag)
@@ -65,7 +66,7 @@ try
 	fruit::FontFace font_face{font_loader, fruit::io_utils::load(font_file)};
 	message_display md{font_face};
 	md.msg = e.what();
-	md.message.text(reinterpret_cast<char8_t const*>(md.msg.c_str()));
+	md.message.text(idis::split<std::basic_string<char8_t>>(md.msg, '\n'));
 	idis::wm::window mainwin{md, 1024, 640, "Idis"};
 	mainwin.set_close_callback<window_action_tag>().set_size_callback<window_action_tag>();
 	md.event_loop.set_pre_drain_callback(glfwPollEvents);
