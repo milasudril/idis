@@ -121,7 +121,11 @@ int idis::app::main(int, char**)
 	printf("## Selected present mode %d\n\n", present_mode);
 
 	auto surface_caps = get_surface_capabilities(devices[device_info.device_index].device, surface);
-	(void)surface_caps;  // Contains surface size
+
+	auto const surface_extent = select_extent(surface_caps, window);
+
+	printf("## Selected surface extent %u x %u\n\n", surface_extent.width, surface_extent.height);
+
 	idis::wm::vk_device device{device_info};
 
 	auto graphics_queue = device.get_graphics_queue();

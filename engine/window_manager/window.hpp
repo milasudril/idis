@@ -51,6 +51,13 @@ namespace idis::wm
 			return ret;
 		}
 
+		dimensions get_fb_dimensions() const
+		{
+			dimensions ret{};
+			glfwGetFramebufferSize(m_handle.get(), &ret.width, &ret.height);
+			return ret;
+		}
+
 	private:
 		[[no_unique_address]] initializer m_init;
 		handle_type m_handle;
