@@ -19,8 +19,11 @@ std::string idis::sys::to_string(proc_term_signal val)
 		CASE_RET_STR(SIGXFSZ);
 		CASE_RET_STR(SIGFPE);
 		CASE_RET_STR(SIGSYS);
+		CASE_RET_STR(SIGTERM);
+		CASE_RET_STR(SIGKILL);
+		CASE_RET_STR(SIGTRAP);
 
-		default: return "<UNKNOWN>";
+		default: return "<UNKNOWN SIGNAL>";
 	}
 }
 
@@ -104,6 +107,16 @@ std::string idis::sys::to_string(signal_cause val)
 				CASE_RET_STR(TRAP_TRACE);
 				CASE_RET_STR(TRAP_BRANCH);
 				CASE_RET_STR(TRAP_HWBKPT);
+			}
+			break;
+
+		case SIGSEGV:
+			switch(val.value())
+			{
+				CASE_RET_STR(SEGV_MAPERR);
+				CASE_RET_STR(SEGV_ACCERR);
+				CASE_RET_STR(SEGV_BNDERR);
+				CASE_RET_STR(SEGV_PKUERR);
 			}
 			break;
 	}

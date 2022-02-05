@@ -6,6 +6,7 @@
 #include "engine/window_manager/vk_surface.hpp"
 #include "engine/window_manager/window.hpp"
 #include "engine/window_manager/vk_device.hpp"
+#include "engine/window_manager/vk_swapchain.hpp"
 #include "engine/error_handler/crash_handler.hpp"
 
 #include <algorithm>
@@ -127,6 +128,8 @@ int idis::app::main(int, char**)
 	printf("## Selected surface extent %u x %u\n\n", surface_extent.width, surface_extent.height);
 
 	idis::wm::vk_device device{device_info};
+
+	idis::wm::vk_swapchain swapchain{device};
 
 	auto graphics_queue = device.get_graphics_queue();
 	assert(graphics_queue != nullptr);
