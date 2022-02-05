@@ -21,14 +21,26 @@ namespace
 		create_info.imageExtent      = image_extent;
 		create_info.imageArrayLayers = 1;
 		create_info.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-		// TODO:
-		// create_info.imageSharingMode
-		// create_info.queueFamilyIndex
-		// create_info.pQueueFamilyIndices
-		create_info.compositeAlpha   = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+
+		std::array<uint32_t, 2> queue_families{
+		    static_cast<uint32_t>(device.get_graphics_queue_family()),
+		    static_cast<uint32_t>(device.get_surface_queue_family())};
+
+		if(queue_families[0] == queue_families[1])
+		{
+			create_info.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		}
+		else
+		{
+			create_info.imageSharingMode      = VK_SHARING_MODE_CONCURRENT;
+			create_info.queueFamilyIndexCount = std::size(queue_families);
+			create_info.pQueueFamilyIndices   = std::data(queue_families);
+		}
+
+		create_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 		// TODO: create_info.presentMode = present_mode;
-		create_info.clipped          = VK_TRUE;
-		create_info.oldSwapchain     = VK_NULL_HANDLE;
+		create_info.clipped      = VK_TRUE;
+		create_info.oldSwapchain = VK_NULL_HANDLE;
 
 		VkSwapchainKHR swapchain{};
 		if(vkCreateSwapchainKHR(device.handle(), &create_info, nullptr, &swapchain) != VK_SUCCESS)

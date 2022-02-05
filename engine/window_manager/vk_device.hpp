@@ -46,6 +46,10 @@ namespace idis::wm
 			return queue;
 		}
 
+		auto get_graphics_queue_family() const { return m_graphics_queue; }
+
+		auto get_surface_queue_family() const { return m_surface_queue; }
+
 	private:
 		handle_type m_handle;
 		int m_graphics_queue;
