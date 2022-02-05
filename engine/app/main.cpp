@@ -130,6 +130,12 @@ int idis::app::main(int, char**)
 
 	idis::wm::vk_device device{device_info};
 
+	auto graphics_queue = device.get_graphics_queue();
+	assert(graphics_queue != nullptr);
+
+	auto surface_queue = device.get_surface_queue();
+	assert(surface_queue != nullptr);
+
 	idis::wm::vk_swapchain swapchain{device,
 	                                 surface,
 	                                 wm::get_image_count(surface_caps),
@@ -138,11 +144,7 @@ int idis::app::main(int, char**)
 	                                 present_mode,
 									 surface_caps.currentTransform};
 
-	auto graphics_queue = device.get_graphics_queue();
-	assert(graphics_queue != nullptr);
-
-	auto surface_queue = device.get_surface_queue();
-	assert(surface_queue != nullptr);
-
+	auto const images = swapchain.get_images();
+	assert(std::size(images) == wm::get_image_count(surface_caps));
 	return 0;
 }

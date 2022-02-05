@@ -29,6 +29,8 @@ namespace idis::wm
 				if(obj != nullptr) { vkDestroySwapchainKHR(m_device, obj, nullptr); }
 			}
 
+			VkDevice device() const { return m_device; }
+
 		private:
 			VkDevice m_device;
 		};
@@ -51,6 +53,15 @@ namespace idis::wm
 		                      VkSurfaceTransformFlagBitsKHR transform);
 
 		VkSwapchainKHR handle() const { return m_handle.get(); }
+
+		std::vector<VkImage> get_images() const
+		{
+			uint32_t img_count{};
+			vkGetSwapchainImagesKHR(m_handle.get_deleter().device(), m_handle.get(), &img_count, nullptr);
+			std::vector<VkImage> ret(img_count);
+			vkGetSwapchainImagesKHR(m_handle.get_deleter().device(), m_handle.get(), &img_count, std::data(ret));
+			return ret;
+		}
 
 	private:
 		handle_type m_handle;
