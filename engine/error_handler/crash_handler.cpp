@@ -7,19 +7,17 @@
 
 #include <span>
 
-#include <cstdio>
-
 namespace
 {
 	void write(int fd, std::span<std::byte const> buffer)
 	{
-		auto n = std::size(buffer);
+		auto n   = std::size(buffer);
 		auto ptr = std::data(buffer);
 		while(n != 0)
 		{
 			auto n_written = ::write(fd, ptr, n);
 			ptr += n_written;
-			n-=n_written;
+			n -= n_written;
 		}
 	}
 
@@ -38,18 +36,20 @@ namespace
 		write(STDERR_FILENO, nulstring);
 		write(STDERR_FILENO, as_bytes(siginfo));
 		write(STDERR_FILENO, as_bytes(ctxt));
+		fsync(STDERR_FILENO);
 		kill(getpid(), siginfo.si_signo);
 	}
 }
 
 void idis::crash_handler::arm()
 {
-	struct sigaction sigact{};
+	struct sigaction sigact
+	{
+	};
 	sigact.sa_flags = SA_SIGINFO | SA_RESETHAND;
 	sigemptyset(&sigact.sa_mask);
-	sigact.sa_sigaction = [](int, siginfo_t* siginfo, void* uctxt) {
-		signal_handler(*siginfo, *reinterpret_cast<ucontext_t*>(uctxt));
-	};
+	sigact.sa_sigaction = [](int, siginfo_t* siginfo, void* uctxt)
+	{ signal_handler(*siginfo, *reinterpret_cast<ucontext_t*>(uctxt)); };
 	sigaction(SIGABRT, &sigact, nullptr);
 	sigaction(SIGSEGV, &sigact, nullptr);
 	sigaction(SIGBUS, &sigact, nullptr);

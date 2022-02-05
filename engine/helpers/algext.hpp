@@ -9,7 +9,7 @@ namespace idis
 	std::vector<ResultItem> split(Container const& src, typename Container::value_type delimiter)
 	{
 		std::vector<ResultItem> ret;
-		auto ptr = std::begin(src);
+		auto ptr  = std::begin(src);
 		auto prev = ptr;
 		while(ptr != std::end(src))
 		{
@@ -20,7 +20,9 @@ namespace idis
 				prev = ptr;
 			}
 			else
-			{ ++ptr; }
+			{
+				++ptr;
+			}
 		}
 
 		ret.push_back(ResultItem{prev, ptr});
@@ -30,7 +32,9 @@ namespace idis
 
 	template<class Container>
 	auto split(Container const& src, typename Container::value_type delimiter)
-	{ return split<Container, Container>(src, delimiter); }
+	{
+		return split<Container, Container>(src, delimiter);
+	}
 }
 
 #endif

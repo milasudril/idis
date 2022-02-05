@@ -6,6 +6,7 @@
 #include "engine/window_manager/vk_surface.hpp"
 #include "engine/window_manager/window.hpp"
 #include "engine/window_manager/vk_device.hpp"
+#include "engine/error_handler/crash_handler.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -29,6 +30,8 @@ namespace
 
 int idis::app::main(int, char**)
 {
+	idis::crash_handler::arm();
+
 	printf("# Initiating vulkan\n");
 	idis::wm::vk_instance eyafjallajökull;
 	printf("\n");
@@ -92,5 +95,6 @@ int idis::app::main(int, char**)
 
 	auto surface_queue = device.get_surface_queue();
 	assert(surface_queue != nullptr);
+	assert(false);
 	return 0;
 }

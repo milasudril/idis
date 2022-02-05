@@ -125,6 +125,41 @@ namespace idis::sys
 		std::vector<std::byte> m_stderr;
 	};
 
+	class signal_cause
+	{
+	public:
+		signal_cause() = default;
+
+		explicit signal_cause(int value, proc_term_signal signo): m_value{value}, m_signo{signo} {}
+
+		auto value() const { return m_value; }
+
+		auto signo() const { return m_signo; }
+
+		bool operator==(signal_cause const&) const = default;
+		bool operator!=(signal_cause const&) const = default;
+
+	private:
+		int m_value;
+		proc_term_signal m_signo;
+	};
+
+	std::string to_string(signal_cause val);
+
+	struct signal_info
+	{
+		siginfo_t data;
+	};
+
+	std::string to_string(signal_info const&);
+
+	struct user_context
+	{
+		ucontext_t data;
+	};
+
+	std::string to_string(user_context const&);
+
 	inline auto has_error(process_result const& res) { return has_error(res.status()); }
 
 	std::string to_string(process_result const& res);
