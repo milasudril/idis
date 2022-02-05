@@ -10,7 +10,8 @@ namespace
 	                         idis::wm::vk_surface& surface,
 	                         uint32_t image_count,
 	                         VkSurfaceFormatKHR const& surface_format,
-	                         VkExtent2D const& image_extent)
+	                         VkExtent2D const& image_extent,
+	                         VkPresentModeKHR present_mode)
 	{
 		VkSwapchainCreateInfoKHR create_info{};
 		create_info.sType            = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -38,9 +39,9 @@ namespace
 		}
 
 		create_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-		// TODO: create_info.presentMode = present_mode;
-		create_info.clipped      = VK_TRUE;
-		create_info.oldSwapchain = VK_NULL_HANDLE;
+		create_info.presentMode    = present_mode;
+		create_info.clipped        = VK_TRUE;
+		create_info.oldSwapchain   = VK_NULL_HANDLE;
 
 		VkSwapchainKHR swapchain{};
 		if(vkCreateSwapchainKHR(device.handle(), &create_info, nullptr, &swapchain) != VK_SUCCESS)
@@ -57,7 +58,9 @@ idis::wm::vk_swapchain::vk_swapchain(vk_device& device,
                                      vk_surface& surface,
                                      uint32_t image_count,
                                      VkSurfaceFormatKHR const& surface_format,
-                                     VkExtent2D const& image_extent)
-    : m_handle{create_vk_swapchain(device, surface, image_count, surface_format, image_extent)}
+                                     VkExtent2D const& image_extent,
+                                     VkPresentModeKHR present_mode)
+    : m_handle{create_vk_swapchain(
+        device, surface, image_count, surface_format, image_extent, present_mode)}
 {
 }

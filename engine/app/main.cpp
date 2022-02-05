@@ -130,8 +130,12 @@ int idis::app::main(int, char**)
 
 	idis::wm::vk_device device{device_info};
 
-	idis::wm::vk_swapchain swapchain{
-	    device, surface, wm::get_image_count(surface_caps), *surface_format, surface_extent};
+	idis::wm::vk_swapchain swapchain{device,
+	                                 surface,
+	                                 wm::get_image_count(surface_caps),
+	                                 *surface_format,
+	                                 surface_extent,
+	                                 present_mode};
 
 	auto graphics_queue = device.get_graphics_queue();
 	assert(graphics_queue != nullptr);
