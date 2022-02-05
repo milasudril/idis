@@ -82,6 +82,13 @@ namespace idis::wm
 		                             caps.maxImageExtent.height)};
 	}
 
+	inline auto get_image_count(VkSurfaceCapabilitiesKHR const& caps)
+	{
+		auto img_count = caps.minImageCount + 2;
+		if(caps.maxImageCount > 0) { return std::min(img_count, caps.maxImageCount); }
+		return img_count;
+	}
+
 	inline auto get_surface_formats(VkPhysicalDevice device, vk_surface const& surface)
 	{
 		uint32_t format_count{};

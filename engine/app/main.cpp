@@ -93,17 +93,18 @@ int idis::app::main(int, char**)
 	printf("\n## Selected device:\n\n%s\n\n", to_string(devices[device_info.device_index]).c_str());
 
 
-	auto const formats = get_surface_formats(devices[device_info.device_index].device, surface);
+	auto const surface_formats =
+	    get_surface_formats(devices[device_info.device_index].device, surface);
 
-	auto const format =
-	    std::ranges::find_if(formats,
+	auto const surface_format =
+	    std::ranges::find_if(surface_formats,
 	                         [](auto const& item)
 	                         {
 		                         return item.format == VK_FORMAT_B8G8R8A8_SRGB
 		                                && item.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
 	                         });
 
-	if(format == std::end(formats))
+	if(surface_format == std::end(surface_formats))
 	{
 		throw exception{"configure surface", "No suitable surface format found"};
 	}
@@ -129,7 +130,8 @@ int idis::app::main(int, char**)
 
 	idis::wm::vk_device device{device_info};
 
-	idis::wm::vk_swapchain swapchain{device};
+	idis::wm::vk_swapchain swapchain{
+	    device, surface, wm::get_image_count(surface_caps), *surface_format, surface_extent};
 
 	auto graphics_queue = device.get_graphics_queue();
 	assert(graphics_queue != nullptr);

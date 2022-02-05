@@ -8,6 +8,7 @@
 #define IDIS_WINDOWMANAGER_VKSWAPCHAIN_HPP
 
 #include "./vk_device.hpp"
+#include "./vk_surface.hpp"
 
 //#include <vulkan/vulkan.h>
 
@@ -41,7 +42,11 @@ namespace idis::wm
 
 		vk_swapchain() = default;
 
-		explicit vk_swapchain(vk_device& device);
+		explicit vk_swapchain(vk_device& device,
+		                      vk_surface& surface,
+		                      uint32_t img_count,
+		                      VkSurfaceFormatKHR const& surface_format,
+		                      VkExtent2D const& image_extent);
 
 		VkSwapchainKHR handle() const { return m_handle.get(); }
 
