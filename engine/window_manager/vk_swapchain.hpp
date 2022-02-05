@@ -47,7 +47,8 @@ namespace idis::wm
 		                      uint32_t img_count,
 		                      VkSurfaceFormatKHR const& surface_format,
 		                      VkExtent2D const& image_extent,
-		                      VkPresentModeKHR present_mode);
+		                      VkPresentModeKHR present_mode,
+		                      VkSurfaceTransformFlagBitsKHR transform);
 
 		VkSwapchainKHR handle() const { return m_handle.get(); }
 

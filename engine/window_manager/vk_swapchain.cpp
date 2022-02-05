@@ -11,7 +11,8 @@ namespace
 	                         uint32_t image_count,
 	                         VkSurfaceFormatKHR const& surface_format,
 	                         VkExtent2D const& image_extent,
-	                         VkPresentModeKHR present_mode)
+	                         VkPresentModeKHR present_mode,
+	                         VkSurfaceTransformFlagBitsKHR transform)
 	{
 		VkSwapchainCreateInfoKHR create_info{};
 		create_info.sType            = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -38,6 +39,7 @@ namespace
 			create_info.pQueueFamilyIndices   = std::data(queue_families);
 		}
 
+		create_info.preTransform = transform;
 		create_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 		create_info.presentMode    = present_mode;
 		create_info.clipped        = VK_TRUE;
@@ -59,8 +61,9 @@ idis::wm::vk_swapchain::vk_swapchain(vk_device& device,
                                      uint32_t image_count,
                                      VkSurfaceFormatKHR const& surface_format,
                                      VkExtent2D const& image_extent,
-                                     VkPresentModeKHR present_mode)
+                                     VkPresentModeKHR present_mode,
+									 VkSurfaceTransformFlagBitsKHR transform)
     : m_handle{create_vk_swapchain(
-        device, surface, image_count, surface_format, image_extent, present_mode)}
+        device, surface, image_count, surface_format, image_extent, present_mode, transform)}
 {
 }

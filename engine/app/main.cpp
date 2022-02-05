@@ -135,7 +135,8 @@ int idis::app::main(int, char**)
 	                                 wm::get_image_count(surface_caps),
 	                                 *surface_format,
 	                                 surface_extent,
-	                                 present_mode};
+	                                 present_mode,
+									 surface_caps.currentTransform};
 
 	auto graphics_queue = device.get_graphics_queue();
 	assert(graphics_queue != nullptr);
