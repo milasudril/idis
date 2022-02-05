@@ -26,6 +26,16 @@ namespace
 			default: return static_cast<size_t>(-1);
 		}
 	}
+
+	size_t rank(VkPresentModeKHR value)
+	{
+		switch(value)
+		{
+			case VK_PRESENT_MODE_MAILBOX_KHR: return 0;
+			case VK_PRESENT_MODE_IMMEDIATE_KHR: return 1;
+			default: return static_cast<size_t>(-1);
+		}
+	}
 }
 
 int idis::app::main(int, char**)
@@ -81,13 +91,37 @@ int idis::app::main(int, char**)
 
 	printf("\n## Selected device:\n\n%s\n\n", to_string(devices[device_info.device_index]).c_str());
 
-	auto surface_caps = get_surface_capabilities(devices[device_info.device_index].device, surface);
-	(void)surface_caps;  // Contains surface size
 
-	auto formats = get_surface_formats(devices[device_info.device_index].device, surface);
+	auto const formats = get_surface_formats(devices[device_info.device_index].device, surface);
+
+	auto const format =
+	    std::ranges::find_if(formats,
+	                         [](auto const& item)
+	                         {
+		                         return item.format == VK_FORMAT_B8G8R8A8_SRGB
+		                                && item.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
+	                         });
+
+	if(format == std::end(formats))
+	{
+		throw exception{"configure surface", "No suitable surface format found"};
+	}
+
 	auto present_modes =
 	    get_surface_present_modes(devices[device_info.device_index].device, surface);
+	std::ranges::sort(present_modes, [](auto a, auto b) { return rank(a) < rank(b); });
 
+	auto const present_mode = present_modes[0];
+	if(!(present_mode == VK_PRESENT_MODE_MAILBOX_KHR
+	     || present_mode == VK_PRESENT_MODE_IMMEDIATE_KHR))
+	{
+		throw exception{"configure surface", "No suitable present mode found"};
+	}
+
+	printf("## Selected present mode %d\n\n", present_mode);
+
+	auto surface_caps = get_surface_capabilities(devices[device_info.device_index].device, surface);
+	(void)surface_caps;  // Contains surface size
 	idis::wm::vk_device device{device_info};
 
 	auto graphics_queue = device.get_graphics_queue();
@@ -95,6 +129,6 @@ int idis::app::main(int, char**)
 
 	auto surface_queue = device.get_surface_queue();
 	assert(surface_queue != nullptr);
-	assert(false);
+
 	return 0;
 }
