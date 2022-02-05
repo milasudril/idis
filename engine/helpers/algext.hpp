@@ -1,5 +1,5 @@
-#ifndef IDIS_HELPERS_ALGEXT
-#define IDIS_HELPERS_ALGEXT
+#ifndef IDIS_HELPERS_ALGEXT_HPP
+#define IDIS_HELPERS_ALGEXT_HPP
 
 #include <vector>
 

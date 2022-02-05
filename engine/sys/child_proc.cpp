@@ -2,6 +2,8 @@
 
 #include "./child_proc.hpp"
 
+#include "engine/helpers/hexformat.hpp"
+
 #define CASE_RET_STR(value)                                                                        \
 	case value: return #value
 
@@ -118,54 +120,52 @@ std::string idis::sys::to_string(signal_info const& info)
 	    .append(" code=")
 	    .append(to_string(signal_cause{data.si_code, signo}))
 	    .append(" addr=")
-	    // TODO: Use hex format
-	    .append(std::to_string(reinterpret_cast<intptr_t>(data.si_addr)));
+	    .append(to_string(hexformat{data.si_addr}));
 }
 
 std::string idis::sys::to_string(user_context const& ctxt)
 {
 	auto& cpu_state = ctxt.data.uc_mcontext;
-	// TODO: Use hex format
 	return std::string{"rax="}
-	    .append(std::to_string(cpu_state.gregs[REG_RAX]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RAX]}))
 	    .append(" rbx=")
-	    .append(std::to_string(cpu_state.gregs[REG_RBX]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RBX]}))
 	    .append(" rcx=")
-	    .append(std::to_string(cpu_state.gregs[REG_RCX]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RCX]}))
 	    .append(" rdx=")
-	    .append(std::to_string(cpu_state.gregs[REG_RDX]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RDX]}))
 	    .append("\nr08=")
-	    .append(std::to_string(cpu_state.gregs[REG_R8]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R8]}))
 	    .append(" r09=")
-	    .append(std::to_string(cpu_state.gregs[REG_R9]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R9]}))
 	    .append(" r10=")
-	    .append(std::to_string(cpu_state.gregs[REG_R10]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R10]}))
 	    .append(" r11=")
-	    .append(std::to_string(cpu_state.gregs[REG_R11]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R11]}))
 	    .append("\nr12=")
-	    .append(std::to_string(cpu_state.gregs[REG_R12]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R12]}))
 	    .append(" r13=")
-	    .append(std::to_string(cpu_state.gregs[REG_R13]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R13]}))
 	    .append(" r14=")
-	    .append(std::to_string(cpu_state.gregs[REG_R14]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R14]}))
 	    .append(" r15=")
-	    .append(std::to_string(cpu_state.gregs[REG_R15]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_R15]}))
 	    .append("\nrdi=")
-	    .append(std::to_string(cpu_state.gregs[REG_RDI]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RDI]}))
 	    .append(" rsi=")
-	    .append(std::to_string(cpu_state.gregs[REG_RSI]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RSI]}))
 	    .append(" rbp=")
-	    .append(std::to_string(cpu_state.gregs[REG_RBP]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RBP]}))
 	    .append(" rsp=")
-	    .append(std::to_string(cpu_state.gregs[REG_RSP]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RSP]}))
 	    .append("\nrip=")
-	    .append(std::to_string(cpu_state.gregs[REG_RIP]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_RIP]}))
 	    .append(" rflags=")
-	    .append(std::to_string(cpu_state.gregs[REG_EFL]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_EFL]}))
 	    .append(" cr2=")
-	    .append(std::to_string(cpu_state.gregs[REG_CR2]))
+	    .append(to_string(hexformat{cpu_state.gregs[REG_CR2]}))
 	    .append(" seg=")
-	    .append(std::to_string(cpu_state.gregs[REG_CSGSFS]));
+	    .append(to_string(hexformat{cpu_state.gregs[REG_CSGSFS]}));
 }
 
 std::string idis::sys::get_error_message(process_result const& res)
@@ -189,7 +189,7 @@ std::string idis::sys::get_error_message(process_result const& res)
 		signal_info extended_info{};
 		memcpy(&extended_info, ptr, sizeof(extended_info));
 		ptr += sizeof(extended_info);
-		ret.append("\n").append(to_string(extended_info)).append("\n");
+		ret.append("\nSignal info:\n\n").append(to_string(extended_info)).append("\n");
 	}
 
 	if(static_cast<size_t>(end - ptr) < sizeof(ucontext_t)) { return ret; }
@@ -197,7 +197,7 @@ std::string idis::sys::get_error_message(process_result const& res)
 	{
 		user_context extended_info{};
 		memcpy(&extended_info, ptr, sizeof(extended_info));
-		ret.append("\n").append(to_string(extended_info));
+		ret.append("\nCPU state:\n\n").append(to_string(extended_info));
 	}
 
 	return ret;

@@ -3,6 +3,7 @@
 #include "./vk_instance.hpp"
 
 #include "engine/error_handler/exception.hpp"
+#include "engine/helpers/hexformat.hpp"
 
 #include <algorithm>
 
@@ -90,7 +91,7 @@ std::string idis::wm::to_string(vk_device_info const& dev_info)
 std::string idis::wm::to_string(vk_queue_family_info const& family_info)
 {
 	return std::string{"device="}
-	    .append(std::to_string(reinterpret_cast<intptr_t>(family_info.device)))
+	    .append(to_string(hexformat{family_info.device}))
 	    .append("; device_index=")
 	    .append(std::to_string(family_info.device_index))
 	    .append("; family_index=")
