@@ -101,6 +101,8 @@ namespace idis::vk_init
 	render_device select_device(std::string_view prefered_device,
 	                            system const& sysinfo,
 	                            surface const& surf);
+
+	VkPresentModeKHR select_present_mode(VkPhysicalDevice device, surface const& surf);
 }
 
 #endif

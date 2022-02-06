@@ -139,3 +139,30 @@ idis::vk_init::render_device idis::vk_init::select_device(std::string_view prefe
 
 	return usable_devices[0];
 }
+
+namespace
+{
+	size_t rank(VkPresentModeKHR value)
+	{
+		switch(value)
+		{
+			case VK_PRESENT_MODE_MAILBOX_KHR: return 0;
+			case VK_PRESENT_MODE_IMMEDIATE_KHR: return 1;
+			default: return static_cast<size_t>(-1);
+		}
+	}
+}
+
+VkPresentModeKHR idis::vk_init::select_present_mode(VkPhysicalDevice device, surface const& surf)
+{
+	auto present_modes = get_surface_present_modes(device, surf);
+	std::ranges::sort(present_modes, [](auto a, auto b) { return rank(a) < rank(b); });
+
+	auto const present_mode = present_modes[0];
+	if(!(present_mode == VK_PRESENT_MODE_MAILBOX_KHR
+	     || present_mode == VK_PRESENT_MODE_IMMEDIATE_KHR))
+	{
+		throw exception{"configure surface", "No suitable present mode found"};
+	}
+	return present_mode;
+}
