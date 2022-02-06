@@ -4,8 +4,8 @@
 //@		{"ref":"vulkan", "rel":"implementation", "origin":"pkg-config"}]
 //@	}
 
-#ifndef IDIS_WINDOWMANAGER_SURFACE_HPP
-#define IDIS_WINDOWMANAGER_SURFACE_HPP
+#ifndef IDIS_VKINIT_SURFACE_HPP
+#define IDIS_VKINIT_SURFACE_HPP
 
 #include "./instance.hpp"
 
