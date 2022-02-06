@@ -8,6 +8,8 @@
 #include "engine/vk_init/device.hpp"
 #include "engine/window_manager/window.hpp"
 #include "engine/gpu_res/vk_swapchain.hpp"
+#include "engine/gpu_res/vk_image_view.hpp"
+#include "engine/gpu_res/utils.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -21,13 +23,16 @@ public:
 					  idis::vk_init::surface& surface):
 					  m_device{device},
 					  m_surface{surface},
-					  m_swapchain{device, surface}
-	{}
+					  m_swapchain{device, surface},
+					  m_img_views{get_image_views_from(m_swapchain)}
+	{
+	}
 
 private:
 	std::reference_wrapper<idis::vk_init::device> m_device;
 	std::reference_wrapper<idis::vk_init::surface> m_surface;
 	idis::gpu_res::vk_swapchain m_swapchain;
+	std::vector<idis::gpu_res::vk_image_view> m_img_views;
 };
 
 int idis::app::main(int, char**)
