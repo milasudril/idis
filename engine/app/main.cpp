@@ -43,12 +43,20 @@ int idis::app::main(int, char**)
 {
 	crash_handler::arm();
 
-	printf("# Initiating vulkan\n");
+	printf("# Initiating vulkan\n\n");
 
 	// Create vulkan instance
 
 	vk_init::instance eyafjallajökull;
-	printf("\n");
+
+
+	// Create surface
+
+	wm::window_base window{1024, 640, "Idis"};
+	vk_init::surface surface{eyafjallajökull, window};
+
+
+	// Pick device
 
 	auto& system_info = eyafjallajökull.system_info();
 	auto devices      = system_info.devices();
@@ -67,15 +75,6 @@ int idis::app::main(int, char**)
 	std::ranges::for_each(queue_families,
 	                      [](auto const& queue_family)
 	                      { printf("%s\n", to_string(queue_family).c_str()); });
-
-
-	// Create surface
-
-	wm::window_base window{1024, 640, "Idis"};
-	vk_init::surface surface{eyafjallajökull, window};
-
-
-	// Pick device
 
 	auto usable_devices = collect_usable_devices(queue_families, surface);
 
@@ -101,7 +100,9 @@ int idis::app::main(int, char**)
 
 	printf("\n## Selected device:\n\n%s\n\n", to_string(devices[device_info.device_index]).c_str());
 
+
 	// create device
+
 	vk_init::device device{device_info};
 
 	auto graphics_queue = device.get_graphics_queue();
