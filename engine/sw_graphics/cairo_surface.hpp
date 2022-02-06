@@ -7,7 +7,7 @@
 #ifndef IDIS_WINDOWMANAGER_CAIROSURFACE_HPP
 #define IDIS_WINDOWMANAGER_CAIROSURFACE_HPP
 
-#include "./window.hpp"
+#include "engine/window_manager/window.hpp"
 
 #include "pixel_store/image.hpp"
 #include "pixel_store/rgba_value.hpp"
