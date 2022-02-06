@@ -125,6 +125,18 @@
                     "target_filename_ext": ".css"
                 },
                 "loader": "generic"
+            },
+            "glsl": {
+                "compiler": {
+                    "config": {},
+                    "recipe": "build_scripts/glsl_compiler.py",
+                    "use_get_tags": 0
+                },
+                "config": {
+                    "filename_ext_replacement_mode": "replace",
+                    "target_filename_ext": ".spv"
+                },
+                "loader": "generic"
             }
         },
         "source_tree_loader": {
@@ -135,7 +147,9 @@
                 ".lib.maikerule": "lib",
                 ".py": "extension",
                 ".sass": "sass2css",
-                ".test.cpp": "cxx_test"
+                ".test.cpp": "cxx_test",
+                ".vert": "glsl",
+                ".frag": "glsl"
             },
             "input_filter": [
                 "^\\.",
