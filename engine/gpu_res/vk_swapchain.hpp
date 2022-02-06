@@ -7,43 +7,40 @@
 #ifndef IDIS_GPURES_VKSWAPCHAIN_HPP
 #define IDIS_GPURES_VKSWAPCHAIN_HPP
 
-#include "engine/vk_init/vk_device.hpp"
-#include "engine/vk_init/vk_surface.hpp"
+#include "engine/vk_init/device.hpp"
+#include "engine/vk_init/surface.hpp"
 
 #include <type_traits>
 #include <memory>
 
-namespace idis::wm
+namespace idis::gpu_res
 {
-	namespace detail
+	class vk_swapchain_deleter
 	{
-		class vk_swapchain_deleter
+	public:
+		explicit vk_swapchain_deleter(VkDevice device): m_device{device} {}
+
+		void operator()(VkSwapchainKHR obj) const
 		{
-		public:
-			explicit vk_swapchain_deleter(VkDevice device): m_device{device} {}
+			if(obj != nullptr) { vkDestroySwapchainKHR(m_device, obj, nullptr); }
+		}
 
-			void operator()(VkSwapchainKHR obj) const
-			{
-				if(obj != nullptr) { vkDestroySwapchainKHR(m_device, obj, nullptr); }
-			}
+		VkDevice device() const { return m_device; }
 
-			VkDevice device() const { return m_device; }
-
-		private:
-			VkDevice m_device;
-		};
-	}
+	private:
+		VkDevice m_device;
+	};
 
 	class vk_swapchain
 	{
 	public:
 		using handle_type =
-		    std::unique_ptr<std::remove_pointer_t<VkSwapchainKHR>, detail::vk_swapchain_deleter>;
+		    std::unique_ptr<std::remove_pointer_t<VkSwapchainKHR>, vk_swapchain_deleter>;
 
 		vk_swapchain() = default;
 
-		explicit vk_swapchain(vk_device& device,
-		                      vk_surface& surface,
+		explicit vk_swapchain(vk_init::device& device,
+		                      vk_init::surface& surface,
 		                      uint32_t img_count,
 		                      VkSurfaceFormatKHR const& surface_format,
 		                      VkExtent2D const& image_extent,

@@ -105,6 +105,20 @@ namespace idis::wm
 			return *this;
 		}
 	};
+
+	inline auto select_extent(VkSurfaceCapabilitiesKHR const& caps, wm::window_base const& window)
+	{
+		if(caps.currentExtent.width != UINT32_MAX) { return caps.currentExtent; }
+
+		auto const dim = window.get_fb_dimensions();
+
+		return VkExtent2D{std::clamp(static_cast<uint32_t>(dim.width),
+		                             caps.minImageExtent.width,
+		                             caps.maxImageExtent.width),
+		                  std::clamp(static_cast<uint32_t>(dim.height),
+		                             caps.minImageExtent.height,
+		                             caps.maxImageExtent.height)};
+	}
 }
 
 #endif

@@ -1,8 +1,8 @@
 //@	{
-//@	 "target":{"name":"./vk_device.o"}
+//@	 "target":{"name":"./device.o"}
 //@	}
 
-#include "./vk_device.hpp"
+#include "./device.hpp"
 
 #include "engine/error_handler/exception.hpp"
 
@@ -10,7 +10,7 @@
 #include <array>
 #include <algorithm>
 
-idis::wm::vk_device::vk_device(vk_render_device const& device_info)
+idis::vk_init::device::device(render_device const& device_info)
     : m_graphics_queue{device_info.graphics_queue_family}
     , m_surface_queue{device_info.surface_queue_family}
 {

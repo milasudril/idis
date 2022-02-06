@@ -1,6 +1,6 @@
-//@{"target":{"name":"vk_instance.o"}}
+//@{"target":{"name":"instance.o"}}
 
-#include "./vk_instance.hpp"
+#include "./instance.hpp"
 
 #include "engine/error_handler/exception.hpp"
 #include "engine/helpers/hexformat.hpp"
@@ -9,7 +9,7 @@
 
 namespace
 {
-	idis::wm::vk_instance::handle_type make_vk_instance()
+	idis::vk_init::instance::handle_type make_instance()
 	{
 		if(glfwVulkanSupported() == GLFW_FALSE)
 		{
@@ -41,7 +41,7 @@ namespace
 		{
 			throw idis::exception{"create vulkan instance", "Operation failed"};
 		}
-		return idis::wm::vk_instance::handle_type{instance};
+		return idis::vk_init::instance::handle_type{instance};
 	}
 
 	template<class T>
@@ -70,7 +70,7 @@ namespace
 	}
 }
 
-std::string idis::wm::to_string(vk_device_info const& dev_info)
+std::string idis::vk_init::to_string(device_info const& dev_info)
 {
 	auto const& props = dev_info.properties;
 
@@ -88,7 +88,7 @@ std::string idis::wm::to_string(vk_device_info const& dev_info)
 	    .append(get_api_version_string(props.apiVersion));
 }
 
-std::string idis::wm::to_string(vk_queue_family_info const& family_info)
+std::string idis::vk_init::to_string(queue_family_info const& family_info)
 {
 	return std::string{"device="}
 	    .append(to_string(hexformat{family_info.device}))
@@ -102,7 +102,7 @@ std::string idis::wm::to_string(vk_queue_family_info const& family_info)
 	    .append(std::to_string(family_info.properties.queueCount));
 }
 
-idis::wm::vk_system_info::vk_system_info(VkInstance instance)
+idis::vk_init::system::system(VkInstance instance)
 {
 	uint32_t dev_count{};
 	vkEnumeratePhysicalDevices(instance, &dev_count, nullptr);
@@ -117,13 +117,13 @@ idis::wm::vk_system_info::vk_system_info(VkInstance instance)
 	                       std::back_inserter(m_devices),
 	                       [](auto device)
 	                       {
-		                       vk_device_info dev_info{};
+		                       device_info dev_info{};
 		                       dev_info.device = device;
 		                       vkGetPhysicalDeviceProperties(device, &dev_info.properties);
 		                       return dev_info;
 	                       });
 
-	std::vector<vk_queue_family_info> qf;
+	std::vector<queue_family_info> qf;
 	std::ranges::for_each(
 	    devices,
 	    [&queue_families = qf, device_index = 0](auto device) mutable
@@ -139,7 +139,7 @@ idis::wm::vk_system_info::vk_system_info(VkInstance instance)
 		         dev_index    = std::as_const(device_index),
 		         family_index = 0](auto const& props) mutable
 		        {
-			        auto ret = vk_queue_family_info{dev, dev_index, family_index, props};
+			        auto ret = queue_family_info{dev, dev_index, family_index, props};
 			        ++family_index;
 			        return ret;
 		        });
@@ -149,4 +149,4 @@ idis::wm::vk_system_info::vk_system_info(VkInstance instance)
 	m_queue_families = queue_family_list{std::move(qf)};
 }
 
-idis::wm::vk_instance::vk_instance(): m_handle{make_vk_instance()}, m_system_info{m_handle.get()} {}
+idis::vk_init::instance::instance(): m_handle{make_instance()}, m_system_info{m_handle.get()} {}

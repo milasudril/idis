@@ -1,14 +1,14 @@
 //@	{
-//@	 "target":{"name":"vk_surface.o", "pkgconfig_libs":["vulkan"]}
+//@	 "target":{"name":"surface.o", "pkgconfig_libs":["vulkan"]}
 //@	}
 
-#include "./vk_surface.hpp"
+#include "./surface.hpp"
 
 #include <algorithm>
 
 namespace
 {
-	auto create_vk_surface(idis::wm::vk_instance& instance, idis::wm::window_base& window)
+	auto create_surface(idis::vk_init::instance& instance, idis::wm::window_base& window)
 	{
 		VkSurfaceKHR surface{};
 		if(glfwCreateWindowSurface(instance.handle(), window.handle(), nullptr, &surface)
@@ -17,21 +17,21 @@ namespace
 			throw idis::exception{"create vulkan surface", ""};
 		}
 
-		return idis::wm::vk_surface::handle_type{
-		    surface, idis::wm::detail::vk_surface_deleter{instance.handle()}};
+		return idis::vk_init::surface::handle_type{
+		    surface, idis::vk_init::surface_deleter{instance.handle()}};
 	}
 }
 
 
-idis::wm::vk_surface::vk_surface(vk_instance& instance, window_base& window)
-    : m_handle{create_vk_surface(instance, window)}
+idis::vk_init::surface::surface(instance& assoc_instance, wm::window_base& window)
+    : m_handle{create_surface(assoc_instance, window)}
 {
 }
 
-std::vector<idis::wm::vk_render_device> idis::wm::collect_usable_devices(
-    vk_system_info::queue_family_list_view queue_families, vk_surface const& surface)
+std::vector<idis::vk_init::render_device> idis::vk_init::collect_usable_devices(
+    system::queue_family_list_view queue_families, surface const& surface)
 {
-	std::vector<idis::wm::vk_render_device> ret{};
+	std::vector<render_device> ret{};
 	if(std::size(queue_families) == 0) { return ret; }
 
 	auto const surf = surface.handle();
@@ -46,10 +46,10 @@ std::vector<idis::wm::vk_render_device> idis::wm::collect_usable_devices(
 		{
 			if(graphics_queue_family != -1 && surface_queue_family != -1)
 			{
-				ret.push_back(vk_render_device{dev_current,
-				                               ptr->device_index - 1,
-				                               graphics_queue_family,
-				                               surface_queue_family});
+				ret.push_back(render_device{dev_current,
+				                            ptr->device_index - 1,
+				                            graphics_queue_family,
+				                            surface_queue_family});
 			}
 
 			dev_current           = ptr->device;
@@ -78,7 +78,7 @@ std::vector<idis::wm::vk_render_device> idis::wm::collect_usable_devices(
 	return ret;
 }
 
-std::string idis::wm::to_string(vk_render_device const& device)
+std::string idis::vk_init::to_string(render_device const& device)
 {
 	return std::string{"device="}
 	    .append(std::to_string(reinterpret_cast<intptr_t>(device.device)))

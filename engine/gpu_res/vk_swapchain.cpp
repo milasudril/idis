@@ -6,8 +6,8 @@
 
 namespace
 {
-	auto create_vk_swapchain(idis::wm::vk_device& device,
-	                         idis::wm::vk_surface& surface,
+	auto create_vk_swapchain(idis::vk_init::device& device,
+	                         idis::vk_init::surface& surface,
 	                         uint32_t image_count,
 	                         VkSurfaceFormatKHR const& surface_format,
 	                         VkExtent2D const& image_extent,
@@ -51,18 +51,18 @@ namespace
 			throw idis::exception{"create vulkan swapchain", ""};
 		}
 
-		return idis::wm::vk_swapchain::handle_type{
-		    swapchain, idis::wm::detail::vk_swapchain_deleter{device.handle()}};
+		return idis::gpu_res::vk_swapchain::handle_type{
+		    swapchain, idis::gpu_res::vk_swapchain_deleter{device.handle()}};
 	}
 }
 
-idis::wm::vk_swapchain::vk_swapchain(vk_device& device,
-                                     vk_surface& surface,
-                                     uint32_t image_count,
-                                     VkSurfaceFormatKHR const& surface_format,
-                                     VkExtent2D const& image_extent,
-                                     VkPresentModeKHR present_mode,
-                                     VkSurfaceTransformFlagBitsKHR transform)
+idis::gpu_res::vk_swapchain::vk_swapchain(vk_init::device& device,
+                                          vk_init::surface& surface,
+                                          uint32_t image_count,
+                                          VkSurfaceFormatKHR const& surface_format,
+                                          VkExtent2D const& image_extent,
+                                          VkPresentModeKHR present_mode,
+                                          VkSurfaceTransformFlagBitsKHR transform)
     : m_handle{create_vk_swapchain(
         device, surface, image_count, surface_format, image_extent, present_mode, transform)}
 {

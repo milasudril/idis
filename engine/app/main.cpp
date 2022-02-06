@@ -3,9 +3,9 @@
 #include "./main.hpp"
 
 #include "engine/error_handler/crash_handler.hpp"
-#include "engine/vk_init/vk_instance.hpp"
-#include "engine/vk_init/vk_surface.hpp"
-#include "engine/vk_init/vk_device.hpp"
+#include "engine/vk_init/instance.hpp"
+#include "engine/vk_init/surface.hpp"
+#include "engine/vk_init/device.hpp"
 #include "engine/window_manager/window.hpp"
 #include "engine/gpu_res/vk_swapchain.hpp"
 
@@ -41,10 +41,10 @@ namespace
 
 int idis::app::main(int, char**)
 {
-	idis::crash_handler::arm();
+	crash_handler::arm();
 
 	printf("# Initiating vulkan\n");
-	idis::wm::vk_instance eyafjallajökull;
+	vk_init::instance eyafjallajökull;
 	printf("\n");
 
 	auto& system_info = eyafjallajökull.system_info();
@@ -66,8 +66,8 @@ int idis::app::main(int, char**)
 	                      { printf("%s\n", to_string(queue_family).c_str()); });
 
 
-	idis::wm::window_base window{1024, 640, "Idis"};
-	idis::wm::vk_surface surface{eyafjallajökull, window};
+	wm::window_base window{1024, 640, "Idis"};
+	vk_init::surface surface{eyafjallajökull, window};
 	auto usable_devices = collect_usable_devices(queue_families, surface);
 
 	if(std::size(usable_devices) == 0)
@@ -128,7 +128,7 @@ int idis::app::main(int, char**)
 
 	printf("## Selected surface extent %u x %u\n\n", surface_extent.width, surface_extent.height);
 
-	idis::wm::vk_device device{device_info};
+	vk_init::device device{device_info};
 
 	auto graphics_queue = device.get_graphics_queue();
 	assert(graphics_queue != nullptr);
@@ -136,15 +136,15 @@ int idis::app::main(int, char**)
 	auto surface_queue = device.get_surface_queue();
 	assert(surface_queue != nullptr);
 
-	idis::wm::vk_swapchain swapchain{device,
-	                                 surface,
-	                                 wm::get_image_count(surface_caps),
-	                                 *surface_format,
-	                                 surface_extent,
-	                                 present_mode,
-	                                 surface_caps.currentTransform};
+	gpu_res::vk_swapchain swapchain{device,
+	                                surface,
+	                                vk_init::get_image_count(surface_caps),
+	                                *surface_format,
+	                                surface_extent,
+	                                present_mode,
+	                                surface_caps.currentTransform};
 
 	auto const images = swapchain.get_images();
-	assert(std::size(images) == wm::get_image_count(surface_caps));
+	assert(std::size(images) == vk_init::get_image_count(surface_caps));
 	return 0;
 }
