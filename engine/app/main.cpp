@@ -14,6 +14,22 @@
 
 #include <cassert>
 
+class renderer
+{
+public:
+	explicit renderer(idis::vk_init::device& device,
+					  idis::vk_init::surface& surface):
+					  m_device{device},
+					  m_surface{surface},
+					  m_swapchain{device, surface}
+	{}
+
+private:
+	std::reference_wrapper<idis::vk_init::device> m_device;
+	std::reference_wrapper<idis::vk_init::surface> m_surface;
+	idis::gpu_res::vk_swapchain m_swapchain;
+};
+
 int idis::app::main(int, char**)
 {
 	crash_handler::arm();
@@ -29,6 +45,6 @@ int idis::app::main(int, char**)
 	auto surface_queue = device.get_surface_queue();
 	assert(surface_queue != nullptr);
 
-	gpu_res::vk_swapchain swapchain{device, surface};
+	renderer r{device, surface};
 	return 0;
 }
