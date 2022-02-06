@@ -42,7 +42,7 @@ int idis::app::main(int, char**)
 	wm::window_base window{1024, 640, "Idis"};
 	vk_init::surface surface{eyafjallajökull, window};
 
-	auto device_info = select_device(eyafjallajökull.system_info(), surface);
+	auto device_info = select_device("", eyafjallajökull.system_info(), surface);
 
 	// create device
 

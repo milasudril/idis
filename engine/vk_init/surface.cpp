@@ -105,7 +105,8 @@ namespace
 	}
 }
 
-idis::vk_init::render_device idis::vk_init::select_device(system const& sysinfo,
+idis::vk_init::render_device idis::vk_init::select_device(std::string_view prefered_device,
+                                                          system const& sysinfo,
                                                           surface const& surf)
 {
 	auto queue_families = sysinfo.queue_families();
@@ -116,13 +117,17 @@ idis::vk_init::render_device idis::vk_init::select_device(system const& sysinfo,
 		throw exception{"select graphics devices", "No usable graphics device found"};
 	}
 
-	printf("\n## Found %zu usable devices:\n\n", std::size(usable_devices));
-
-
-	std::ranges::for_each(usable_devices,
-	                      [](auto const& device) { printf("%s\n", to_string(device).c_str()); });
-
 	auto devices = sysinfo.devices();
+
+	if(auto i = std::ranges::find_if(usable_devices,
+	                                 [devices, prefered_device](auto const& item) {
+		                                 return devices[item.device_index].properties.deviceName
+		                                        == prefered_device;
+	                                 });
+	   i != std::end(usable_devices))
+	{
+		return *i;
+	}
 
 	std::ranges::sort(usable_devices,
 	                  [devices](auto const& a, auto const& b)
@@ -131,5 +136,6 @@ idis::vk_init::render_device idis::vk_init::select_device(system const& sysinfo,
 		                  auto const type_b = devices[b.device_index].properties.deviceType;
 		                  return rank(type_a) < rank(type_b);
 	                  });
+
 	return usable_devices[0];
 }
