@@ -44,6 +44,9 @@ int idis::app::main(int, char**)
 	crash_handler::arm();
 
 	printf("# Initiating vulkan\n");
+
+	// Create vulkan instance
+
 	vk_init::instance eyafjallajökull;
 	printf("\n");
 
@@ -66,8 +69,14 @@ int idis::app::main(int, char**)
 	                      { printf("%s\n", to_string(queue_family).c_str()); });
 
 
+	// Create surface
+
 	wm::window_base window{1024, 640, "Idis"};
 	vk_init::surface surface{eyafjallajökull, window};
+
+
+	// Pick device
+
 	auto usable_devices = collect_usable_devices(queue_families, surface);
 
 	if(std::size(usable_devices) == 0)
@@ -92,7 +101,16 @@ int idis::app::main(int, char**)
 
 	printf("\n## Selected device:\n\n%s\n\n", to_string(devices[device_info.device_index]).c_str());
 
+	// create device
+	vk_init::device device{device_info};
 
+	auto graphics_queue = device.get_graphics_queue();
+	assert(graphics_queue != nullptr);
+
+	auto surface_queue = device.get_surface_queue();
+	assert(surface_queue != nullptr);
+
+	// create swapchain
 	auto const surface_formats =
 	    get_surface_formats(devices[device_info.device_index].device, surface);
 
@@ -128,13 +146,6 @@ int idis::app::main(int, char**)
 
 	printf("## Selected surface extent %u x %u\n\n", surface_extent.width, surface_extent.height);
 
-	vk_init::device device{device_info};
-
-	auto graphics_queue = device.get_graphics_queue();
-	assert(graphics_queue != nullptr);
-
-	auto surface_queue = device.get_surface_queue();
-	assert(surface_queue != nullptr);
 
 	gpu_res::vk_swapchain swapchain{device,
 	                                surface,
