@@ -4,13 +4,11 @@
 //@		{"ref":"vulkan", "rel":"implementation", "origin":"pkg-config"}]
 //@	}
 
-#ifndef IDIS_WINDOWMANAGER_VKSWAPCHAIN_HPP
-#define IDIS_WINDOWMANAGER_VKSWAPCHAIN_HPP
+#ifndef IDIS_GPURES_VKSWAPCHAIN_HPP
+#define IDIS_GPURES_VKSWAPCHAIN_HPP
 
-#include "./vk_device.hpp"
-#include "./vk_surface.hpp"
-
-//#include <vulkan/vulkan.h>
+#include "engine/vk_init/vk_device.hpp"
+#include "engine/vk_init/vk_surface.hpp"
 
 #include <type_traits>
 #include <memory>

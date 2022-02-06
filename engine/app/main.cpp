@@ -2,12 +2,12 @@
 
 #include "./main.hpp"
 
-#include "engine/window_manager/vk_instance.hpp"
-#include "engine/window_manager/vk_surface.hpp"
-#include "engine/window_manager/window.hpp"
-#include "engine/window_manager/vk_device.hpp"
-#include "engine/window_manager/vk_swapchain.hpp"
 #include "engine/error_handler/crash_handler.hpp"
+#include "engine/vk_init/vk_instance.hpp"
+#include "engine/vk_init/vk_surface.hpp"
+#include "engine/vk_init/vk_device.hpp"
+#include "engine/window_manager/window.hpp"
+#include "engine/gpu_res/vk_swapchain.hpp"
 
 #include <algorithm>
 #include <cstdio>

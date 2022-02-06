@@ -7,8 +7,9 @@
 #ifndef IDIS_WINDOWMANAGER_VKSURFACE_HPP
 #define IDIS_WINDOWMANAGER_VKSURFACE_HPP
 
-#include "./window.hpp"
 #include "./vk_instance.hpp"
+
+#include "engine/window_manager/window.hpp"
 
 #include <type_traits>
 
