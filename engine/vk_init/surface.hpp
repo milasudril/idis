@@ -97,6 +97,8 @@ namespace idis::vk_init
 		}
 		return ret;
 	}
+
+	render_device select_device(system const& sysinfo, surface const& surf);
 }
 
 #endif

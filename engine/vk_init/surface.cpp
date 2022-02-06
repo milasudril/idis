@@ -89,3 +89,47 @@ std::string idis::vk_init::to_string(render_device const& device)
 	    .append("; surface_queue_family=")
 	    .append(std::to_string(device.surface_queue_family));
 }
+
+namespace
+{
+	size_t rank(VkPhysicalDeviceType value)
+	{
+		switch(value)
+		{
+			case VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU: return 0;
+			case VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU: return 1;
+			case VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU: return 1;
+			case VK_PHYSICAL_DEVICE_TYPE_OTHER:
+			default: return static_cast<size_t>(-1);
+		}
+	}
+}
+
+idis::vk_init::render_device idis::vk_init::select_device(system const& sysinfo,
+                                                          surface const& surf)
+{
+	auto queue_families = sysinfo.queue_families();
+	auto usable_devices = collect_usable_devices(queue_families, surf);
+
+	if(std::size(usable_devices) == 0)
+	{
+		throw exception{"select graphics devices", "No usable graphics device found"};
+	}
+
+	printf("\n## Found %zu usable devices:\n\n", std::size(usable_devices));
+
+
+	std::ranges::for_each(usable_devices,
+	                      [](auto const& device) { printf("%s\n", to_string(device).c_str()); });
+
+	auto devices = sysinfo.devices();
+
+	std::ranges::sort(usable_devices,
+	                  [devices](auto const& a, auto const& b)
+	                  {
+		                  auto const type_a = devices[a.device_index].properties.deviceType;
+		                  auto const type_b = devices[b.device_index].properties.deviceType;
+		                  return rank(type_a) < rank(type_b);
+	                  });
+	return usable_devices[0];
+}
