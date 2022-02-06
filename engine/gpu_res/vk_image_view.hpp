@@ -38,8 +38,10 @@ namespace idis::gpu_res
 
 		vk_image_view() = default;
 
-		explicit vk_image_view(vk_init::device& device, VkImage image, VkFormat format): vk_image_view{device.handle(), image, format}
-		{}
+		explicit vk_image_view(vk_init::device& device, VkImage image, VkFormat format)
+		    : vk_image_view{device.handle(), image, format}
+		{
+		}
 
 		explicit vk_image_view(VkDevice device, VkImage image, VkFormat format);
 

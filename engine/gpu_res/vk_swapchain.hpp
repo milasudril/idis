@@ -49,8 +49,10 @@ namespace idis::gpu_res
 			vkGetSwapchainImagesKHR(
 			    m_data.first.get_deleter().device(), m_data.first.get(), &img_count, nullptr);
 			std::vector<VkImage> ret(img_count);
-			vkGetSwapchainImagesKHR(
-			    m_data.first.get_deleter().device(), m_data.first.get(), &img_count, std::data(ret));
+			vkGetSwapchainImagesKHR(m_data.first.get_deleter().device(),
+			                        m_data.first.get(),
+			                        &img_count,
+			                        std::data(ret));
 			return ret;
 		}
 

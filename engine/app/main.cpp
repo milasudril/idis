@@ -19,12 +19,11 @@
 class renderer
 {
 public:
-	explicit renderer(idis::vk_init::device& device,
-					  idis::vk_init::surface& surface):
-					  m_device{device},
-					  m_surface{surface},
-					  m_swapchain{device, surface},
-					  m_img_views{get_image_views_from(m_swapchain)}
+	explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
+	    : m_device{device}
+	    , m_surface{surface}
+	    , m_swapchain{device, surface}
+	    , m_img_views{get_image_views_from(m_swapchain)}
 	{
 	}
 

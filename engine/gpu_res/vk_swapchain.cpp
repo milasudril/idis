@@ -54,8 +54,8 @@ namespace
 		}
 
 		return std::pair{idis::gpu_res::vk_swapchain::handle_type{
-		    swapchain, idis::gpu_res::vk_swapchain_deleter{device.handle()}},
-		    surface_format.format};
+		                     swapchain, idis::gpu_res::vk_swapchain_deleter{device.handle()}},
+		                 surface_format.format};
 	}
 }
 
