@@ -24,7 +24,7 @@ namespace idis::vk_init
 	public:
 		using handle_type = std::unique_ptr<std::remove_pointer_t<VkDevice>, device_deleter>;
 
-		explicit device(render_device const& device);
+		explicit device(render_device const& device_info);
 
 		VkDevice handle() const { return m_handle.get(); }
 
@@ -46,10 +46,13 @@ namespace idis::vk_init
 
 		auto get_surface_queue_family() const { return m_surface_queue; }
 
+		render_device const& device_info() const { return m_device_info; }
+
 	private:
 		handle_type m_handle;
 		int m_graphics_queue;
 		int m_surface_queue;
+		render_device m_device_info;
 	};
 }
 

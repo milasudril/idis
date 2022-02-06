@@ -39,13 +39,7 @@ namespace idis::gpu_res
 
 		vk_swapchain() = default;
 
-		explicit vk_swapchain(vk_init::device& device,
-		                      vk_init::surface& surface,
-		                      uint32_t img_count,
-		                      VkSurfaceFormatKHR const& surface_format,
-		                      VkExtent2D const& image_extent,
-		                      VkPresentModeKHR present_mode,
-		                      VkSurfaceTransformFlagBitsKHR transform);
+		explicit vk_swapchain(vk_init::device& device, vk_init::surface& surface);
 
 		VkSwapchainKHR handle() const { return m_handle.get(); }
 

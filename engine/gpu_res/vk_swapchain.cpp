@@ -6,14 +6,16 @@
 
 namespace
 {
-	auto create_vk_swapchain(idis::vk_init::device& device,
-	                         idis::vk_init::surface& surface,
-	                         uint32_t image_count,
-	                         VkSurfaceFormatKHR const& surface_format,
-	                         VkExtent2D const& image_extent,
-	                         VkPresentModeKHR present_mode,
-	                         VkSurfaceTransformFlagBitsKHR transform)
+	auto create_vk_swapchain(idis::vk_init::device& device, idis::vk_init::surface& surface)
 	{
+		auto const physical_device = device.device_info().device;
+		auto const surface_caps    = get_surface_capabilities(physical_device, surface);
+		auto const image_count     = idis::vk_init::get_image_count(surface_caps);
+		auto const surface_format  = select_surface_format(physical_device, surface);
+		auto const image_extent    = select_extent(surface_caps, surface.target_window());
+		auto const present_mode    = select_present_mode(physical_device, surface);
+		auto const transform       = surface_caps.currentTransform;
+
 		VkSwapchainCreateInfoKHR create_info{};
 		create_info.sType            = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		create_info.surface          = surface.handle();
@@ -56,14 +58,7 @@ namespace
 	}
 }
 
-idis::gpu_res::vk_swapchain::vk_swapchain(vk_init::device& device,
-                                          vk_init::surface& surface,
-                                          uint32_t image_count,
-                                          VkSurfaceFormatKHR const& surface_format,
-                                          VkExtent2D const& image_extent,
-                                          VkPresentModeKHR present_mode,
-                                          VkSurfaceTransformFlagBitsKHR transform)
-    : m_handle{create_vk_swapchain(
-        device, surface, image_count, surface_format, image_extent, present_mode, transform)}
+idis::gpu_res::vk_swapchain::vk_swapchain(vk_init::device& device, vk_init::surface& surface)
+    : m_handle{create_vk_swapchain(device, surface)}
 {
 }

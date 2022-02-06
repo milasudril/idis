@@ -25,6 +25,7 @@ namespace
 
 idis::vk_init::surface::surface(instance& assoc_instance, wm::window_base& window)
     : m_handle{create_surface(assoc_instance, window)}
+    , m_target_window{window}
 {
 }
 

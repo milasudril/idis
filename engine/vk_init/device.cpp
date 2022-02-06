@@ -13,6 +13,7 @@
 idis::vk_init::device::device(render_device const& device_info)
     : m_graphics_queue{device_info.graphics_queue_family}
     , m_surface_queue{device_info.surface_queue_family}
+    , m_device_info{device_info}
 {
 	std::set queue_families{m_graphics_queue, m_surface_queue};
 	auto const num_queues = std::size(queue_families);

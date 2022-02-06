@@ -40,8 +40,11 @@ namespace idis::vk_init
 
 		VkSurfaceKHR handle() const { return m_handle.get(); }
 
+		wm::window_base& target_window() const { return m_target_window; }
+
 	private:
 		handle_type m_handle;
+		std::reference_wrapper<wm::window_base> m_target_window;
 	};
 
 	struct render_device
