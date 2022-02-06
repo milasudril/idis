@@ -23,7 +23,7 @@ struct window_action_tag
 struct message_display
 {
 	idis::seq::event_loop event_loop;
-	idis::wm::cairo_surface draw_surface;
+	idis::sw_graphics::cairo_surface draw_surface;
 
 	message_display(std::reference_wrapper<fruit::FontFace const> font): message{font} {}
 
@@ -47,7 +47,7 @@ void render(message_display& obj, idis::wm::dimensions dim)
 	// auto res = obj.message.handle(fruit::SizeRequestEvent{});
 	obj.message.compose(
 	    img.pixels(), fruit::Point{0, 0, 0}, fruit::Pixel{0.66f, 0.66f, 0.66f, 0.0f});
-	idis::wm::cairo_image_surface surface{std::as_const(img).pixels()};
+	idis::sw_graphics::cairo_image_surface surface{std::as_const(img).pixels()};
 	obj.draw_surface.fill(surface, pixel_store::vec4_t<int>{0, 0, 0, 0});
 }
 
@@ -70,7 +70,7 @@ try
 	idis::wm::window mainwin{md, 1024, 640, "Idis"};
 	mainwin.set_close_callback<window_action_tag>().set_size_callback<window_action_tag>();
 	md.event_loop.set_pre_drain_callback(glfwPollEvents);
-	md.draw_surface = idis::wm::cairo_surface{mainwin};
+	md.draw_surface = idis::sw_graphics::cairo_surface{mainwin};
 	render(md, mainwin.get_dimensions());
 	md.event_loop.set_post_drain_callback(
 	    [timer = idis::sys::periodic_timer{idis::seq::seconds_per_tick}]() mutable

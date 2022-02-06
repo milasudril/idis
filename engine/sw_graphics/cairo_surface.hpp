@@ -4,8 +4,8 @@
 //@		{"ref":"cairo", "rel":"implementation", "origin":"pkg-config"}]
 //@	}
 
-#ifndef IDIS_WINDOWMANAGER_CAIROSURFACE_HPP
-#define IDIS_WINDOWMANAGER_CAIROSURFACE_HPP
+#ifndef IDIS_SWGRAPHICS_CAIROSURFACE_HPP
+#define IDIS_SWGRAPHICS_CAIROSURFACE_HPP
 
 #include "engine/window_manager/window.hpp"
 
@@ -17,27 +17,24 @@
 #include <cairo/cairo.h>
 #include <cairo/cairo-xlib.h>
 
-namespace idis::wm
+namespace idis::sw_graphics
 {
-	namespace detail
+	struct cairo_deleter
 	{
-		struct cairo_deleter
+		void operator()(cairo_t* ctxt) const
 		{
-			void operator()(cairo_t* ctxt) const
-			{
-				if(ctxt != nullptr) { cairo_destroy(ctxt); }
-			}
+			if(ctxt != nullptr) { cairo_destroy(ctxt); }
+		}
 
-			void operator()(cairo_surface_t* surf) const
-			{
-				if(surf != nullptr) { cairo_surface_destroy(surf); }
-			}
-		};
-	}
+		void operator()(cairo_surface_t* surf) const
+		{
+			if(surf != nullptr) { cairo_surface_destroy(surf); }
+		}
+	};
 
 	class cairo_image_surface
 	{
-		using surface_type = std::unique_ptr<cairo_surface_t, detail::cairo_deleter>;
+		using surface_type = std::unique_ptr<cairo_surface_t, cairo_deleter>;
 
 	public:
 		explicit cairo_image_surface(
@@ -49,18 +46,18 @@ namespace idis::wm
 
 	private:
 		surface_type m_handle;
-		dimensions m_dim;
+		wm::dimensions m_dim;
 	};
 
 	class cairo_surface
 	{
-		using ctxt_type    = std::unique_ptr<cairo_t, detail::cairo_deleter>;
-		using surface_type = std::unique_ptr<cairo_surface_t, detail::cairo_deleter>;
+		using ctxt_type    = std::unique_ptr<cairo_t, cairo_deleter>;
+		using surface_type = std::unique_ptr<cairo_surface_t, cairo_deleter>;
 
 	public:
 		cairo_surface() = default;
 
-		explicit cairo_surface(window_base& target_window);
+		explicit cairo_surface(wm::window_base& target_window);
 
 		cairo_surface& fill(uint8_t r, uint8_t g, uint8_t b)
 		{
@@ -80,19 +77,19 @@ namespace idis::wm
 			return *this;
 		}
 
-		cairo_surface& set_dimensions(dimensions dim)
+		cairo_surface& set_dimensions(wm::dimensions dim)
 		{
 			cairo_xlib_surface_set_size(m_surface.get(), dim.width, dim.height);
 			m_dim = dim;
 			return *this;
 		}
 
-		dimensions get_dimensions() const { return m_dim; }
+		auto get_dimensions() const { return m_dim; }
 
 	private:
 		surface_type m_surface;
 		ctxt_type m_ctxt;
-		dimensions m_dim;
+		wm::dimensions m_dim;
 	};
 }
 

@@ -57,9 +57,11 @@ namespace idis::wm
 		std::vector<VkImage> get_images() const
 		{
 			uint32_t img_count{};
-			vkGetSwapchainImagesKHR(m_handle.get_deleter().device(), m_handle.get(), &img_count, nullptr);
+			vkGetSwapchainImagesKHR(
+			    m_handle.get_deleter().device(), m_handle.get(), &img_count, nullptr);
 			std::vector<VkImage> ret(img_count);
-			vkGetSwapchainImagesKHR(m_handle.get_deleter().device(), m_handle.get(), &img_count, std::data(ret));
+			vkGetSwapchainImagesKHR(
+			    m_handle.get_deleter().device(), m_handle.get(), &img_count, std::data(ret));
 			return ret;
 		}
 

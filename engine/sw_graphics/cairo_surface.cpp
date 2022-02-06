@@ -2,7 +2,7 @@
 
 #include "./cairo_surface.hpp"
 
-idis::wm::cairo_image_surface::cairo_image_surface(
+idis::sw_graphics::cairo_image_surface::cairo_image_surface(
     pixel_store::image_span<pixel_store::rgba_value<> const> img)
     : m_handle{cairo_image_surface_create(
         CAIRO_FORMAT_ARGB32, static_cast<int>(img.width()), static_cast<int>(img.height()))}
@@ -34,7 +34,7 @@ idis::wm::cairo_image_surface::cairo_image_surface(
 	cairo_surface_mark_dirty(handle());
 }
 
-idis::wm::cairo_surface::cairo_surface(window_base& target)
+idis::sw_graphics::cairo_surface::cairo_surface(wm::window_base& target)
 {
 	auto x11_disp = glfwGetX11Display();
 	auto x11_win  = glfwGetX11Window(target.handle());

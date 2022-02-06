@@ -142,7 +142,7 @@ int idis::app::main(int, char**)
 	                                 *surface_format,
 	                                 surface_extent,
 	                                 present_mode,
-									 surface_caps.currentTransform};
+	                                 surface_caps.currentTransform};
 
 	auto const images = swapchain.get_images();
 	assert(std::size(images) == wm::get_image_count(surface_caps));
