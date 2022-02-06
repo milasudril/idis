@@ -30,28 +30,11 @@ int idis::app::main(int, char**)
 	auto surface_queue = device.get_surface_queue();
 	assert(surface_queue != nullptr);
 
-	// create swapchain
-	auto const surface_formats = get_surface_formats(device_info.device, surface);
-
-	auto const surface_format =
-	    std::ranges::find_if(surface_formats,
-	                         [](auto const& item)
-	                         {
-		                         return item.format == VK_FORMAT_B8G8R8A8_SRGB
-		                                && item.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
-	                         });
-
-	if(surface_format == std::end(surface_formats))
-	{
-		throw exception{"configure surface", "No suitable surface format found"};
-	}
-
 	auto surface_caps = get_surface_capabilities(device_info.device, surface);
-
 	gpu_res::vk_swapchain swapchain{device,
 	                                surface,
 	                                vk_init::get_image_count(surface_caps),
-	                                *surface_format,
+	                                select_surface_format(device_info.device, surface),
 	                                select_extent(surface_caps, window),
 	                                select_present_mode(device_info.device, surface),
 	                                surface_caps.currentTransform};

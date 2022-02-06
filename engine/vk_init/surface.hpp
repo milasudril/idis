@@ -103,6 +103,9 @@ namespace idis::vk_init
 	                            surface const& surf);
 
 	VkPresentModeKHR select_present_mode(VkPhysicalDevice device, surface const& surf);
+
+
+	VkSurfaceFormatKHR select_surface_format(VkPhysicalDevice device, surface const& surf);
 }
 
 #endif
