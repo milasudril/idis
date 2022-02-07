@@ -10,6 +10,8 @@
 #include "engine/gpu_res/vk_swapchain.hpp"
 #include "engine/gpu_res/vk_image_view.hpp"
 #include "engine/gpu_res/utils.hpp"
+#include "engine/gpu_res/vk_shader_module.hpp"
+#include "engine/shaders/repo.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -25,6 +27,11 @@ public:
 	    , m_swapchain{device, surface}
 	    , m_img_views{get_image_views_from(m_swapchain)}
 	{
+		idis::gpu_res::vk_shader_module<VK_SHADER_STAGE_VERTEX_BIT> vert_shader{
+			m_device, idis::shaders::repo::get_vertex_shader()};
+		idis::gpu_res::vk_shader_module<VK_SHADER_STAGE_FRAGMENT_BIT> frag_shader{
+			m_device, idis::shaders::repo::get_fragment_shader()
+		};
 	}
 
 private:

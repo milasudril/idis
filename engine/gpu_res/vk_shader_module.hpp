@@ -4,8 +4,8 @@
 //@		{"ref":"vulkan", "rel":"implementation", "origin":"pkg-config"}]
 //@	}
 
-#ifndef IDIS_GPURES_VKIMAGEVIEW_HPP
-#define IDIS_GPURES_VKIMAGEVIEW_HPP
+#ifndef IDIS_GPURES_VKSHADERMODULE_HPP
+#define IDIS_GPURES_VKSHADERMODULE_HPP
 
 #include "engine/vk_init/device.hpp"
 
