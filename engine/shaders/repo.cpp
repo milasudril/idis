@@ -8,8 +8,9 @@
 
 #include "engine/helpers/incbin.hpp"
 
-IDIS_INCBIN(vertex_shader, MAIKE_BUILDINFO_TARGETDIR "/engine/shaders/my_vertex_shader.spv");
-IDIS_INCBIN(fragment_shader, MAIKE_BUILDINFO_TARGETDIR "/engine/shaders/my_fragment_shader.spv");
+IDIS_INCBIN_U32(vertex_shader, MAIKE_BUILDINFO_TARGETDIR "/engine/shaders/my_vertex_shader.spv");
+IDIS_INCBIN_U32(fragment_shader,
+                MAIKE_BUILDINFO_TARGETDIR "/engine/shaders/my_fragment_shader.spv");
 
 namespace idis::shaders::repo
 {
