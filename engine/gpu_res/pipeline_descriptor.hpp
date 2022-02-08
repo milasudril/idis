@@ -31,6 +31,38 @@ namespace idis::gpu_res
 		return ret;
 	}
 
+	inline auto init_rasterization_state()
+	{
+		VkPipelineRasterizationStateCreateInfo ret{};
+		ret.sType                   = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+		ret.depthClampEnable        = VK_FALSE;
+		ret.rasterizerDiscardEnable = VK_FALSE;
+		ret.polygonMode             = VK_POLYGON_MODE_FILL;
+		ret.lineWidth               = 1.0f;
+		ret.cullMode                = VK_CULL_MODE_BACK_BIT;
+		ret.frontFace               = VK_FRONT_FACE_CLOCKWISE;
+		ret.depthBiasEnable         = VK_FALSE;
+		return ret;
+	}
+
+	inline auto init_multisample_state()
+	{
+		VkPipelineMultisampleStateCreateInfo ret{};
+		ret.sType                = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+		ret.sampleShadingEnable  = VK_FALSE;
+		ret.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+		return ret;
+	}
+
+	inline auto init_color_blend_attchment_state()
+	{
+		VkPipelineColorBlendAttachmentState ret;
+		ret.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT
+		                     | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+		ret.blendEnable = VK_FALSE;
+		return ret;
+	}
+
 	class pipeline_descriptor
 	{
 	public:
@@ -38,6 +70,9 @@ namespace idis::gpu_res
 		    : m_vertex_input{init_vertex_input()}
 		    , m_input_assembly{init_input_assembly()}
 		    , m_viewport{init_viewport()}
+		    , m_rasterization_state{init_rasterization_state()}
+		    , m_multisample_state{init_multisample_state()}
+		    , m_color_blend_attachment_state{init_color_blend_attchment_state()}
 		{
 		}
 
@@ -58,11 +93,22 @@ namespace idis::gpu_res
 			return *this;
 		}
 
+		pipeline_descriptor& scissor(wm::dimensions dim)
+		{
+			m_scissor.extent =
+			    VkExtent2D{static_cast<uint32_t>(dim.width), static_cast<uint32_t>(dim.height)};
+			return *this;
+		}
+
 	private:
 		shader_program<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> m_shaders;
 		VkPipelineVertexInputStateCreateInfo m_vertex_input;
 		VkPipelineInputAssemblyStateCreateInfo m_input_assembly;
 		VkViewport m_viewport;
+		VkRect2D m_scissor{};
+		VkPipelineRasterizationStateCreateInfo m_rasterization_state;
+		VkPipelineMultisampleStateCreateInfo m_multisample_state;
+		VkPipelineColorBlendAttachmentState m_color_blend_attachment_state;
 	};
 }
 
