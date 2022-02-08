@@ -11,6 +11,7 @@
 #include "engine/gpu_res/image_view.hpp"
 #include "engine/gpu_res/utils.hpp"
 #include "engine/gpu_res/shader_module.hpp"
+#include "engine/gpu_res/pipeline_descriptor.hpp"
 #include "engine/shaders/repo.hpp"
 
 #include <algorithm>
@@ -27,15 +28,8 @@ public:
 	    , m_swapchain{device, surface}
 	    , m_img_views{get_image_views_from(m_swapchain)}
 	{
-		idis::gpu_res::shader_module vert_shader{m_device,
-		                                         idis::shaders::repo::get_vertex_shader()};
-		idis::gpu_res::shader_module frag_shader{m_device,
-		                                         idis::shaders::repo::get_fragment_shader()};
-
-		auto vert_shader_info = get_shader_stage_info(vert_shader);
-		printf("%d\n", vert_shader_info.stage);
-		auto frag_shader_info = get_shader_stage_info(frag_shader);
-		printf("%d\n", frag_shader_info.stage);
+		m_pipeline.shader(idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()})
+			.shader(idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()});
 	}
 
 private:
@@ -43,6 +37,7 @@ private:
 	std::reference_wrapper<idis::init::surface> m_surface;
 	idis::gpu_res::swapchain m_swapchain;
 	std::vector<idis::gpu_res::image_view> m_img_views;
+	idis::gpu_res::pipeline_descriptor m_pipeline;
 };
 
 int idis::app::main(int, char**)
