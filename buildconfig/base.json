@@ -133,7 +133,7 @@
                     "use_get_tags": 0
                 },
                 "config": {
-                    "filename_ext_replacement_mode": "replace",
+                    "filename_ext_replacement_mode": "append",
                     "target_filename_ext": ".spv"
                 },
                 "loader": "generic"
