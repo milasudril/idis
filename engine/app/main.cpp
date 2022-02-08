@@ -31,6 +31,11 @@ public:
 		                                            idis::shaders::repo::get_vertex_shader()};
 		idis::gpu_res::vk_shader_module frag_shader{m_device,
 		                                            idis::shaders::repo::get_fragment_shader()};
+
+		auto vert_shader_info = get_shader_stage_info(vert_shader);
+		printf("%d\n", vert_shader_info.stage);
+		auto frag_shader_info = get_shader_stage_info(frag_shader);
+		printf("%d\n", frag_shader_info.stage);
 	}
 
 private:

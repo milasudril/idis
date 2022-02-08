@@ -66,6 +66,20 @@ namespace idis::gpu_res
 	private:
 		handle_type m_handle;
 	};
+
+	template<auto PipelineStage>
+	auto get_shader_stage_info(vk_shader_module<PipelineStage> const&&) = delete;
+
+	template<auto PipelineStage>
+	auto get_shader_stage_info(vk_shader_module<PipelineStage> const& module)
+	{
+		VkPipelineShaderStageCreateInfo ret{};
+		ret.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		ret.stage = PipelineStage;
+		ret.module = module.handle();
+		ret.pName = "main";
+		return ret;
+	}
 }
 
 #endif
