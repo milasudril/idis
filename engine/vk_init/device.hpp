@@ -9,7 +9,7 @@
 
 #include "./surface.hpp"
 
-namespace idis::vk_init
+namespace idis::init
 {
 	struct device_deleter
 	{

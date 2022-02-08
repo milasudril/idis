@@ -8,7 +8,7 @@
 
 namespace
 {
-	auto create_surface(idis::vk_init::instance& instance, idis::wm::window_base& window)
+	auto create_surface(idis::init::instance& instance, idis::wm::window_base& window)
 	{
 		VkSurfaceKHR surface{};
 		if(glfwCreateWindowSurface(instance.handle(), window.handle(), nullptr, &surface)
@@ -17,19 +17,19 @@ namespace
 			throw idis::exception{"create vulkan surface", ""};
 		}
 
-		return idis::vk_init::surface::handle_type{
-		    surface, idis::vk_init::surface_deleter{instance.handle()}};
+		return idis::init::surface::handle_type{surface,
+		                                        idis::init::surface_deleter{instance.handle()}};
 	}
 }
 
 
-idis::vk_init::surface::surface(instance& assoc_instance, wm::window_base& window)
+idis::init::surface::surface(instance& assoc_instance, wm::window_base& window)
     : m_handle{create_surface(assoc_instance, window)}
     , m_target_window{window}
 {
 }
 
-std::vector<idis::vk_init::render_device> idis::vk_init::collect_usable_devices(
+std::vector<idis::init::render_device> idis::init::collect_usable_devices(
     system::queue_family_list_view queue_families, surface const& surface)
 {
 	std::vector<render_device> ret{};
@@ -79,7 +79,7 @@ std::vector<idis::vk_init::render_device> idis::vk_init::collect_usable_devices(
 	return ret;
 }
 
-std::string idis::vk_init::to_string(render_device const& device)
+std::string idis::init::to_string(render_device const& device)
 {
 	return std::string{"device="}
 	    .append(std::to_string(reinterpret_cast<intptr_t>(device.device)))
@@ -106,9 +106,9 @@ namespace
 	}
 }
 
-idis::vk_init::render_device idis::vk_init::select_device(std::string_view prefered_device,
-                                                          system const& sysinfo,
-                                                          surface const& surf)
+idis::init::render_device idis::init::select_device(std::string_view prefered_device,
+                                                    system const& sysinfo,
+                                                    surface const& surf)
 {
 	auto queue_families = sysinfo.queue_families();
 	auto usable_devices = collect_usable_devices(queue_families, surf);
@@ -154,7 +154,7 @@ namespace
 	}
 }
 
-VkPresentModeKHR idis::vk_init::select_present_mode(VkPhysicalDevice device, surface const& surf)
+VkPresentModeKHR idis::init::select_present_mode(VkPhysicalDevice device, surface const& surf)
 {
 	auto present_modes = get_surface_present_modes(device, surf);
 	std::ranges::sort(present_modes, [](auto a, auto b) { return rank(a) < rank(b); });
@@ -168,8 +168,7 @@ VkPresentModeKHR idis::vk_init::select_present_mode(VkPhysicalDevice device, sur
 	return present_mode;
 }
 
-VkSurfaceFormatKHR idis::vk_init::select_surface_format(VkPhysicalDevice device,
-                                                        surface const& surf)
+VkSurfaceFormatKHR idis::init::select_surface_format(VkPhysicalDevice device, surface const& surf)
 {
 	auto const surface_formats = get_surface_formats(device, surf);
 

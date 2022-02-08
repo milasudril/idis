@@ -9,7 +9,7 @@
 
 namespace
 {
-	idis::vk_init::instance::handle_type make_instance()
+	idis::init::instance::handle_type make_instance()
 	{
 		if(glfwVulkanSupported() == GLFW_FALSE)
 		{
@@ -41,7 +41,7 @@ namespace
 		{
 			throw idis::exception{"create vulkan instance", "Operation failed"};
 		}
-		return idis::vk_init::instance::handle_type{instance};
+		return idis::init::instance::handle_type{instance};
 	}
 
 	template<class T>
@@ -70,7 +70,7 @@ namespace
 	}
 }
 
-std::string idis::vk_init::to_string(device_info const& dev_info)
+std::string idis::init::to_string(device_info const& dev_info)
 {
 	auto const& props = dev_info.properties;
 
@@ -88,7 +88,7 @@ std::string idis::vk_init::to_string(device_info const& dev_info)
 	    .append(get_api_version_string(props.apiVersion));
 }
 
-std::string idis::vk_init::to_string(queue_family_info const& family_info)
+std::string idis::init::to_string(queue_family_info const& family_info)
 {
 	return std::string{"device="}
 	    .append(to_string(hexformat{family_info.device}))
@@ -102,7 +102,7 @@ std::string idis::vk_init::to_string(queue_family_info const& family_info)
 	    .append(std::to_string(family_info.properties.queueCount));
 }
 
-idis::vk_init::system::system(VkInstance instance)
+idis::init::system::system(VkInstance instance)
 {
 	uint32_t dev_count{};
 	vkEnumeratePhysicalDevices(instance, &dev_count, nullptr);
@@ -149,4 +149,4 @@ idis::vk_init::system::system(VkInstance instance)
 	m_queue_families = queue_family_list{std::move(qf)};
 }
 
-idis::vk_init::instance::instance(): m_handle{make_instance()}, m_system_info{m_handle.get()} {}
+idis::init::instance::instance(): m_handle{make_instance()}, m_system_info{m_handle.get()} {}

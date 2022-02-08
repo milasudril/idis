@@ -1,10 +1,10 @@
-//@	{"target":{"name":"vk_image_view.o"}}
+//@	{"target":{"name":"image_view.o"}}
 
-#include "./vk_image_view.hpp"
+#include "./image_view.hpp"
 
 namespace
 {
-	auto create_vk_image_view(VkDevice device, VkImage image, VkFormat format)
+	auto create_image_view(VkDevice device, VkImage image, VkFormat format)
 	{
 		VkImageViewCreateInfo create_info{};
 		create_info.sType                           = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -27,13 +27,13 @@ namespace
 			throw idis::exception{"create vulkan image view", ""};
 		}
 
-		return idis::gpu_res::vk_image_view::handle_type{
-		    img_view, idis::gpu_res::vk_image_view_deleter{device}};
+		return idis::gpu_res::image_view::handle_type{img_view,
+		                                              idis::gpu_res::image_view_deleter{device}};
 	}
 }
 
 
-idis::gpu_res::vk_image_view::vk_image_view(VkDevice device, VkImage image, VkFormat format)
-    : m_handle{create_vk_image_view(device, image, format)}
+idis::gpu_res::image_view::image_view(VkDevice device, VkImage image, VkFormat format)
+    : m_handle{create_image_view(device, image, format)}
 {
 }

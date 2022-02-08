@@ -1,6 +1,6 @@
 //@	{
 //@	 "dependencies_extra":
-//@		[{"ref":"./vk_image_view.o", "rel":"implementation"},
+//@		[{"ref":"./image_view.o", "rel":"implementation"},
 //@		{"ref":"vulkan", "rel":"implementation", "origin":"pkg-config"}]
 //@	}
 
@@ -14,10 +14,10 @@
 
 namespace idis::gpu_res
 {
-	class vk_image_view_deleter
+	class image_view_deleter
 	{
 	public:
-		explicit vk_image_view_deleter(VkDevice device): m_device{device} {}
+		explicit image_view_deleter(VkDevice device): m_device{device} {}
 
 		void operator()(VkImageView obj) const
 		{
@@ -30,20 +30,19 @@ namespace idis::gpu_res
 		VkDevice m_device;
 	};
 
-	class vk_image_view
+	class image_view
 	{
 	public:
-		using handle_type =
-		    std::unique_ptr<std::remove_pointer_t<VkImageView>, vk_image_view_deleter>;
+		using handle_type = std::unique_ptr<std::remove_pointer_t<VkImageView>, image_view_deleter>;
 
-		vk_image_view() = default;
+		image_view() = default;
 
-		explicit vk_image_view(vk_init::device& device, VkImage image, VkFormat format)
-		    : vk_image_view{device.handle(), image, format}
+		explicit image_view(init::device& device, VkImage image, VkFormat format)
+		    : image_view{device.handle(), image, format}
 		{
 		}
 
-		explicit vk_image_view(VkDevice device, VkImage image, VkFormat format);
+		explicit image_view(VkDevice device, VkImage image, VkFormat format);
 
 		auto handle() const { return m_handle.get(); }
 

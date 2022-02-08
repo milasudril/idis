@@ -1,6 +1,6 @@
 //@	{
 //@	 "dependencies_extra":
-//@		[{"ref":"./vk_swapchain.o", "rel":"implementation"},
+//@		[{"ref":"./swapchain.o", "rel":"implementation"},
 //@		{"ref":"vulkan", "rel":"implementation", "origin":"pkg-config"}]
 //@	}
 
@@ -15,10 +15,10 @@
 
 namespace idis::gpu_res
 {
-	class vk_swapchain_deleter
+	class swapchain_deleter
 	{
 	public:
-		explicit vk_swapchain_deleter(VkDevice device): m_device{device} {}
+		explicit swapchain_deleter(VkDevice device): m_device{device} {}
 
 		void operator()(VkSwapchainKHR obj) const
 		{
@@ -31,15 +31,15 @@ namespace idis::gpu_res
 		VkDevice m_device;
 	};
 
-	class vk_swapchain
+	class swapchain
 	{
 	public:
 		using handle_type =
-		    std::unique_ptr<std::remove_pointer_t<VkSwapchainKHR>, vk_swapchain_deleter>;
+		    std::unique_ptr<std::remove_pointer_t<VkSwapchainKHR>, swapchain_deleter>;
 
-		vk_swapchain() = default;
+		swapchain() = default;
 
-		explicit vk_swapchain(vk_init::device& device, vk_init::surface& surface);
+		explicit swapchain(init::device& device, init::surface& surface);
 
 		VkSwapchainKHR handle() const { return m_data.first.get(); }
 

@@ -10,7 +10,7 @@
 #include <array>
 #include <algorithm>
 
-idis::vk_init::device::device(render_device const& device_info)
+idis::init::device::device(render_device const& device_info)
     : m_graphics_queue{device_info.graphics_queue_family}
     , m_surface_queue{device_info.surface_queue_family}
     , m_device_info{device_info}

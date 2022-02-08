@@ -1,8 +1,8 @@
-//@	{"target":{"name":"vk_shader_module.o"}}
+//@	{"target":{"name":"shader_module.o"}}
 
-#include "./vk_shader_module.hpp"
+#include "./shader_module.hpp"
 
-idis::gpu_res::shader_module_handle idis::gpu_res::create_vk_shader_module(
+idis::gpu_res::shader_module_handle idis::gpu_res::create_shader_module(
     VkDevice device, std::span<uint32_t const> spirv_data)
 {
 	VkShaderModuleCreateInfo create_info{};
@@ -16,5 +16,5 @@ idis::gpu_res::shader_module_handle idis::gpu_res::create_vk_shader_module(
 		throw exception{"create shader module", ""};
 	}
 
-	return shader_module_handle{shader_module, vk_shader_module_deleter{device}};
+	return shader_module_handle{shader_module, shader_module_deleter{device}};
 }
