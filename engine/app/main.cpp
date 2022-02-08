@@ -28,8 +28,11 @@ public:
 	    , m_swapchain{device, surface}
 	    , m_img_views{get_image_views_from(m_swapchain)}
 	{
-		m_pipeline.shader(idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()})
-			.shader(idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()});
+		m_pipeline
+		    .shader(
+		        idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()})
+		    .shader(
+		        idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()});
 	}
 
 private:

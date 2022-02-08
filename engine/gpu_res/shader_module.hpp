@@ -45,7 +45,7 @@ namespace idis::gpu_res
 
 		using handle_type = shader_module_handle;
 
-		shader_module():m_handle{nullptr, shader_module_deleter{nullptr}}{}
+		shader_module(): m_handle{nullptr, shader_module_deleter{nullptr}} {}
 
 		template<class Container>
 		explicit shader_module(init::device& device,
