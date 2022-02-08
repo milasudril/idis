@@ -8,6 +8,7 @@
 #define IDIS_GPURES_VKSHADERMODULE_HPP
 
 #include "engine/vk_init/device.hpp"
+#include "engine/shaders/shader_source.hpp"
 
 #include <type_traits>
 #include <memory>
@@ -46,13 +47,17 @@ namespace idis::gpu_res
 
 		vk_shader_module() = default;
 
-		explicit vk_shader_module(vk_init::device& device, std::span<uint32_t const> spirv_data)
+		template<class Container>
+		explicit vk_shader_module(vk_init::device& device,
+		                          shaders::shader_source<Container, PipelineStage> spirv_data)
 		    : vk_shader_module{device.handle(), spirv_data}
 		{
 		}
 
-		explicit vk_shader_module(VkDevice device, std::span<uint32_t const> spirv_data)
-		    : m_handle{create_vk_shader_module(device, spirv_data)}
+		template<class Container>
+		explicit vk_shader_module(VkDevice device,
+		                          shaders::shader_source<Container, PipelineStage> spirv_data)
+		    : m_handle{create_vk_shader_module(device, spirv_data.data)}
 		{
 		}
 

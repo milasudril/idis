@@ -2,12 +2,13 @@
 //@	 "dependencies_extra":[{"ref":"./repo.o", "rel":"implementation"}]
 //@	}
 
+#include "./shader_source.hpp"
+
 #include <span>
-#include <cstdint>
 
 namespace idis::shaders::repo
 {
-	std::span<uint32_t const> get_vertex_shader();
+	vertex_shader_source<std::span<uint32_t const>> get_vertex_shader();
 
-	std::span<uint32_t const> get_fragment_shader();
+	fragment_shader_source<std::span<uint32_t const>> get_fragment_shader();
 }

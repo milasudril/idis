@@ -27,11 +27,10 @@ public:
 	    , m_swapchain{device, surface}
 	    , m_img_views{get_image_views_from(m_swapchain)}
 	{
-		idis::gpu_res::vk_shader_module<VK_SHADER_STAGE_VERTEX_BIT> vert_shader{
-			m_device, idis::shaders::repo::get_vertex_shader()};
-		idis::gpu_res::vk_shader_module<VK_SHADER_STAGE_FRAGMENT_BIT> frag_shader{
-			m_device, idis::shaders::repo::get_fragment_shader()
-		};
+		idis::gpu_res::vk_shader_module vert_shader{m_device,
+		                                            idis::shaders::repo::get_vertex_shader()};
+		idis::gpu_res::vk_shader_module frag_shader{m_device,
+		                                            idis::shaders::repo::get_fragment_shader()};
 	}
 
 private:
