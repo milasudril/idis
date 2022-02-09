@@ -31,6 +31,18 @@ namespace idis::gpu_res
 		return ret;
 	}
 
+	inline auto init_viewport_state(std::reference_wrapper<VkViewport const> viewport,
+									std::reference_wrapper<VkRect2D const> scissor)
+	{
+		VkPipelineViewportStateCreateInfo ret{};
+        ret.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+        ret.viewportCount = 1;
+        ret.pViewports = &viewport.get();
+        ret.scissorCount = 1;
+        ret.pScissors = &scissor.get();
+		return ret;
+	}
+
 	inline auto init_rasterization_state()
 	{
 		VkPipelineRasterizationStateCreateInfo ret{};
@@ -69,10 +81,13 @@ namespace idis::gpu_res
 		pipeline_descriptor()
 		    : m_vertex_input{init_vertex_input()}
 		    , m_input_assembly{init_input_assembly()}
-		    , m_viewport{init_viewport()}
+		    , m_viewport{std::make_unique<VkViewport>(init_viewport())}
+		    , m_scissor{std::make_unique<VkRect2D>()}
+		    , m_viewport_state{init_viewport_state(*m_viewport, *m_scissor)}
 		    , m_rasterization_state{init_rasterization_state()}
 		    , m_multisample_state{init_multisample_state()}
-		    , m_color_blend_attachment_state{init_color_blend_attchment_state()}
+		    , m_color_blend_attachment_state{std::make_unique<VkPipelineColorBlendAttachmentState>(
+		          init_color_blend_attchment_state())}
 		{
 		}
 
@@ -88,14 +103,14 @@ namespace idis::gpu_res
 
 		pipeline_descriptor& viewport(wm::dimensions dim)
 		{
-			m_viewport.width  = static_cast<float>(dim.width);
-			m_viewport.height = static_cast<float>(dim.height);
+			m_viewport->width  = static_cast<float>(dim.width);
+			m_viewport->height = static_cast<float>(dim.height);
 			return *this;
 		}
 
 		pipeline_descriptor& scissor(wm::dimensions dim)
 		{
-			m_scissor.extent =
+			m_scissor->extent =
 			    VkExtent2D{static_cast<uint32_t>(dim.width), static_cast<uint32_t>(dim.height)};
 			return *this;
 		}
@@ -104,11 +119,12 @@ namespace idis::gpu_res
 		shader_program<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> m_shaders;
 		VkPipelineVertexInputStateCreateInfo m_vertex_input;
 		VkPipelineInputAssemblyStateCreateInfo m_input_assembly;
-		VkViewport m_viewport;
-		VkRect2D m_scissor{};
+		std::unique_ptr<VkViewport> m_viewport;
+		std::unique_ptr<VkRect2D> m_scissor;
+		VkPipelineViewportStateCreateInfo m_viewport_state;
 		VkPipelineRasterizationStateCreateInfo m_rasterization_state;
 		VkPipelineMultisampleStateCreateInfo m_multisample_state;
-		VkPipelineColorBlendAttachmentState m_color_blend_attachment_state;
+		std::unique_ptr<VkPipelineColorBlendAttachmentState> m_color_blend_attachment_state;
 	};
 }
 
