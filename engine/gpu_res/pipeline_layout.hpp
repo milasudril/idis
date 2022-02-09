@@ -33,13 +33,13 @@ namespace idis::gpu_res
 	class pipeline_layout
 	{
 	public:
-		using handle_type = std::unique_ptr<std::remove_pointer_t<VkPipelineLayout>, pipeline_layout_deleter>;;
+		using handle_type =
+		    std::unique_ptr<std::remove_pointer_t<VkPipelineLayout>, pipeline_layout_deleter>;
+		;
 
 		pipeline_layout(): m_handle{nullptr, pipeline_layout_deleter{nullptr}} {}
 
-		explicit pipeline_layout(init::device& device) : pipeline_layout{device.handle()}
-		{
-		}
+		explicit pipeline_layout(init::device& device): pipeline_layout{device.handle()} {}
 
 		explicit pipeline_layout(VkDevice device);
 

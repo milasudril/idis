@@ -139,6 +139,23 @@ namespace idis::gpu_res
 			return *this;
 		}
 
+		auto const& shaders() const { return m_shaders; }
+
+		auto const& vertex_input() const { return m_vertex_input; }
+
+		auto const& input_assembly() const { return m_input_assembly; }
+
+		auto const& viewport_state() const { return m_viewport_state; }
+
+		auto const& rasterization_state() const { return m_rasterization_state; }
+
+		auto const& multisample_state() const { return m_multisample_state; }
+
+		auto const& color_blend_state() const { return m_color_blend_state; }
+
+		auto const& layout() const { return m_layout; }
+
+
 	private:
 		shader_program<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> m_shaders;
 		VkPipelineVertexInputStateCreateInfo m_vertex_input;

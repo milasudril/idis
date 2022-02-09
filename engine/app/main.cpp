@@ -33,7 +33,7 @@ public:
 		        idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()})
 		    .shader(
 		        idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()})
-			.layout(idis::gpu_res::pipeline_layout{m_device});
+		    .layout(idis::gpu_res::pipeline_layout{m_device});
 	}
 
 private:
