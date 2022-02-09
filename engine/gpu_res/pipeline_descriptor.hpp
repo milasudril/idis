@@ -2,6 +2,7 @@
 #define IDIS_GPURES_PIPELINEDESCRIPTOR_HPP
 
 #include "./shader_module.hpp"
+#include "./pipeline_layout.hpp"
 
 namespace idis::gpu_res
 {
@@ -118,6 +119,12 @@ namespace idis::gpu_res
 			return *this;
 		}
 
+		pipeline_descriptor& layout(pipeline_layout&& layout)
+		{
+			m_layout = std::move(layout);
+			return *this;
+		}
+
 		pipeline_descriptor& viewport(wm::dimensions dim)
 		{
 			m_viewport->width  = static_cast<float>(dim.width);
@@ -143,6 +150,7 @@ namespace idis::gpu_res
 		VkPipelineMultisampleStateCreateInfo m_multisample_state;
 		std::unique_ptr<VkPipelineColorBlendAttachmentState> m_color_blend_attachment_state;
 		VkPipelineColorBlendStateCreateInfo m_color_blend_state;
+		pipeline_layout m_layout;
 	};
 }
 
