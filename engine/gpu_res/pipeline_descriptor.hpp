@@ -32,14 +32,14 @@ namespace idis::gpu_res
 	}
 
 	inline auto init_viewport_state(std::reference_wrapper<VkViewport const> viewport,
-									std::reference_wrapper<VkRect2D const> scissor)
+	                                std::reference_wrapper<VkRect2D const> scissor)
 	{
 		VkPipelineViewportStateCreateInfo ret{};
-        ret.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
-        ret.viewportCount = 1;
-        ret.pViewports = &viewport.get();
-        ret.scissorCount = 1;
-        ret.pScissors = &scissor.get();
+		ret.sType         = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+		ret.viewportCount = 1;
+		ret.pViewports    = &viewport.get();
+		ret.scissorCount  = 1;
+		ret.pScissors     = &scissor.get();
 		return ret;
 	}
 
@@ -75,6 +75,22 @@ namespace idis::gpu_res
 		return ret;
 	}
 
+	inline auto init_color_blend_state(
+	    std::reference_wrapper<VkPipelineColorBlendAttachmentState const> attachment)
+	{
+		VkPipelineColorBlendStateCreateInfo ret{};
+		ret.sType             = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+		ret.logicOpEnable     = VK_FALSE;
+		ret.logicOp           = VK_LOGIC_OP_COPY;
+		ret.attachmentCount   = 1;
+		ret.pAttachments      = &attachment.get();
+		ret.blendConstants[0] = 0.0f;
+		ret.blendConstants[1] = 0.0f;
+		ret.blendConstants[2] = 0.0f;
+		ret.blendConstants[3] = 0.0f;
+		return ret;
+	}
+
 	class pipeline_descriptor
 	{
 	public:
@@ -88,6 +104,7 @@ namespace idis::gpu_res
 		    , m_multisample_state{init_multisample_state()}
 		    , m_color_blend_attachment_state{std::make_unique<VkPipelineColorBlendAttachmentState>(
 		          init_color_blend_attchment_state())}
+		    , m_color_blend_state{init_color_blend_state(*m_color_blend_attachment_state)}
 		{
 		}
 
@@ -125,6 +142,7 @@ namespace idis::gpu_res
 		VkPipelineRasterizationStateCreateInfo m_rasterization_state;
 		VkPipelineMultisampleStateCreateInfo m_multisample_state;
 		std::unique_ptr<VkPipelineColorBlendAttachmentState> m_color_blend_attachment_state;
+		VkPipelineColorBlendStateCreateInfo m_color_blend_state;
 	};
 }
 
