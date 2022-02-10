@@ -92,6 +92,15 @@ namespace idis::gpu_res
 		return ret;
 	}
 
+	template<auto... Tags>
+	using shader_module_set = std::tuple<shader_module<Tags>...>;
+
+	struct shader_program_info
+	{
+		shader_module_set<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> modules;
+		pipeline_layout layout;
+	};
+
 	class pipeline_descriptor
 	{
 	public:
@@ -106,22 +115,13 @@ namespace idis::gpu_res
 		    , m_color_blend_attachment_state{std::make_unique<VkPipelineColorBlendAttachmentState>(
 		          init_color_blend_attchment_state())}
 		    , m_color_blend_state{init_color_blend_state(*m_color_blend_attachment_state)}
+		    , m_shader_program{nullptr}
 		{
 		}
 
-		template<auto... Tags>
-		using shader_program = std::tuple<shader_module<Tags>...>;
-
-		template<auto ShaderStage>
-		pipeline_descriptor& shader(shader_module<ShaderStage>&& shader_mod)
+		pipeline_descriptor& shader_program(std::reference_wrapper<shader_program_info const> prg)
 		{
-			std::get<shader_module<ShaderStage>>(m_shaders) = std::move(shader_mod);
-			return *this;
-		}
-
-		pipeline_descriptor& layout(pipeline_layout&& layout)
-		{
-			m_layout = std::move(layout);
+			m_shader_program = &prg.get();
 			return *this;
 		}
 
@@ -139,7 +139,7 @@ namespace idis::gpu_res
 			return *this;
 		}
 
-		auto const& shaders() const { return m_shaders; }
+		auto const& shader_program() const { return m_shader_program; }
 
 		auto const& vertex_input() const { return m_vertex_input; }
 
@@ -153,11 +153,7 @@ namespace idis::gpu_res
 
 		auto const& color_blend_state() const { return m_color_blend_state; }
 
-		auto const& layout() const { return m_layout; }
-
-
 	private:
-		shader_program<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> m_shaders;
 		VkPipelineVertexInputStateCreateInfo m_vertex_input;
 		VkPipelineInputAssemblyStateCreateInfo m_input_assembly;
 		std::unique_ptr<VkViewport> m_viewport;
@@ -167,7 +163,7 @@ namespace idis::gpu_res
 		VkPipelineMultisampleStateCreateInfo m_multisample_state;
 		std::unique_ptr<VkPipelineColorBlendAttachmentState> m_color_blend_attachment_state;
 		VkPipelineColorBlendStateCreateInfo m_color_blend_state;
-		pipeline_layout m_layout;
+		shader_program_info const* m_shader_program;
 	};
 }
 

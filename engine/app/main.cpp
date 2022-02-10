@@ -27,13 +27,12 @@ public:
 	    , m_surface{surface}
 	    , m_swapchain{device, surface}
 	    , m_img_views{get_image_views_from(m_swapchain)}
+	    , m_shader_prog{
+	          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
+	           idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()}},
+	          idis::gpu_res::pipeline_layout{m_device}}
 	{
-		m_pipeline
-		    .shader(
-		        idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()})
-		    .shader(
-		        idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()})
-		    .layout(idis::gpu_res::pipeline_layout{m_device});
+		m_pipeline.shader_program(m_shader_prog);
 	}
 
 private:
@@ -41,6 +40,7 @@ private:
 	std::reference_wrapper<idis::init::surface> m_surface;
 	idis::gpu_res::swapchain m_swapchain;
 	std::vector<idis::gpu_res::image_view> m_img_views;
+	idis::gpu_res::shader_program_info m_shader_prog;
 	idis::gpu_res::pipeline_descriptor m_pipeline;
 };
 
