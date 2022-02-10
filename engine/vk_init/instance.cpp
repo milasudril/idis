@@ -28,14 +28,26 @@ namespace
 		VkInstanceCreateInfo create_info{};
 		create_info.sType            = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		create_info.pApplicationInfo = &app_info;
-		create_info.ppEnabledExtensionNames =
-		    glfwGetRequiredInstanceExtensions(&create_info.enabledExtensionCount);
-		if(create_info.ppEnabledExtensionNames == nullptr)
+
+		uint32_t glfw_extension_count{};
+		auto const glfw_extensions = glfwGetRequiredInstanceExtensions(&glfw_extension_count);
+		if(glfw_extensions == nullptr)
 		{
 			throw idis::exception{
 			    "create vulkan instance",
 			    "The selected driver has no drawing capabilities or is not available"};
 		}
+
+		std::vector<char const*> req_extensions(glfw_extensions,
+		                                        glfw_extensions + glfw_extension_count);
+		req_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+
+		create_info.enabledExtensionCount   = std::size(req_extensions);
+		create_info.ppEnabledExtensionNames = std::data(req_extensions);
+
+		create_info.enabledLayerCount          = 1;
+		constexpr char const* validation_layer = "VK_LAYER_KHRONOS_validation";
+		create_info.ppEnabledLayerNames        = &validation_layer;
 
 		if(vkCreateInstance(&create_info, nullptr, &instance) != VK_SUCCESS)
 		{

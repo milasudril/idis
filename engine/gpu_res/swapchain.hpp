@@ -41,27 +41,25 @@ namespace idis::gpu_res
 
 		explicit swapchain(init::device& device, init::surface& surface);
 
-		VkSwapchainKHR handle() const { return m_data.first.get(); }
+		VkSwapchainKHR handle() const { return std::get<0>(m_data).get(); }
+
+		auto device() const { return std::get<0>(m_data).get_deleter().device(); }
+
+		auto image_format() const { return std::get<1>(m_data); }
+
+		auto extent() const { return std::get<2>(m_data); }
 
 		std::vector<VkImage> get_images() const
 		{
 			uint32_t img_count{};
-			vkGetSwapchainImagesKHR(
-			    m_data.first.get_deleter().device(), m_data.first.get(), &img_count, nullptr);
+			vkGetSwapchainImagesKHR(device(), handle(), &img_count, nullptr);
 			std::vector<VkImage> ret(img_count);
-			vkGetSwapchainImagesKHR(m_data.first.get_deleter().device(),
-			                        m_data.first.get(),
-			                        &img_count,
-			                        std::data(ret));
+			vkGetSwapchainImagesKHR(device(), handle(), &img_count, std::data(ret));
 			return ret;
 		}
 
-		auto device() const { return m_data.first.get_deleter().device(); }
-
-		auto image_format() const { return m_data.second; }
-
 	private:
-		std::pair<handle_type, VkFormat> m_data;
+		std::tuple<handle_type, VkFormat, VkExtent2D> m_data;
 	};
 }
 

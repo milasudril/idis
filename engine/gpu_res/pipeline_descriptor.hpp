@@ -8,7 +8,7 @@ namespace idis::gpu_res
 {
 	inline auto init_vertex_input()
 	{
-		VkPipelineVertexInputStateCreateInfo ret;
+		VkPipelineVertexInputStateCreateInfo ret{};
 		ret.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		ret.vertexBindingDescriptionCount   = 0;
 		ret.vertexAttributeDescriptionCount = 0;
@@ -17,7 +17,7 @@ namespace idis::gpu_res
 
 	inline auto init_input_assembly()
 	{
-		VkPipelineInputAssemblyStateCreateInfo ret;
+		VkPipelineInputAssemblyStateCreateInfo ret{};
 		ret.sType                  = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		ret.topology               = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		ret.primitiveRestartEnable = VK_FALSE;
@@ -69,7 +69,7 @@ namespace idis::gpu_res
 
 	inline auto init_color_blend_attchment_state()
 	{
-		VkPipelineColorBlendAttachmentState ret;
+		VkPipelineColorBlendAttachmentState ret{};
 		ret.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT
 		                     | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 		ret.blendEnable = VK_FALSE;
@@ -125,14 +125,14 @@ namespace idis::gpu_res
 			return *this;
 		}
 
-		pipeline_descriptor& viewport(wm::dimensions dim)
+		pipeline_descriptor& viewport(VkExtent2D dim)
 		{
 			m_viewport->width  = static_cast<float>(dim.width);
 			m_viewport->height = static_cast<float>(dim.height);
 			return *this;
 		}
 
-		pipeline_descriptor& scissor(wm::dimensions dim)
+		pipeline_descriptor& scissor(VkExtent2D dim)
 		{
 			m_scissor->extent =
 			    VkExtent2D{static_cast<uint32_t>(dim.width), static_cast<uint32_t>(dim.height)};

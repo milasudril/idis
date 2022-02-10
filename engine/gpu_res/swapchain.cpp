@@ -53,9 +53,10 @@ namespace
 			throw idis::exception{"create vulkan swapchain", ""};
 		}
 
-		return std::pair{idis::gpu_res::swapchain::handle_type{
-		                     swapchain, idis::gpu_res::swapchain_deleter{device.handle()}},
-		                 surface_format.format};
+		return std::tuple{idis::gpu_res::swapchain::handle_type{
+		                      swapchain, idis::gpu_res::swapchain_deleter{device.handle()}},
+		                  surface_format.format,
+		                  image_extent};
 	}
 }
 

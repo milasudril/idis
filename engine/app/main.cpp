@@ -41,9 +41,10 @@ public:
 	void create_pipeline()
 	{
 		auto new_render_pass = idis::gpu_res::render_pass{m_device, m_swapchain.image_format()};
-		auto new_pipeline    = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
-		m_render_pass        = std::move(new_render_pass);
-		m_pipeline           = std::move(new_pipeline);
+		m_pipeline_info.viewport(m_swapchain.extent()).scissor(m_swapchain.extent());
+		auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
+		m_render_pass     = std::move(new_render_pass);
+		m_pipeline        = std::move(new_pipeline);
 	}
 
 private:
