@@ -139,7 +139,7 @@ namespace idis::gpu_res
 			return *this;
 		}
 
-		auto const& shader_program() const { return m_shader_program; }
+		auto const& shader_program() const { return *m_shader_program; }
 
 		auto const& vertex_input() const { return m_vertex_input; }
 

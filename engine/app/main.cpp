@@ -12,6 +12,7 @@
 #include "engine/gpu_res/utils.hpp"
 #include "engine/gpu_res/shader_module.hpp"
 #include "engine/gpu_res/pipeline_descriptor.hpp"
+#include "engine/gpu_res/pipeline.hpp"
 #include "engine/gpu_res/render_pass.hpp"
 #include "engine/shaders/repo.hpp"
 
@@ -28,14 +29,21 @@ public:
 	    , m_surface{surface}
 	    , m_swapchain{device, surface}
 	    , m_img_views{get_image_views_from(m_swapchain)}
-	    , m_shader_prog{{idis::gpu_res::shader_module{m_device,
-	                                                  idis::shaders::repo::get_vertex_shader()},
-	                     idis::gpu_res::shader_module{m_device,
-	                                                  idis::shaders::repo::get_fragment_shader()}},
-	                    idis::gpu_res::pipeline_layout{m_device}}
-	    , m_render_pass{device, m_swapchain.image_format()}
+	    , m_shader_prog{
+	          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
+	           idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()}},
+	          idis::gpu_res::pipeline_layout{m_device}}
 	{
-		m_pipeline.shader_program(m_shader_prog);
+		m_pipeline_info.shader_program(m_shader_prog);
+		create_pipeline();
+	}
+
+	void create_pipeline()
+	{
+		auto new_render_pass = idis::gpu_res::render_pass{m_device, m_swapchain.image_format()};
+		auto new_pipeline    = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
+		m_render_pass        = std::move(new_render_pass);
+		m_pipeline           = std::move(new_pipeline);
 	}
 
 private:
@@ -45,7 +53,8 @@ private:
 	std::vector<idis::gpu_res::image_view> m_img_views;
 	idis::gpu_res::shader_program_info m_shader_prog;
 	idis::gpu_res::render_pass m_render_pass;
-	idis::gpu_res::pipeline_descriptor m_pipeline;
+	idis::gpu_res::pipeline_descriptor m_pipeline_info;
+	idis::gpu_res::pipeline m_pipeline;
 };
 
 int idis::app::main(int, char**)

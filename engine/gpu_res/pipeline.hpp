@@ -8,6 +8,7 @@
 #define IDIS_GPURES_PIPELINE_HPP
 
 #include "./pipeline_descriptor.hpp"
+#include "./render_pass.hpp"
 
 #include <type_traits>
 #include <memory>
@@ -40,14 +41,14 @@ namespace idis::gpu_res
 
 
 		explicit pipeline(init::device& device,
-		                  std::reference_wrapper<pipeline_descriptor const> descriptor)
-		    : pipeline{device.handle(), descriptor}
+		                  pipeline_descriptor const& descriptor,
+		                  render_pass& rp)
+		    : pipeline{device.handle(), descriptor, rp}
 		{
 		}
 
 
-		explicit pipeline(VkDevice device,
-		                  std::reference_wrapper<pipeline_descriptor const> descriptor);
+		explicit pipeline(VkDevice device, pipeline_descriptor const& descriptor, render_pass& rp);
 
 		auto handle() const { return m_handle.get(); }
 
