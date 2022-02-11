@@ -27,8 +27,6 @@ public:
 	explicit renderer(idis::init::device& device, idis::init::surface& surface)
 	    : m_device{device}
 	    , m_surface{surface}
-	    , m_swapchain{device, surface}
-	    , m_img_views{get_image_views_from(m_swapchain)}
 	    , m_shader_prog{
 	          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
 	           idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_fragment_shader()}},
@@ -40,11 +38,17 @@ public:
 
 	void create_pipeline()
 	{
-		auto new_render_pass = idis::gpu_res::render_pass{m_device, m_swapchain.image_format()};
-		m_pipeline_info.viewport(m_swapchain.extent()).scissor(m_swapchain.extent());
+		auto new_swapchain = idis::gpu_res::swapchain{m_device, m_surface};
+		auto new_img_views = create_image_views_from(new_swapchain);
+		auto new_render_pass = idis::gpu_res::render_pass{m_device, new_swapchain.image_format()};
+		m_pipeline_info.viewport(new_swapchain.extent()).scissor(new_swapchain.extent());
 		auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
+		auto new_framebuffers = create_framebuffers_from(m_device, new_render_pass, m_img_views);
+		m_swapchain       = std::move(new_swapchain);
+		m_img_views       = std::move(new_img_views);
 		m_render_pass     = std::move(new_render_pass);
 		m_pipeline        = std::move(new_pipeline);
+		m_framebuffers    = std::move(new_framebuffers);
 	}
 
 private:
@@ -56,6 +60,7 @@ private:
 	idis::gpu_res::render_pass m_render_pass;
 	idis::gpu_res::pipeline_descriptor m_pipeline_info;
 	idis::gpu_res::pipeline m_pipeline;
+	std::vector<idis::gpu_res::framebuffer> m_framebuffers;
 };
 
 int idis::app::main(int, char**)
