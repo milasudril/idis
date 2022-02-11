@@ -6,11 +6,11 @@
 
 namespace
 {
-	auto create_swapchain(idis::init::device& device, idis::init::surface& surface)
+	auto create_swapchain(idis::vk_init::device& device, idis::vk_init::surface& surface)
 	{
 		auto const physical_device = device.device_info().device;
 		auto const surface_caps    = get_surface_capabilities(physical_device, surface);
-		auto const image_count     = idis::init::get_image_count(surface_caps);
+		auto const image_count     = idis::vk_init::get_image_count(surface_caps);
 		auto const surface_format  = select_surface_format(physical_device, surface);
 		auto const image_extent    = select_extent(surface_caps, surface.target_window());
 		auto const present_mode    = select_present_mode(physical_device, surface);
@@ -60,7 +60,7 @@ namespace
 	}
 }
 
-idis::gpu_res::swapchain::swapchain(init::device& device, init::surface& surface)
+idis::gpu_res::swapchain::swapchain(vk_init::device& device, vk_init::surface& surface)
     : m_data{create_swapchain(device, surface)}
 {
 }

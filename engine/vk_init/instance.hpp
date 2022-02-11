@@ -15,7 +15,7 @@
 #include <string>
 #include <span>
 
-namespace idis::init
+namespace idis::vk_init
 {
 	struct device_info
 	{

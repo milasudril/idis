@@ -48,7 +48,7 @@ namespace idis::gpu_res
 		shader_module(): m_handle{nullptr, shader_module_deleter{nullptr}} {}
 
 		template<class Container>
-		explicit shader_module(init::device& device,
+		explicit shader_module(vk_init::device& device,
 		                       shaders::shader_source<Container, PipelineStage> spirv_data)
 		    : shader_module{device.handle(), spirv_data}
 		{

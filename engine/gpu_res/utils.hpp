@@ -21,7 +21,7 @@ namespace idis::gpu_res
 		return ret;
 	}
 
-	inline std::vector<framebuffer> create_framebuffers_from(idis::init::device& device,
+	inline std::vector<framebuffer> create_framebuffers_from(idis::vk_init::device& device,
 	                                                         render_pass& rp,
 	                                                         VkExtent2D dim,
 	                                                         std::span<image_view> img_views)

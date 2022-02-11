@@ -42,7 +42,7 @@ namespace idis::gpu_res
 		{
 		}
 
-		explicit swapchain(init::device& device, init::surface& surface);
+		explicit swapchain(vk_init::device& device, vk_init::surface& surface);
 
 		VkSwapchainKHR handle() const { return std::get<0>(m_data).get(); }
 

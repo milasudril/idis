@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace idis::init
+namespace idis::vk_init
 {
 	class surface_deleter
 	{

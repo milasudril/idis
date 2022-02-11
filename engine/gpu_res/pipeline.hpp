@@ -40,7 +40,7 @@ namespace idis::gpu_res
 		pipeline(): m_handle{nullptr, pipeline_deleter{nullptr}} {}
 
 
-		explicit pipeline(init::device& device,
+		explicit pipeline(vk_init::device& device,
 		                  pipeline_descriptor const& descriptor,
 		                  render_pass& rp)
 		    : pipeline{device.handle(), descriptor, rp}

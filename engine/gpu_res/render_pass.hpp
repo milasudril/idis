@@ -40,7 +40,7 @@ namespace idis::gpu_res
 		render_pass(): m_handle{nullptr, render_pass_deleter{nullptr}} {}
 
 
-		explicit render_pass(init::device& device, VkFormat output_format)
+		explicit render_pass(vk_init::device& device, VkFormat output_format)
 		    : render_pass{device.handle(), output_format}
 		{
 		}

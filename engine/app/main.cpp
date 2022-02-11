@@ -24,7 +24,7 @@
 class renderer
 {
 public:
-	explicit renderer(idis::init::device& device, idis::init::surface& surface)
+	explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
 	    : m_device{device}
 	    , m_surface{surface}
 	    , m_shader_prog{
@@ -55,8 +55,8 @@ public:
 	}
 
 private:
-	std::reference_wrapper<idis::init::device> m_device;
-	std::reference_wrapper<idis::init::surface> m_surface;
+	std::reference_wrapper<idis::vk_init::device> m_device;
+	std::reference_wrapper<idis::vk_init::surface> m_surface;
 	idis::gpu_res::swapchain m_swapchain;
 	std::vector<idis::gpu_res::image_view> m_img_views;
 	idis::gpu_res::shader_program_info m_shader_prog;
@@ -70,10 +70,10 @@ int idis::app::main(int, char**)
 {
 	crash_handler::arm();
 
-	init::instance eyafjallajökull;
+	vk_init::instance eyafjallajökull;
 	wm::window_base window{1024, 640, "Idis"};
-	init::surface surface{eyafjallajökull, window};
-	init::device device{select_device("", eyafjallajökull.system_info(), surface)};
+	vk_init::surface surface{eyafjallajökull, window};
+	vk_init::device device{select_device("", eyafjallajökull.system_info(), surface)};
 
 	auto graphics_queue = device.get_graphics_queue();
 	assert(graphics_queue != nullptr);
