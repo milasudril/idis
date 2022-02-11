@@ -37,8 +37,10 @@ namespace idis::gpu_res
 		using handle_type =
 		    std::unique_ptr<std::remove_pointer_t<VkSwapchainKHR>, swapchain_deleter>;
 
-		swapchain():m_data{handle_type{nullptr, swapchain_deleter{nullptr}},VkFormat{}, VkExtent2D{}}
-		{}
+		swapchain()
+		    : m_data{handle_type{nullptr, swapchain_deleter{nullptr}}, VkFormat{}, VkExtent2D{}}
+		{
+		}
 
 		explicit swapchain(init::device& device, init::surface& surface);
 

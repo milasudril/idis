@@ -38,17 +38,18 @@ public:
 
 	void create_pipeline()
 	{
-		auto new_swapchain = idis::gpu_res::swapchain{m_device, m_surface};
-		auto new_img_views = create_image_views_from(new_swapchain);
+		auto new_swapchain   = idis::gpu_res::swapchain{m_device, m_surface};
+		auto new_img_views   = create_image_views_from(new_swapchain);
 		auto new_render_pass = idis::gpu_res::render_pass{m_device, new_swapchain.image_format()};
 		m_pipeline_info.viewport(new_swapchain.extent()).scissor(new_swapchain.extent());
-		auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
-		auto new_framebuffers = create_framebuffers_from(m_device, new_render_pass, m_img_views);
-		m_swapchain       = std::move(new_swapchain);
-		m_img_views       = std::move(new_img_views);
-		m_render_pass     = std::move(new_render_pass);
-		m_pipeline        = std::move(new_pipeline);
-		m_framebuffers    = std::move(new_framebuffers);
+		auto new_pipeline     = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
+		auto new_framebuffers = create_framebuffers_from(
+		    m_device, new_render_pass, new_swapchain.extent(), m_img_views);
+		m_swapchain    = std::move(new_swapchain);
+		m_img_views    = std::move(new_img_views);
+		m_render_pass  = std::move(new_render_pass);
+		m_pipeline     = std::move(new_pipeline);
+		m_framebuffers = std::move(new_framebuffers);
 	}
 
 private:
