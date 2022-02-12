@@ -48,6 +48,11 @@ namespace idis::vk_init
 
 		render_device const& device_info() const { return m_device_info; }
 
+		void wait() const
+		{
+			vkDeviceWaitIdle(m_handle.get());
+		}
+
 	private:
 		handle_type m_handle;
 		int m_graphics_queue;

@@ -56,7 +56,7 @@ namespace
 
 		void reconfigure()
 		{
-			vkDeviceWaitIdle(m_device.get().handle());
+			m_device.get().wait();
 
 			// Must remove all resources. Otherwise, the window is busy.
 			m_command_buffers.clear();
@@ -182,8 +182,7 @@ int idis::app::main(int, char**)
 		    timer.wait();
 	    });
 	state.loop.run();
-	vkDeviceWaitIdle(device.handle());
-	state.r = nullptr;
+	device.wait();
 
 	return 0;
 }
