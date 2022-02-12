@@ -5,6 +5,7 @@
 #include "./image_view.hpp"
 #include "./framebuffer.hpp"
 #include "./command_pool.hpp"
+#include "./pipeline.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -90,6 +91,19 @@ namespace idis::gpu_res
 		render_pass_section& operator=(render_pass_section const&) = delete;
 		render_pass_section(render_pass_section&&)                 = delete;
 		render_pass_section& operator=(render_pass_section&&) = delete;
+
+		render_pass_section& bind(VkCommandBuffer buffer, VkPipeline pipeline)
+		{
+			vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
+			return *this;
+		}
+
+		// FIXME: Strongly typed integers here
+		render_pass_section& draw(VkCommandBuffer buffer, int a, int b, int c, int d)
+		{
+			vkCmdDraw(buffer, a, b, c, d);
+			return *this;
+		}
 
 	private:
 		VkCommandBuffer m_handle;

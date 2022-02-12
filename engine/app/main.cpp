@@ -62,11 +62,13 @@ namespace
 			    idis::gpu_res::command_buffer_set{m_command_pool, std::size(new_framebuffers)};
 
 			idis::for_each(
-			    [rp = new_render_pass.handle(), extent = new_swapchain.extent()](auto cmd_buffer,
-			                                                                     auto const& fb)
+			    [rp       = new_render_pass.handle(),
+			     extent   = new_swapchain.extent(),
+			     pipeline = new_pipeline.handle()](auto cmd_buffer, auto const& fb)
 			    {
 				    idis::gpu_res::command_recording_session rec{cmd_buffer};
 				    idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
+				    rp_sec.bind(cmd_buffer, pipeline).draw(cmd_buffer, 3, 1, 0, 0);
 			    },
 			    new_command_buffers.buffers(),
 			    new_framebuffers);
