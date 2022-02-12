@@ -136,6 +136,7 @@ int idis::app::main(int, char**)
 		    timer.wait();
 	    });
 	state.loop.run();
+	vkDeviceWaitIdle(device.handle());
 
 	return 0;
 }
