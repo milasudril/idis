@@ -17,8 +17,8 @@ namespace
 			throw idis::exception{"create vulkan surface", ""};
 		}
 
-		return idis::vk_init::surface::handle_type{surface,
-		                                        idis::vk_init::surface_deleter{instance.handle()}};
+		return idis::vk_init::surface::handle_type{
+		    surface, idis::vk_init::surface_deleter{instance.handle()}};
 	}
 }
 
@@ -107,8 +107,8 @@ namespace
 }
 
 idis::vk_init::render_device idis::vk_init::select_device(std::string_view prefered_device,
-                                                    system const& sysinfo,
-                                                    surface const& surf)
+                                                          system const& sysinfo,
+                                                          surface const& surf)
 {
 	auto queue_families = sysinfo.queue_families();
 	auto usable_devices = collect_usable_devices(queue_families, surf);
@@ -168,7 +168,8 @@ VkPresentModeKHR idis::vk_init::select_present_mode(VkPhysicalDevice device, sur
 	return present_mode;
 }
 
-VkSurfaceFormatKHR idis::vk_init::select_surface_format(VkPhysicalDevice device, surface const& surf)
+VkSurfaceFormatKHR idis::vk_init::select_surface_format(VkPhysicalDevice device,
+                                                        surface const& surf)
 {
 	auto const surface_formats = get_surface_formats(device, surf);
 
