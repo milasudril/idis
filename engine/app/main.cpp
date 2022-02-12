@@ -22,7 +22,6 @@
 
 #include <algorithm>
 #include <cstdio>
-
 #include <cassert>
 
 namespace
@@ -60,6 +59,11 @@ namespace
 			    m_device, new_render_pass, new_swapchain.extent(), new_img_views);
 			auto new_command_buffers =
 			    idis::gpu_res::command_buffer_set{m_command_pool, std::size(new_framebuffers)};
+
+			std::ranges::for_each(new_command_buffers.buffers(), [](auto item) {
+				idis::gpu_res::command_recording_session rec{item};
+			});
+
 			m_swapchain       = std::move(new_swapchain);
 			m_img_views       = std::move(new_img_views);
 			m_render_pass     = std::move(new_render_pass);
