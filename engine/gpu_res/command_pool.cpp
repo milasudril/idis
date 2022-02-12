@@ -28,3 +28,19 @@ namespace
 idis::gpu_res::command_pool::command_pool(vk_init::device& dev): m_handle{create_command_pool(dev)}
 {
 }
+
+idis::gpu_res::command_buffer_set::command_buffer_set(command_pool& pool, size_t n)
+    : m_storage(n)
+    , m_owner{&pool}
+{
+	VkCommandBufferAllocateInfo create_info{};
+	create_info.sType              = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+	create_info.commandPool        = pool.handle();
+	create_info.level              = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+	create_info.commandBufferCount = static_cast<size_t>(n);
+
+	if(vkAllocateCommandBuffers(pool.device(), &create_info, std::data(m_storage)) != VK_SUCCESS)
+	{
+		throw exception{"create command buffers ", ""};
+	}
+}

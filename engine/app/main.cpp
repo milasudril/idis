@@ -37,7 +37,7 @@ namespace
 		explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
 		    : m_device{device}
 		    , m_surface{surface}
-		    , m_cmd_pool{device}
+		    , m_command_pool{device}
 		    , m_shader_prog{
 		          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
 		           idis::gpu_res::shader_module{m_device,
@@ -58,17 +58,20 @@ namespace
 			auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
 			auto new_framebuffers = create_framebuffers_from(
 			    m_device, new_render_pass, new_swapchain.extent(), new_img_views);
-			m_swapchain    = std::move(new_swapchain);
-			m_img_views    = std::move(new_img_views);
-			m_render_pass  = std::move(new_render_pass);
-			m_pipeline     = std::move(new_pipeline);
-			m_framebuffers = std::move(new_framebuffers);
+			auto new_command_buffers =
+			    idis::gpu_res::command_buffer_set{m_command_pool, std::size(new_framebuffers)};
+			m_swapchain       = std::move(new_swapchain);
+			m_img_views       = std::move(new_img_views);
+			m_render_pass     = std::move(new_render_pass);
+			m_pipeline        = std::move(new_pipeline);
+			m_framebuffers    = std::move(new_framebuffers);
+			m_command_buffers = std::move(new_command_buffers);
 		}
 
 	private:
 		std::reference_wrapper<idis::vk_init::device> m_device;
 		std::reference_wrapper<idis::vk_init::surface> m_surface;
-		idis::gpu_res::command_pool m_cmd_pool;
+		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
 
@@ -77,6 +80,7 @@ namespace
 		idis::gpu_res::render_pass m_render_pass;
 		idis::gpu_res::pipeline m_pipeline;
 		std::vector<idis::gpu_res::framebuffer> m_framebuffers;
+		idis::gpu_res::command_buffer_set m_command_buffers;
 	};
 
 	struct engine_state

@@ -47,6 +47,36 @@ namespace idis::gpu_res
 	private:
 		handle_type m_handle;
 	};
+
+	class command_buffer_set
+	{
+	public:
+		command_buffer_set() = default;
+
+		explicit command_buffer_set(command_pool& pool, size_t n);
+
+		command_buffer_set(command_buffer_set const&) = delete;
+		command_buffer_set& operator=(command_buffer_set const&) = delete;
+		command_buffer_set(command_buffer_set&&)                 = default;
+		command_buffer_set& operator=(command_buffer_set&&) = default;
+
+		~command_buffer_set()
+		{
+			if(!m_storage.empty())
+			{
+				vkFreeCommandBuffers(m_owner->device(),
+				                     m_owner->handle(),
+				                     static_cast<uint32_t>(std::size(m_storage)),
+				                     std::data(m_storage));
+			}
+		}
+
+		std::span<VkCommandBuffer const> buffers() const { return m_storage; }
+
+	private:
+		std::vector<VkCommandBuffer> m_storage;
+		command_pool const* m_owner;
+	};
 }
 
 #endif
