@@ -42,9 +42,9 @@ namespace idis::vk_init
 			return queue;
 		}
 
-		auto get_graphics_queue_family() const { return m_graphics_queue; }
+		auto graphics_queue_family() const { return m_graphics_queue; }
 
-		auto get_surface_queue_family() const { return m_surface_queue; }
+		auto surface_queue_family() const { return m_surface_queue; }
 
 		render_device const& device_info() const { return m_device_info; }
 

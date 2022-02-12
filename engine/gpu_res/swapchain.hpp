@@ -4,8 +4,8 @@
 //@		{"ref":"vulkan", "rel":"implementation", "origin":"pkg-config"}]
 //@	}
 
-#ifndef IDIS_GPURES_VKSWAPCHAIN_HPP
-#define IDIS_GPURES_VKSWAPCHAIN_HPP
+#ifndef IDIS_GPURES_SWAPCHAIN_HPP
+#define IDIS_GPURES_SWAPCHAIN_HPP
 
 #include "engine/vk_init/device.hpp"
 #include "engine/vk_init/surface.hpp"

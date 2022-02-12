@@ -7,13 +7,14 @@
 #include "engine/vk_init/surface.hpp"
 #include "engine/vk_init/device.hpp"
 #include "engine/window_manager/window.hpp"
+#include "engine/gpu_res/command_pool.hpp"
+#include "engine/gpu_res/shader_module.hpp"
 #include "engine/gpu_res/swapchain.hpp"
 #include "engine/gpu_res/image_view.hpp"
+#include "engine/gpu_res/render_pass.hpp"
 #include "engine/gpu_res/utils.hpp"
-#include "engine/gpu_res/shader_module.hpp"
 #include "engine/gpu_res/pipeline_descriptor.hpp"
 #include "engine/gpu_res/pipeline.hpp"
-#include "engine/gpu_res/render_pass.hpp"
 #include "engine/shaders/repo.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
@@ -36,6 +37,7 @@ namespace
 		explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
 		    : m_device{device}
 		    , m_surface{surface}
+		    , m_cmd_pool{device}
 		    , m_shader_prog{
 		          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
 		           idis::gpu_res::shader_module{m_device,
@@ -43,10 +45,10 @@ namespace
 		          idis::gpu_res::pipeline_layout{m_device}}
 		{
 			m_pipeline_info.shader_program(m_shader_prog);
-			create_pipeline();
+			reconfigure();
 		}
 
-		void create_pipeline()
+		void reconfigure()
 		{
 			auto new_swapchain = idis::gpu_res::swapchain{m_device, m_surface};
 			auto new_img_views = create_image_views_from(new_swapchain);
@@ -66,11 +68,13 @@ namespace
 	private:
 		std::reference_wrapper<idis::vk_init::device> m_device;
 		std::reference_wrapper<idis::vk_init::surface> m_surface;
+		idis::gpu_res::command_pool m_cmd_pool;
+		idis::gpu_res::shader_program_info m_shader_prog;
+		idis::gpu_res::pipeline_descriptor m_pipeline_info;
+
 		idis::gpu_res::swapchain m_swapchain;
 		std::vector<idis::gpu_res::image_view> m_img_views;
-		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::render_pass m_render_pass;
-		idis::gpu_res::pipeline_descriptor m_pipeline_info;
 		idis::gpu_res::pipeline m_pipeline;
 		std::vector<idis::gpu_res::framebuffer> m_framebuffers;
 	};

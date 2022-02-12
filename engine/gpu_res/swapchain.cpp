@@ -27,8 +27,8 @@ namespace
 		create_info.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
 		std::array<uint32_t, 2> queue_families{
-		    static_cast<uint32_t>(device.get_graphics_queue_family()),
-		    static_cast<uint32_t>(device.get_surface_queue_family())};
+		    static_cast<uint32_t>(device.graphics_queue_family()),
+		    static_cast<uint32_t>(device.surface_queue_family())};
 
 		if(queue_families[0] == queue_families[1])
 		{
