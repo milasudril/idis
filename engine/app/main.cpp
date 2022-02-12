@@ -81,6 +81,11 @@ namespace
 			m_command_buffers = std::move(new_command_buffers);
 		}
 
+		void draw_frame()
+		{
+			puts("Hej");
+		}
+
 	private:
 		std::reference_wrapper<idis::vk_init::device> m_device;
 		std::reference_wrapper<idis::vk_init::surface> m_surface;
@@ -111,7 +116,7 @@ int idis::app::main(int, char**)
 	engine_state state;
 	wm::window mainwin{state, 1024, 640, "Idis"};
 	mainwin.set_close_callback<window_action_tag>();
-	//.set_size_callback<window_action_tag>();
+	//TODO: .set_size_callback<window_action_tag>();
 	vk_init::surface surface{eyafjallajökull, mainwin};
 	vk_init::device device{select_device("", eyafjallajökull.system_info(), surface)};
 
@@ -125,8 +130,11 @@ int idis::app::main(int, char**)
 
 	state.loop.set_pre_drain_callback(glfwPollEvents);
 	state.loop.set_post_drain_callback(
-	    [timer = idis::sys::periodic_timer{idis::seq::seconds_per_tick}]() mutable
-	    { timer.wait(); });
+	    [timer = idis::sys::periodic_timer{idis::seq::seconds_per_tick}, &r]() mutable
+	    {
+		    r.draw_frame();
+		    timer.wait();
+	    });
 	state.loop.run();
 
 	return 0;
