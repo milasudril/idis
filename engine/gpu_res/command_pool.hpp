@@ -73,6 +73,8 @@ namespace idis::gpu_res
 
 		std::span<VkCommandBuffer const> buffers() const { return m_storage; }
 
+		VkCommandBuffer operator[](size_t index) const { return m_storage[index]; }
+
 	private:
 		std::vector<VkCommandBuffer> m_storage;
 		command_pool const* m_owner;

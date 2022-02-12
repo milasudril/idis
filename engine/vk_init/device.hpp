@@ -28,14 +28,14 @@ namespace idis::vk_init
 
 		VkDevice handle() const { return m_handle.get(); }
 
-		VkQueue get_graphics_queue() const
+		VkQueue graphics_queue() const
 		{
 			VkQueue queue{};
 			vkGetDeviceQueue(m_handle.get(), m_graphics_queue, 0, &queue);
 			return queue;
 		}
 
-		VkQueue get_surface_queue() const
+		VkQueue surface_queue() const
 		{
 			VkQueue queue{};
 			vkGetDeviceQueue(m_handle.get(), m_surface_queue, 0, &queue);

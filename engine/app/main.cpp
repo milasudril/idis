@@ -84,7 +84,15 @@ namespace
 			m_command_buffers = std::move(new_command_buffers);
 		}
 
-		void draw_frame() { puts("Hej"); }
+		void draw_frame()
+		{
+			auto img_index = acquire_next_image(m_device, m_swapchain, m_image_available);
+			submit(m_device.get().graphics_queue(),
+			       m_command_buffers[img_index],
+			       m_image_available,
+			       m_render_finished);
+			present(m_device.get().surface_queue(), m_swapchain, img_index, m_render_finished);
+		}
 
 	private:
 		std::reference_wrapper<idis::vk_init::device> m_device;
@@ -121,12 +129,6 @@ int idis::app::main(int, char**)
 	//TODO: .set_size_callback<window_action_tag>();
 	vk_init::surface surface{eyafjallajökull, mainwin};
 	vk_init::device device{select_device("", eyafjallajökull.system_info(), surface)};
-
-	auto graphics_queue = device.get_graphics_queue();
-	assert(graphics_queue != nullptr);
-
-	auto surface_queue = device.get_surface_queue();
-	assert(surface_queue != nullptr);
 
 	renderer r{device, surface};
 

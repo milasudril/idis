@@ -6,6 +6,9 @@
 #include "./framebuffer.hpp"
 #include "./command_pool.hpp"
 #include "./pipeline.hpp"
+#include "./semaphore.hpp"
+
+#include "engine/error_handler/exception.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -108,6 +111,60 @@ namespace idis::gpu_res
 	private:
 		VkCommandBuffer m_handle;
 	};
+
+	inline auto acquire_next_image(vk_init::device& dev, swapchain& swp, semaphore& sem)
+	{
+		uint32_t ret{};
+		vkAcquireNextImageKHR(
+		    dev.handle(), swp.handle(), UINT64_MAX, sem.handle(), VK_NULL_HANDLE, &ret);
+		return ret;
+	}
+
+	inline auto submit(VkQueue queue,
+	                   VkCommandBuffer cmd_buffer,
+	                   semaphore& wait_for,
+	                   semaphore& signal)
+	{
+		VkSubmitInfo submit_info{};
+		submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+		std::array<VkSemaphore, 1> const wait_sem{wait_for.handle()};
+		submit_info.waitSemaphoreCount = static_cast<uint32_t>(std::size(wait_sem));
+		submit_info.pWaitSemaphores    = std::data(wait_sem);
+
+		std::array<VkPipelineStageFlags, 1> const wait_stages{
+		    VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+		submit_info.pWaitDstStageMask  = std::data(wait_stages);
+		submit_info.commandBufferCount = 1;
+
+		submit_info.pCommandBuffers = &cmd_buffer;
+
+		std::array<VkSemaphore, 1> const signal_sem{signal.handle()};
+		submit_info.signalSemaphoreCount = static_cast<uint32_t>(std::size(signal_sem));
+		submit_info.pSignalSemaphores    = std::data(signal_sem);
+
+		if(vkQueueSubmit(queue, 1, &submit_info, VK_NULL_HANDLE) != VK_SUCCESS)
+		{
+			throw exception{"submit command buffer", ""};
+		}
+	}
+
+	inline auto present(VkQueue queue, swapchain& swp, uint32_t image_index, semaphore& wait_for)
+	{
+		VkPresentInfoKHR present_info{};
+		present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
+		std::array<VkSemaphore, 1> const wait_sem{wait_for.handle()};
+		present_info.waitSemaphoreCount = static_cast<uint32_t>(std::size(wait_sem));
+		present_info.pWaitSemaphores    = std::data(wait_sem);
+
+		std::array<VkSwapchainKHR, 1> swapchains{swp.handle()};
+		present_info.swapchainCount = static_cast<uint32_t>(std::size(swapchains));
+		present_info.pSwapchains    = std::data(swapchains);
+		present_info.pImageIndices  = &image_index;
+
+		vkQueuePresentKHR(queue, &present_info);
+	}
 }
 
 #endif
