@@ -38,7 +38,7 @@ namespace idis::gpu_res
 		VkSemaphore ret{};
 		if(vkCreateSemaphore(device, &semaphore_info, nullptr, &ret) != VK_SUCCESS)
 		{
-			throw idis::exception{"create semaphores", ""};
+			throw idis::exception{"create semaphore", ""};
 		}
 
 		return semaphore_handle{ret, semaphore_deleter{device}};

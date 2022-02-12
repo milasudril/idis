@@ -7,6 +7,7 @@
 #include "./command_pool.hpp"
 #include "./pipeline.hpp"
 #include "./semaphore.hpp"
+#include "./fence.hpp"
 
 #include "engine/error_handler/exception.hpp"
 
@@ -123,7 +124,8 @@ namespace idis::gpu_res
 	inline auto submit(VkQueue queue,
 	                   VkCommandBuffer cmd_buffer,
 	                   semaphore& wait_for,
-	                   semaphore& signal)
+	                   semaphore& signal,
+	                   fence& signal_fence)
 	{
 		VkSubmitInfo submit_info{};
 		submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -143,7 +145,7 @@ namespace idis::gpu_res
 		submit_info.signalSemaphoreCount = static_cast<uint32_t>(std::size(signal_sem));
 		submit_info.pSignalSemaphores    = std::data(signal_sem);
 
-		if(vkQueueSubmit(queue, 1, &submit_info, VK_NULL_HANDLE) != VK_SUCCESS)
+		if(vkQueueSubmit(queue, 1, &submit_info, signal_fence.handle()) != VK_SUCCESS)
 		{
 			throw exception{"submit command buffer", ""};
 		}

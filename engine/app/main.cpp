@@ -16,6 +16,7 @@
 #include "engine/gpu_res/pipeline_descriptor.hpp"
 #include "engine/gpu_res/pipeline.hpp"
 #include "engine/gpu_res/semaphore.hpp"
+#include "engine/gpu_res/fence.hpp"
 #include "engine/shaders/repo.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
@@ -38,8 +39,10 @@ namespace
 		explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
 		    : m_device{device}
 		    , m_surface{surface}
-		    , m_render_finished{device}
-		    , m_image_available{device}
+		    , m_render_finished{idis::gpu_res::semaphore{device}, idis::gpu_res::semaphore{device}}
+		    , m_image_available{idis::gpu_res::semaphore{device}, idis::gpu_res::semaphore{device}}
+		    , m_fences{idis::gpu_res::fence{device}, idis::gpu_res::fence{device}}
+		    , m_frame_index{0}
 		    , m_command_pool{device}
 		    , m_shader_prog{
 		          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
@@ -86,19 +89,27 @@ namespace
 
 		void draw_frame()
 		{
-			auto img_index = acquire_next_image(m_device, m_swapchain, m_image_available);
+			auto const k            = m_frame_index % s_frames_in_flight;
+			auto const fence_handle = m_fences[k].handle();
+			vkWaitForFences(m_device.get().handle(), 1, &fence_handle, VK_TRUE, UINT64_MAX);
+			vkResetFences(m_device.get().handle(), 1, &fence_handle);
+			auto img_index = acquire_next_image(m_device, m_swapchain, m_image_available[k]);
 			submit(m_device.get().graphics_queue(),
 			       m_command_buffers[img_index],
-			       m_image_available,
-			       m_render_finished);
-			present(m_device.get().surface_queue(), m_swapchain, img_index, m_render_finished);
+			       m_image_available[k],
+			       m_render_finished[k],
+			       m_fences[k]);
+			present(m_device.get().surface_queue(), m_swapchain, img_index, m_render_finished[k]);
 		}
 
 	private:
 		std::reference_wrapper<idis::vk_init::device> m_device;
 		std::reference_wrapper<idis::vk_init::surface> m_surface;
-		idis::gpu_res::semaphore m_render_finished;
-		idis::gpu_res::semaphore m_image_available;
+		static constexpr auto s_frames_in_flight = 2;
+		std::array<idis::gpu_res::semaphore, s_frames_in_flight> m_render_finished;
+		std::array<idis::gpu_res::semaphore, s_frames_in_flight> m_image_available;
+		std::array<idis::gpu_res::fence, s_frames_in_flight> m_fences;
+		size_t m_frame_index;
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
