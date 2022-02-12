@@ -77,31 +77,6 @@ namespace idis::gpu_res
 		std::vector<VkCommandBuffer> m_storage;
 		command_pool const* m_owner;
 	};
-
-	class command_recording_session
-	{
-	public:
-		explicit command_recording_session(VkCommandBuffer handle):m_handle{handle}
-		{
-			VkCommandBufferBeginInfo begin_info{};
-			begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-			if(!vkBeginCommandBuffer(m_handle, &begin_info) != VK_SUCCESS)
-			{ exception{"lock command buffer", ""}; }
-		}
-
-		~command_recording_session()
-		{
-			vkEndCommandBuffer(m_handle);
-		}
-
-		command_recording_session(command_recording_session const&) = delete;
-		command_recording_session& operator=(command_recording_session const&) = delete;
-		command_recording_session(command_recording_session&&)                 = delete;
-		command_recording_session& operator=(command_recording_session&&) = delete;
-
-	private:
-		VkCommandBuffer m_handle;
-	};
 }
 
 #endif
