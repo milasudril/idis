@@ -18,6 +18,7 @@
 #include "engine/shaders/repo.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
+#include "engine/helpers/algext.hpp"
 
 
 #include <algorithm>
@@ -60,9 +61,15 @@ namespace
 			auto new_command_buffers =
 			    idis::gpu_res::command_buffer_set{m_command_pool, std::size(new_framebuffers)};
 
-			std::ranges::for_each(new_command_buffers.buffers(), [](auto item) {
-				idis::gpu_res::command_recording_session rec{item};
-			});
+			idis::for_each(
+			    [rp = new_render_pass.handle(), extent = new_swapchain.extent()](auto cmd_buffer,
+			                                                                     auto const& fb)
+			    {
+				    idis::gpu_res::command_recording_session rec{cmd_buffer};
+				    idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
+			    },
+			    new_command_buffers.buffers(),
+			    new_framebuffers);
 
 			m_swapchain       = std::move(new_swapchain);
 			m_img_views       = std::move(new_img_views);
