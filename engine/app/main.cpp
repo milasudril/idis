@@ -15,6 +15,7 @@
 #include "engine/gpu_res/utils.hpp"
 #include "engine/gpu_res/pipeline_descriptor.hpp"
 #include "engine/gpu_res/pipeline.hpp"
+#include "engine/gpu_res/semaphore.hpp"
 #include "engine/shaders/repo.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
@@ -37,6 +38,8 @@ namespace
 		explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
 		    : m_device{device}
 		    , m_surface{surface}
+		    , m_render_finished{device}
+		    , m_image_available{device}
 		    , m_command_pool{device}
 		    , m_shader_prog{
 		          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
@@ -81,14 +84,13 @@ namespace
 			m_command_buffers = std::move(new_command_buffers);
 		}
 
-		void draw_frame()
-		{
-			puts("Hej");
-		}
+		void draw_frame() { puts("Hej"); }
 
 	private:
 		std::reference_wrapper<idis::vk_init::device> m_device;
 		std::reference_wrapper<idis::vk_init::surface> m_surface;
+		idis::gpu_res::semaphore m_render_finished;
+		idis::gpu_res::semaphore m_image_available;
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
