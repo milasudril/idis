@@ -45,10 +45,11 @@ namespace idis::gpu_res
 		{
 		}
 
-
 		explicit render_pass(VkDevice device, VkFormat output_format);
 
 		auto handle() const { return m_handle.get(); }
+
+		void reset() { m_handle.reset(); }
 
 	private:
 		handle_type m_handle;

@@ -61,6 +61,11 @@ namespace idis::gpu_res
 			return ret;
 		}
 
+		void reset()
+		{
+			std::get<0>(m_data).reset();
+		}
+
 	private:
 		std::tuple<handle_type, VkFormat, VkExtent2D> m_data;
 	};

@@ -4,6 +4,8 @@
 
 #include "./swapchain.hpp"
 
+#include "engine/vk_init/error.hpp"
+
 namespace
 {
 	auto create_swapchain(idis::vk_init::device& device, idis::vk_init::surface& surface)
@@ -48,9 +50,9 @@ namespace
 		create_info.oldSwapchain   = VK_NULL_HANDLE;
 
 		VkSwapchainKHR swapchain{};
-		if(vkCreateSwapchainKHR(device.handle(), &create_info, nullptr, &swapchain) != VK_SUCCESS)
+		if(auto res = vkCreateSwapchainKHR(device.handle(), &create_info, nullptr, &swapchain); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create vulkan swapchain", ""};
+			throw idis::exception{"create vulkan swapchain", to_string(idis::vk_init::error{res})};
 		}
 
 		return std::tuple{idis::gpu_res::swapchain::handle_type{

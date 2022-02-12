@@ -3,9 +3,7 @@
 #include "./child_proc.hpp"
 
 #include "engine/helpers/hexformat.hpp"
-
-#define CASE_RET_STR(value)                                                                        \
-	case value: return #value
+#include "engine/helpers/case_ret_str.hpp"
 
 std::string idis::sys::to_string(proc_term_signal val)
 {

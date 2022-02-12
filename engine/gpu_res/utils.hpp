@@ -113,12 +113,26 @@ namespace idis::gpu_res
 		VkCommandBuffer m_handle;
 	};
 
-	inline auto acquire_next_image(vk_init::device& dev, swapchain& swp, semaphore& sem)
+	template<class OutOfDateHandler>
+	inline auto acquire_next_image(vk_init::device& dev, swapchain& swp, semaphore& sem, OutOfDateHandler&& on_out_of_date)
 	{
-		uint32_t ret{};
-		vkAcquireNextImageKHR(
-		    dev.handle(), swp.handle(), UINT64_MAX, sem.handle(), VK_NULL_HANDLE, &ret);
-		return ret;
+		while(true)
+		{
+			uint32_t ret{};
+			switch(vkAcquireNextImageKHR(
+		    dev.handle(), swp.handle(), UINT64_MAX, sem.handle(), VK_NULL_HANDLE, &ret))
+			{
+				case VK_SUCCESS:
+					return ret;
+				case VK_SUBOPTIMAL_KHR:
+					return ret;
+				case VK_ERROR_OUT_OF_DATE_KHR:
+					on_out_of_date();
+					break;
+				default:
+					throw exception{"acquire next image", ""};
+			}
+		}
 	}
 
 	inline auto submit(VkQueue queue,

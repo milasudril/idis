@@ -75,6 +75,8 @@ namespace idis::gpu_res
 
 		VkCommandBuffer operator[](size_t index) const { return m_storage[index]; }
 
+		void clear() {m_storage.clear();}
+
 	private:
 		std::vector<VkCommandBuffer> m_storage;
 		command_pool const* m_owner;
