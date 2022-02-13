@@ -52,6 +52,8 @@ namespace idis::gpu_res
 
 		void reset() { m_handle.reset(); }
 
+		VkDevice device() const { return m_handle.get_deleter().device(); }
+
 	private:
 		handle_type m_handle;
 	};

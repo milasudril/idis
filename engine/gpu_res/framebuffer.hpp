@@ -39,11 +39,10 @@ namespace idis::gpu_res
 
 		framebuffer() = default;
 
-		explicit framebuffer(std::reference_wrapper<vk_init::device const> device,
-		                     render_pass const& matching_rp,
+		explicit framebuffer(render_pass const& matching_rp,
 		                     VkExtent2D dim,
 		                     image_view& img_view)
-		    : framebuffer{device.get().handle(), matching_rp.handle(), dim, img_view.handle()}
+		    : framebuffer{matching_rp.device(), matching_rp.handle(), dim, img_view.handle()}
 		{
 		}
 

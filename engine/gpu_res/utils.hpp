@@ -27,15 +27,14 @@ namespace idis::gpu_res
 		return ret;
 	}
 
-	inline std::vector<framebuffer> create_framebuffers_from(idis::vk_init::device& device,
-	                                                         render_pass& rp,
+	inline std::vector<framebuffer> create_framebuffers_from(render_pass const& matching_rp,
 	                                                         VkExtent2D dim,
 	                                                         std::span<image_view> img_views)
 	{
 		std::vector<framebuffer> ret;
 		std::ranges::transform(img_views,
 		                       std::back_inserter(ret),
-		                       [dev = device.handle(), rp_handle = rp.handle(), dim](auto& item) {
+		                       [dev = matching_rp.device(), rp_handle = matching_rp.handle(), dim](auto& item) {
 			                       return framebuffer{dev, rp_handle, dim, item.handle()};
 		                       });
 
