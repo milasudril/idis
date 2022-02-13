@@ -6,7 +6,7 @@
 #include "engine/vk_init/instance.hpp"
 #include "engine/vk_init/surface.hpp"
 #include "engine/vk_init/device.hpp"
-#include "engine/window_manager/window.hpp"
+#include "engine/window_managment/window.hpp"
 #include "engine/gpu_res/command_pool.hpp"
 #include "engine/gpu_res/shader_module.hpp"
 #include "engine/gpu_res/swapchain.hpp"

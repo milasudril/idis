@@ -2,7 +2,7 @@
 
 #include "./main.hpp"
 
-#include "engine/window_manager/window.hpp"
+#include "engine/window_managment/window.hpp"
 #include "engine/sw_graphics/cairo_surface.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"

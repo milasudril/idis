@@ -1,7 +1,7 @@
 //@	{"dependencies_extra":[{"ref":"./glfw_stub.o", "rel":"implementation"}]}
 
-#ifndef IDIS_WINDOWMANAGER_GLFWSTUB_HPP
-#define IDIS_WINDOWMANAGER_GLFWSTUB_HPP
+#ifndef IDIS_WINDOWMANAGMENT_GLFWSTUB_HPP
+#define IDIS_WINDOWMANAGMENT_GLFWSTUB_HPP
 
 #include <GLFW/glfw3.h>
 

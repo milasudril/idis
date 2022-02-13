@@ -1,7 +1,7 @@
 //@	{"dependencies_extra":[{"ref":"glfw3", "rel":"implementation", "origin":"pkg-config"}]}
 
-#ifndef IDIS_WINDOWMANAGER_INITIALIZER_HPP
-#define IDIS_WINDOWMANAGER_INITIALIZER_HPP
+#ifndef IDIS_WINDOWMANAGMENT_INITIALIZER_HPP
+#define IDIS_WINDOWMANAGMENT_INITIALIZER_HPP
 
 #include "engine/error_handling/exception.hpp"
 #include <GLFW/glfw3.h>

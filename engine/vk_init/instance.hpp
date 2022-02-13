@@ -7,7 +7,7 @@
 #ifndef IDIS_VKINIT_INSTANCE_HPP
 #define IDIS_VKINIT_INSTANCE_HPP
 
-#include "engine/window_manager/initializer.hpp"
+#include "engine/window_managment/initializer.hpp"
 #include "engine/utils/sorted_sequence.hpp"
 
 #include <memory>

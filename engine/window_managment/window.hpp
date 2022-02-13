@@ -6,8 +6,8 @@
 //@		]
 //@	}
 
-#ifndef IDIS_WINDOWMANAGER_WINDOW_HPP
-#define IDIS_WINDOWMANAGER_WINDOW_HPP
+#ifndef IDIS_WINDOWMANAGMENT_WINDOW_HPP
+#define IDIS_WINDOWMANAGMENT_WINDOW_HPP
 
 #include "./initializer.hpp"
 

@@ -9,7 +9,7 @@
 
 #include "./instance.hpp"
 
-#include "engine/window_manager/window.hpp"
+#include "engine/window_managment/window.hpp"
 
 #include <type_traits>
 
