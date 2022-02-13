@@ -1,13 +1,12 @@
-#ifndef IDIS_TIMER_PERIODICTIMER_HPP
-#define IDIS_TIMER_PERIODICTIMER_HPP
+#ifndef IDIS_SYS_PERIODICTIMER_HPP
+#define IDIS_SYS_PERIODICTIMER_HPP
 
 #include "./fd.hpp"
+#include "./error_code.hpp"
 #include "engine/error_handling/exception.hpp"
 
 #include <chrono>
-#include <memory>
 #include <sys/timerfd.h>
-#include <cstring>
 #include <unistd.h>
 
 namespace idis::sys
@@ -31,7 +30,7 @@ namespace idis::sys
 		explicit periodic_timer(std::chrono::duration<Rep, Period> period)
 		    : m_fd{timerfd_create(CLOCK_MONOTONIC, 0)}
 		{
-			if(m_fd == nullptr) { throw exception{"create periodic timer", strerror(errno)}; }
+			if(m_fd == nullptr) { throw exception{"create periodic timer", to_string(error_code{errno})}; }
 
 			itimerspec spec{};
 			spec.it_interval = to_timespec(period);
