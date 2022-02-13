@@ -2,6 +2,8 @@
 
 #include "./image_view.hpp"
 
+#include "engine/vk_init/error.hpp"
+
 namespace
 {
 	auto create_image_view(VkDevice device, VkImage image, VkFormat format)
@@ -22,9 +24,9 @@ namespace
 		create_info.subresourceRange.layerCount     = 1;
 
 		VkImageView img_view{};
-		if(vkCreateImageView(device, &create_info, nullptr, &img_view) != VK_SUCCESS)
+		if(auto res = vkCreateImageView(device, &create_info, nullptr, &img_view); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create vulkan image view", ""};
+			throw idis::exception{"create vulkan image view", to_string(idis::vk_init::error{res})};
 		}
 
 		return idis::gpu_res::image_view::handle_type{img_view,
