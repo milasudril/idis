@@ -3,6 +3,7 @@
 //@	}
 
 #include "./device.hpp"
+#include "./error.hpp"
 
 #include "engine/error_handling/exception.hpp"
 
@@ -42,9 +43,9 @@ idis::vk_init::device::device(render_device const& device_info)
 	create_info.ppEnabledExtensionNames  = &swapchain_name;
 
 	VkDevice device{};
-	if(vkCreateDevice(device_info.device, &create_info, nullptr, &device) != VK_SUCCESS)
+	if(auto res = vkCreateDevice(device_info.device, &create_info, nullptr, &device); res != VK_SUCCESS)
 	{
-		throw exception{"create logical device", ""};
+		throw exception{"create logical device", to_string(error{res})};
 	}
 	m_handle.reset(device);
 }

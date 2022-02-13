@@ -2,6 +2,7 @@
 #define IDIS_VKINIT_ERROR_HPP
 
 #include "engine/utils/case_ret_str.hpp"
+#include "engine/error_handling/common_causes.hpp"
 
 #include <vulkan/vulkan.h>
 
@@ -23,13 +24,16 @@ namespace idis::vk_init
 		switch(e.value())
 		{
 			CASE_RET_STR(VK_SUCCESS);
+			CASE_RET_STR(VK_ERROR_EXTENSION_NOT_PRESENT);
+			CASE_RET_STR(VK_ERROR_FEATURE_NOT_PRESENT);
+			CASE_RET_STR(VK_ERROR_TOO_MANY_OBJECTS);
 			CASE_RET_STR(VK_ERROR_OUT_OF_HOST_MEMORY);
 			CASE_RET_STR(VK_ERROR_OUT_OF_DEVICE_MEMORY);
 			CASE_RET_STR(VK_ERROR_DEVICE_LOST);
 			CASE_RET_STR(VK_ERROR_SURFACE_LOST_KHR);
 			CASE_RET_STR(VK_ERROR_NATIVE_WINDOW_IN_USE_KHR);
 			CASE_RET_STR(VK_ERROR_INITIALIZATION_FAILED);
-			default: return "Unknown error";
+			default: return idis::unknown_error;
 		}
 	}
 }
