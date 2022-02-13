@@ -10,6 +10,7 @@
 #include "./fence.hpp"
 
 #include "engine/error_handling/exception.hpp"
+#include "engine/vk_init/error.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -51,9 +52,9 @@ namespace idis::gpu_res
 		{
 			VkCommandBufferBeginInfo begin_info{};
 			begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-			if(!vkBeginCommandBuffer(m_handle, &begin_info) != VK_SUCCESS)
+			if(auto res = vkBeginCommandBuffer(m_handle, &begin_info); res != VK_SUCCESS)
 			{
-				exception{"lock command buffer", ""};
+				exception{"record commands", to_string(vk_init::error{res})};
 			}
 		}
 
@@ -124,13 +125,14 @@ namespace idis::gpu_res
 		while(true)
 		{
 			uint32_t ret{};
-			switch(vkAcquireNextImageKHR(
-			    dev.handle(), swp.handle(), UINT64_MAX, sem.handle(), VK_NULL_HANDLE, &ret))
+			auto const res = vkAcquireNextImageKHR(
+			    dev.handle(), swp.handle(), UINT64_MAX, sem.handle(), VK_NULL_HANDLE, &ret);
+			switch(res)
 			{
 				case VK_SUCCESS: return ret;
 				case VK_SUBOPTIMAL_KHR: return ret;
 				case VK_ERROR_OUT_OF_DATE_KHR: on_out_of_date(); break;
-				default: throw exception{"acquire next image", ""};
+				default: throw exception{"acquire next image", to_string(vk_init::error{res})};
 			}
 		}
 	}
@@ -159,9 +161,10 @@ namespace idis::gpu_res
 		submit_info.signalSemaphoreCount = static_cast<uint32_t>(std::size(signal_sem));
 		submit_info.pSignalSemaphores    = std::data(signal_sem);
 
-		if(vkQueueSubmit(queue, 1, &submit_info, signal_fence.handle()) != VK_SUCCESS)
+		if(auto res = vkQueueSubmit(queue, 1, &submit_info, signal_fence.handle());
+		   res != VK_SUCCESS)
 		{
-			throw exception{"submit command buffer", ""};
+			throw exception{"submit command buffer", to_string(vk_init::error{res})};
 		}
 	}
 
