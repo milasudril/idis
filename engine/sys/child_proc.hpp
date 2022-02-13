@@ -4,7 +4,7 @@
 #define IDIS_SYS_CHILDPROC_HPP
 
 #include "./pipe.hpp"
-#include "engine/error_handler/exception.hpp"
+#include "engine/error_handling/exception.hpp"
 
 #include <sys/types.h>
 #include <sys/wait.h>

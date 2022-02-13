@@ -1,7 +1,7 @@
 //@	{"target":{"name":"render_pass.o"}}
 
 #include "./render_pass.hpp"
-#include "engine/error_handler/exception.hpp"
+#include "engine/error_handling/exception.hpp"
 
 namespace
 {

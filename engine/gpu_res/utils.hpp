@@ -9,7 +9,7 @@
 #include "./semaphore.hpp"
 #include "./fence.hpp"
 
-#include "engine/error_handler/exception.hpp"
+#include "engine/error_handling/exception.hpp"
 
 #include <vector>
 #include <algorithm>

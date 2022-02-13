@@ -8,7 +8,7 @@
 
 static_assert(std::is_base_of_v<std::runtime_error, idis::exception>);
 
-TESTCASE(idis_errorhandler_exception_create)
+TESTCASE(idis_exception_create)
 {
 	idis::exception e{"foo", "bar"};
 	auto const what = e.what();

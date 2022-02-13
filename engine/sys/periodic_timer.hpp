@@ -2,7 +2,7 @@
 #define IDIS_TIMER_PERIODICTIMER_HPP
 
 #include "./fd.hpp"
-#include "engine/error_handler/exception.hpp"
+#include "engine/error_handling/exception.hpp"
 
 #include <chrono>
 #include <memory>

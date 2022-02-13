@@ -2,7 +2,7 @@
 
 #include "./pipeline_layout.hpp"
 
-#include "engine/error_handler/exception.hpp"
+#include "engine/error_handling/exception.hpp"
 
 namespace
 {

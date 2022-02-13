@@ -6,7 +6,7 @@
 #define IDIS_GPURES_SEMAPHORE_HPP
 
 #include "engine/vk_init/device.hpp"
-#include "engine/error_handler/exception.hpp"
+#include "engine/error_handling/exception.hpp"
 
 #include <type_traits>
 #include <memory>

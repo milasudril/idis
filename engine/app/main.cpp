@@ -2,7 +2,7 @@
 
 #include "./main.hpp"
 
-#include "engine/error_handler/crash_handler.hpp"
+#include "engine/error_handling/crash_handler.hpp"
 #include "engine/vk_init/instance.hpp"
 #include "engine/vk_init/surface.hpp"
 #include "engine/vk_init/device.hpp"
