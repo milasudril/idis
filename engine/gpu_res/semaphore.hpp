@@ -6,6 +6,7 @@
 #define IDIS_GPURES_SEMAPHORE_HPP
 
 #include "engine/vk_init/device.hpp"
+#include "engine/vk_init/error.hpp"
 #include "engine/error_handling/exception.hpp"
 
 #include <type_traits>
@@ -36,9 +37,9 @@ namespace idis::gpu_res
 		VkSemaphoreCreateInfo semaphore_info{};
 		semaphore_info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 		VkSemaphore ret{};
-		if(vkCreateSemaphore(device, &semaphore_info, nullptr, &ret) != VK_SUCCESS)
+		if(auto res = vkCreateSemaphore(device, &semaphore_info, nullptr, &ret); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create semaphore", ""};
+			throw idis::exception{"create semaphore", to_string(vk_init::error{res})};
 		}
 
 		return semaphore_handle{ret, semaphore_deleter{device}};

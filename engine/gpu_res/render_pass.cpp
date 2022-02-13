@@ -1,7 +1,9 @@
 //@	{"target":{"name":"render_pass.o"}}
 
 #include "./render_pass.hpp"
+
 #include "engine/error_handling/exception.hpp"
+#include "engine/vk_init/error.hpp"
 
 namespace
 {
@@ -44,9 +46,9 @@ namespace
 		render_pass_info.pDependencies   = &dependency;
 
 		VkRenderPass ret{};
-		if(vkCreateRenderPass(dev, &render_pass_info, nullptr, &ret) != VK_SUCCESS)
+		if(auto res = vkCreateRenderPass(dev, &render_pass_info, nullptr, &ret); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create render pass", ""};
+			throw idis::exception{"create render pass", to_string(idis::vk_init::error{res})};
 		}
 
 		return idis::gpu_res::render_pass::handle_type{ret,

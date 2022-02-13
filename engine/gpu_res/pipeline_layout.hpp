@@ -39,8 +39,10 @@ namespace idis::gpu_res
 
 		pipeline_layout(): m_handle{nullptr, pipeline_layout_deleter{nullptr}} {}
 
-		explicit pipeline_layout(std::reference_wrapper<vk_init::device const> device):
-			pipeline_layout{device.get().handle()} {}
+		explicit pipeline_layout(std::reference_wrapper<vk_init::device const> device)
+		    : pipeline_layout{device.get().handle()}
+		{
+		}
 
 		explicit pipeline_layout(VkDevice device);
 

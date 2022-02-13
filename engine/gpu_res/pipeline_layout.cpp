@@ -17,7 +17,8 @@ namespace
 		pipeline_layout_info.pPushConstantRanges    = nullptr;  // Optional
 
 		VkPipelineLayout ret{};
-		if(auto res = vkCreatePipelineLayout(device, &pipeline_layout_info, nullptr, &ret); res != VK_SUCCESS)
+		if(auto res = vkCreatePipelineLayout(device, &pipeline_layout_info, nullptr, &ret);
+		   res != VK_SUCCESS)
 		{
 			throw idis::exception{"create pipeline layout", to_string(idis::vk_init::error{res})};
 		}
