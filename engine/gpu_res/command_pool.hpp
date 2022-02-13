@@ -38,7 +38,7 @@ namespace idis::gpu_res
 
 		command_pool(): m_handle{nullptr, command_pool_deleter{nullptr}} {}
 
-		explicit command_pool(vk_init::device& device);
+		explicit command_pool(std::reference_wrapper<vk_init::device const> device);
 
 		VkCommandPool handle() const { return m_handle.get(); }
 

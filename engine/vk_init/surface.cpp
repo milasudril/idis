@@ -14,7 +14,8 @@ namespace
 	{
 		VkSurfaceKHR surface{};
 		if(auto res = glfwCreateWindowSurface(
-		       instance.get().handle(), window.get().handle(), nullptr, &surface); res != VK_SUCCESS)
+		       instance.get().handle(), window.get().handle(), nullptr, &surface);
+		   res != VK_SUCCESS)
 		{
 			throw idis::exception{"create vulkan surface", to_string(idis::vk_init::error{res})};
 		}
