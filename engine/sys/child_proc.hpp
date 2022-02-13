@@ -4,6 +4,7 @@
 #define IDIS_SYS_CHILDPROC_HPP
 
 #include "./pipe.hpp"
+#include "./error_code.hpp"
 #include "engine/error_handling/exception.hpp"
 
 #include <sys/types.h>
@@ -175,7 +176,7 @@ namespace idis::sys
 			auto pid = fork();
 			if(pid == -1)
 			{
-				throw exception{std::string{"start "}.append(std::move(name)), strerror(errno)};
+				throw exception{std::string{"start "}.append(std::move(name)), to_string(error_code{errno})};
 			}
 
 			if(pid == 0)
