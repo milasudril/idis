@@ -72,7 +72,8 @@ namespace
 			    idis::gpu_res::render_pass{m_device, new_swapchain.image_format()};
 			m_pipeline_info.viewport(new_swapchain.extent()).scissor(new_swapchain.extent());
 			auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
-			auto new_framebuffers = create_framebuffers_from(new_render_pass, new_swapchain.extent(), new_img_views);
+			auto new_framebuffers =
+			    create_framebuffers_from(new_render_pass, new_swapchain.extent(), new_img_views);
 			auto new_command_buffers =
 			    idis::gpu_res::command_buffer_set{m_command_pool, std::size(new_framebuffers)};
 

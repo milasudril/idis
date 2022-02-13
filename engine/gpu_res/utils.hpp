@@ -16,14 +16,16 @@
 
 namespace idis::gpu_res
 {
-	inline std::vector<image_view> create_image_views_from(swapchain const& src)
+	inline std::vector<image_view> create_image_views_from(
+	    std::reference_wrapper<swapchain const> src)
 	{
 		std::vector<image_view> ret;
-		std::ranges::transform(src.get_images(),
-		                       std::back_inserter(ret),
-		                       [dev = src.device(), format = src.image_format()](auto item) {
-			                       return image_view{dev, item, format};
-		                       });
+		std::ranges::transform(
+		    get_images(src),
+		    std::back_inserter(ret),
+		    [dev = src.get().device(), format = src.get().image_format()](auto item) {
+			    return image_view{dev, item, format};
+		    });
 		return ret;
 	}
 
@@ -32,11 +34,12 @@ namespace idis::gpu_res
 	                                                         std::span<image_view const> img_views)
 	{
 		std::vector<framebuffer> ret;
-		std::ranges::transform(img_views,
-		                       std::back_inserter(ret),
-		                       [dev = matching_rp.device(), rp_handle = matching_rp.handle(), dim](auto& item) {
-			                       return framebuffer{dev, rp_handle, dim, item.handle()};
-		                       });
+		std::ranges::transform(
+		    img_views,
+		    std::back_inserter(ret),
+		    [dev = matching_rp.device(), rp_handle = matching_rp.handle(), dim](auto& item) {
+			    return framebuffer{dev, rp_handle, dim, item.handle()};
+		    });
 
 		return ret;
 	}

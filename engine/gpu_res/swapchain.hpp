@@ -53,20 +53,20 @@ namespace idis::gpu_res
 
 		auto extent() const { return std::get<2>(m_data); }
 
-		std::vector<VkImage> get_images() const
-		{
-			uint32_t img_count{};
-			vkGetSwapchainImagesKHR(device(), handle(), &img_count, nullptr);
-			std::vector<VkImage> ret(img_count);
-			vkGetSwapchainImagesKHR(device(), handle(), &img_count, std::data(ret));
-			return ret;
-		}
-
 		void reset() { std::get<0>(m_data).reset(); }
 
 	private:
 		std::tuple<handle_type, VkFormat, VkExtent2D> m_data;
 	};
+
+	inline std::vector<VkImage> get_images(std::reference_wrapper<swapchain const> swp)
+	{
+		uint32_t img_count{};
+		vkGetSwapchainImagesKHR(swp.get().device(), swp.get().handle(), &img_count, nullptr);
+		std::vector<VkImage> ret(img_count);
+		vkGetSwapchainImagesKHR(swp.get().device(), swp.get().handle(), &img_count, std::data(ret));
+		return ret;
+	}
 }
 
 #endif
