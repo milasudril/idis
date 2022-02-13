@@ -7,3 +7,6 @@
 [submodule "pixel_store"]
 	path = pixel_store
 	url = git@github.com:milasudril/pixel_store.git
+[submodule "VulkanMemoryAllocator"]
+	path = VulkanMemoryAllocator
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
