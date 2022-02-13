@@ -36,15 +36,16 @@ namespace idis::vk_init
 
 		surface() = default;
 
-		explicit surface(instance& assoc_instance, wm::window_base& target_window);
+		explicit surface(std::reference_wrapper<instance const> assoc_instance,
+		                 std::reference_wrapper<wm::window_base const> target_window);
 
 		VkSurfaceKHR handle() const { return m_handle.get(); }
 
-		wm::window_base& target_window() const { return m_target_window; }
+		wm::window_base const& target_window() const { return m_target_window.get(); }
 
 	private:
 		handle_type m_handle;
-		std::reference_wrapper<wm::window_base> m_target_window;
+		std::reference_wrapper<wm::window_base const> m_target_window;
 	};
 
 	struct render_device

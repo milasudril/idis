@@ -8,22 +8,25 @@
 
 namespace
 {
-	auto create_surface(idis::vk_init::instance& instance, idis::wm::window_base& window)
+	auto create_surface(std::reference_wrapper<idis::vk_init::instance const> instance,
+	                    std::reference_wrapper<idis::wm::window_base const> window)
 	{
 		VkSurfaceKHR surface{};
-		if(glfwCreateWindowSurface(instance.handle(), window.handle(), nullptr, &surface)
+		if(glfwCreateWindowSurface(
+		       instance.get().handle(), window.get().handle(), nullptr, &surface)
 		   != VK_SUCCESS)
 		{
 			throw idis::exception{"create vulkan surface", ""};
 		}
 
 		return idis::vk_init::surface::handle_type{
-		    surface, idis::vk_init::surface_deleter{instance.handle()}};
+		    surface, idis::vk_init::surface_deleter{instance.get().handle()}};
 	}
 }
 
 
-idis::vk_init::surface::surface(instance& assoc_instance, wm::window_base& window)
+idis::vk_init::surface::surface(std::reference_wrapper<instance const> assoc_instance,
+                                std::reference_wrapper<wm::window_base const> window)
     : m_handle{create_surface(assoc_instance, window)}
     , m_target_window{window}
 {

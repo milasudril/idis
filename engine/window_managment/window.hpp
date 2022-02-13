@@ -42,7 +42,7 @@ namespace idis::wm
 	public:
 		explicit window_base(int width, int height, char const* title);
 
-		auto handle() { return m_handle.get(); }
+		auto handle() const { return m_handle.get(); }
 
 		dimensions get_dimensions() const
 		{
