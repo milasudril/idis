@@ -1,13 +1,12 @@
-#ifndef IDIS_HELPERS_PIPE_HPP
-#define IDIS_HELPERS_PIPE_HPP
+#ifndef IDIS_SYS_PIPE_HPP
+#define IDIS_SYS_PIPE_HPP
 
 #include "./fd.hpp"
+#include "./error_code.hpp"
 
 #include "engine/error_handling/exception.hpp"
 
 #include <unistd.h>
-#include <cstring>
-#include <memory>
 
 namespace idis::sys
 {
@@ -20,7 +19,10 @@ namespace idis::sys
 			constexpr size_t pipe_write_index = 1;
 
 			int fds[2];
-			if(::pipe(fds) == -1) { throw exception{"create a pipe", strerror(errno)}; }
+			if(::pipe(fds) == -1)
+			{
+				throw exception{"create a pipe", to_string(error_code{errno})};
+			}
 
 			m_read_fd  = fd_handle{fds[pipe_read_index]};
 			m_write_fd = fd_handle{fds[pipe_write_index]};

@@ -11,7 +11,7 @@ namespace idis::sys
 	public:
 		using rep = decltype(errno);
 
-		explicit error_code(rep val): m_value{val}{}
+		explicit error_code(rep val): m_value{val} {}
 
 		rep value() const { return m_value; }
 
@@ -19,10 +19,7 @@ namespace idis::sys
 		rep m_value;
 	};
 
-	inline char const* to_string(error_code val)
-	{
-		return strerror(val.value());
-	}
+	inline char const* to_string(error_code val) { return strerror(val.value()); }
 }
 
 #endif
