@@ -3,6 +3,7 @@
 #include "./pipeline_layout.hpp"
 
 #include "engine/error_handling/exception.hpp"
+#include "engine/vk_init/error.hpp"
 
 namespace
 {
@@ -16,9 +17,9 @@ namespace
 		pipeline_layout_info.pPushConstantRanges    = nullptr;  // Optional
 
 		VkPipelineLayout ret{};
-		if(vkCreatePipelineLayout(device, &pipeline_layout_info, nullptr, &ret) != VK_SUCCESS)
+		if(auto res = vkCreatePipelineLayout(device, &pipeline_layout_info, nullptr, &ret); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create pipeline layout", ""};
+			throw idis::exception{"create pipeline layout", to_string(idis::vk_init::error{res})};
 		}
 
 		return idis::gpu_res::pipeline_layout::handle_type{
