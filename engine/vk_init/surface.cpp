@@ -12,11 +12,10 @@ namespace
 	                    std::reference_wrapper<idis::wm::window_base const> window)
 	{
 		VkSurfaceKHR surface{};
-		if(glfwCreateWindowSurface(
-		       instance.get().handle(), window.get().handle(), nullptr, &surface)
-		   != VK_SUCCESS)
+		if(auto res = glfwCreateWindowSurface(
+		       instance.get().handle(), window.get().handle(), nullptr, &surface); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create vulkan surface", ""};
+			throw idis::exception{"create vulkan surface", to_string(idis::vk_init::error{res})};
 		}
 
 		return idis::vk_init::surface::handle_type{
