@@ -4,6 +4,8 @@
 
 #include "./command_pool.hpp"
 
+#include "engine/vk_init/error.hpp"
+
 namespace
 {
 	auto create_command_pool(std::reference_wrapper<idis::vk_init::device const> device)
@@ -14,9 +16,10 @@ namespace
 
 		VkCommandPool ret{};
 
-		if(vkCreateCommandPool(device.get().handle(), &create_info, nullptr, &ret) != VK_SUCCESS)
+		if(auto res = vkCreateCommandPool(device.get().handle(), &create_info, nullptr, &ret);
+		   res != VK_SUCCESS)
 		{
-			throw idis::exception{"create command buffer", ""};
+			throw idis::exception{"create command pool", to_string(idis::vk_init::error{res})};
 		}
 
 		return idis::gpu_res::command_pool::handle_type{
@@ -30,18 +33,20 @@ idis::gpu_res::command_pool::command_pool(std::reference_wrapper<idis::vk_init::
 {
 }
 
-idis::gpu_res::command_buffer_set::command_buffer_set(command_pool& pool, size_t n)
+idis::gpu_res::command_buffer_set::command_buffer_set(
+    std::reference_wrapper<command_pool const> pool, size_t n)
     : m_storage(n)
-    , m_owner{&pool}
+    , m_owner{&pool.get()}
 {
 	VkCommandBufferAllocateInfo create_info{};
 	create_info.sType              = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	create_info.commandPool        = pool.handle();
+	create_info.commandPool        = m_owner->handle();
 	create_info.level              = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-	create_info.commandBufferCount = static_cast<size_t>(n);
+	create_info.commandBufferCount = static_cast<uint32_t>(n);
 
-	if(vkAllocateCommandBuffers(pool.device(), &create_info, std::data(m_storage)) != VK_SUCCESS)
+	if(auto res = vkAllocateCommandBuffers(pool.get().device(), &create_info, std::data(m_storage));
+	   res != VK_SUCCESS)
 	{
-		throw exception{"create command buffers ", ""};
+		throw exception{"create command buffers", to_string(idis::vk_init::error{res})};
 	}
 }

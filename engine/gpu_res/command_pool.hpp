@@ -53,7 +53,7 @@ namespace idis::gpu_res
 	public:
 		command_buffer_set() = default;
 
-		explicit command_buffer_set(command_pool& pool, size_t n);
+		explicit command_buffer_set(std::reference_wrapper<command_pool const> pool, size_t n);
 
 		command_buffer_set(command_buffer_set const&) = delete;
 		command_buffer_set& operator=(command_buffer_set const&) = delete;
