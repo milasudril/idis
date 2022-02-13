@@ -29,7 +29,7 @@ namespace idis::gpu_res
 
 	inline std::vector<framebuffer> create_framebuffers_from(render_pass const& matching_rp,
 	                                                         VkExtent2D dim,
-	                                                         std::span<image_view> img_views)
+	                                                         std::span<image_view const> img_views)
 	{
 		std::vector<framebuffer> ret;
 		std::ranges::transform(img_views,
