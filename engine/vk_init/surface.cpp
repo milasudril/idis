@@ -3,6 +3,7 @@
 //@	}
 
 #include "./surface.hpp"
+#include "./error.hpp"
 
 #include <algorithm>
 
