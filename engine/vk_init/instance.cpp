@@ -1,6 +1,7 @@
 //@{"target":{"name":"instance.o"}}
 
 #include "./instance.hpp"
+#include "./error.hpp"
 
 #include "engine/error_handling/exception.hpp"
 #include "engine/utils/hexformat.hpp"
@@ -9,7 +10,7 @@
 
 namespace
 {
-	idis::vk_init::instance::handle_type make_instance()
+	idis::vk_init::instance::handle_type create_instance()
 	{
 		if(glfwVulkanSupported() == GLFW_FALSE)
 		{
@@ -45,13 +46,13 @@ namespace
 		create_info.enabledExtensionCount   = std::size(req_extensions);
 		create_info.ppEnabledExtensionNames = std::data(req_extensions);
 
-		create_info.enabledLayerCount          = 0;
+		create_info.enabledLayerCount          = 1;
 		constexpr char const* validation_layer = "VK_LAYER_KHRONOS_validation";
 		create_info.ppEnabledLayerNames        = &validation_layer;
 
-		if(vkCreateInstance(&create_info, nullptr, &instance) != VK_SUCCESS)
+		if(auto res = vkCreateInstance(&create_info, nullptr, &instance); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create vulkan instance", "Operation failed"};
+			throw idis::exception{"create vulkan instance", to_string(idis::vk_init::error{res})};
 		}
 		return idis::vk_init::instance::handle_type{instance};
 	}
@@ -161,4 +162,4 @@ idis::vk_init::system::system(VkInstance instance)
 	m_queue_families = queue_family_list{std::move(qf)};
 }
 
-idis::vk_init::instance::instance(): m_handle{make_instance()}, m_system_info{m_handle.get()} {}
+idis::vk_init::instance::instance(): m_handle{create_instance()}, m_system_info{m_handle.get()} {}

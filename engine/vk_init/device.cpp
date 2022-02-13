@@ -43,7 +43,8 @@ idis::vk_init::device::device(render_device const& device_info)
 	create_info.ppEnabledExtensionNames  = &swapchain_name;
 
 	VkDevice device{};
-	if(auto res = vkCreateDevice(device_info.device, &create_info, nullptr, &device); res != VK_SUCCESS)
+	if(auto res = vkCreateDevice(device_info.device, &create_info, nullptr, &device);
+	   res != VK_SUCCESS)
 	{
 		throw exception{"create logical device", to_string(error{res})};
 	}
