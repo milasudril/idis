@@ -24,7 +24,8 @@ namespace
 		create_info.subresourceRange.layerCount     = 1;
 
 		VkImageView img_view{};
-		if(auto res = vkCreateImageView(device, &create_info, nullptr, &img_view); res != VK_SUCCESS)
+		if(auto res = vkCreateImageView(device, &create_info, nullptr, &img_view);
+		   res != VK_SUCCESS)
 		{
 			throw idis::exception{"create vulkan image view", to_string(idis::vk_init::error{res})};
 		}

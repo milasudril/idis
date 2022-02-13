@@ -37,7 +37,9 @@ namespace idis::gpu_res
 
 		image_view() = default;
 
-		explicit image_view(std::reference_wrapper<vk_init::device const> device, VkImage image, VkFormat format)
+		explicit image_view(std::reference_wrapper<vk_init::device const> device,
+		                    VkImage image,
+		                    VkFormat format)
 		    : image_view{device.get().handle(), image, format}
 		{
 		}

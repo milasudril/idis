@@ -3,13 +3,15 @@
 //@	}
 
 #include "./pipeline.hpp"
+
 #include "engine/error_handling/exception.hpp"
+#include "engine/vk_init/error.hpp"
 
 namespace
 {
 	auto create_pipeline(VkDevice device,
 	                     idis::gpu_res::pipeline_descriptor const& descriptor,
-	                     idis::gpu_res::render_pass& rp)
+	                     VkRenderPass matching_rp)
 	{
 		VkGraphicsPipelineCreateInfo pipeline_info{};
 		pipeline_info.sType        = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -27,15 +29,16 @@ namespace
 		pipeline_info.pRasterizationState = &descriptor.rasterization_state();
 		pipeline_info.pMultisampleState   = &descriptor.multisample_state();
 		pipeline_info.pColorBlendState    = &descriptor.color_blend_state();
-		pipeline_info.renderPass          = rp.handle();
+		pipeline_info.renderPass          = matching_rp;
 		pipeline_info.subpass             = 0;
 		pipeline_info.basePipelineHandle  = VK_NULL_HANDLE;
 
 		VkPipeline ret{};
-		if(vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &ret)
-		   != VK_SUCCESS)
+		if(auto res =
+		       vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &ret);
+		   res != VK_SUCCESS)
 		{
-			throw idis::exception{"create graphics pipeline", ""};
+			throw idis::exception{"create graphics pipeline", to_string(idis::vk_init::error{res})};
 		}
 
 		return idis::gpu_res::pipeline::handle_type{ret, idis::gpu_res::pipeline_deleter{device}};
@@ -44,7 +47,7 @@ namespace
 
 idis::gpu_res::pipeline::pipeline(VkDevice device,
                                   pipeline_descriptor const& descriptor,
-                                  render_pass& rp)
-    : m_handle{create_pipeline(device, descriptor, rp)}
+                                  VkRenderPass matching_rp)
+    : m_handle{create_pipeline(device, descriptor, matching_rp)}
 {
 }

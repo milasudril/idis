@@ -40,15 +40,16 @@ namespace idis::gpu_res
 		pipeline(): m_handle{nullptr, pipeline_deleter{nullptr}} {}
 
 
-		explicit pipeline(vk_init::device& device,
+		explicit pipeline(std::reference_wrapper<vk_init::device const> device,
 		                  pipeline_descriptor const& descriptor,
-		                  render_pass& rp)
-		    : pipeline{device.handle(), descriptor, rp}
+		                  render_pass const& matching_rp)
+		    : pipeline{device.get().handle(), descriptor, matching_rp.handle()}
 		{
 		}
 
-
-		explicit pipeline(VkDevice device, pipeline_descriptor const& descriptor, render_pass& rp);
+		explicit pipeline(VkDevice device,
+		                  pipeline_descriptor const& descriptor,
+		                  VkRenderPass matching_rp);
 
 		auto handle() const { return m_handle.get(); }
 

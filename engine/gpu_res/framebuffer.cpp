@@ -8,7 +8,10 @@
 
 namespace
 {
-	auto create_framebuffer(VkDevice device, VkRenderPass matching_rp, VkExtent2D dim, VkImageView img_view)
+	auto create_framebuffer(VkDevice device,
+	                        VkRenderPass matching_rp,
+	                        VkExtent2D dim,
+	                        VkImageView img_view)
 	{
 		VkFramebufferCreateInfo create_info{};
 		create_info.sType           = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
@@ -20,7 +23,8 @@ namespace
 		create_info.layers          = 1;
 
 		VkFramebuffer framebuffer{};
-		if(auto res = vkCreateFramebuffer(device, &create_info, nullptr, &framebuffer); res != VK_SUCCESS)
+		if(auto res = vkCreateFramebuffer(device, &create_info, nullptr, &framebuffer);
+		   res != VK_SUCCESS)
 		{
 			throw idis::exception{"create framebuffer", to_string(idis::vk_init::error{res})};
 		}
