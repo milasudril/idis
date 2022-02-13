@@ -30,7 +30,10 @@ namespace idis::sys
 		explicit periodic_timer(std::chrono::duration<Rep, Period> period)
 		    : m_fd{timerfd_create(CLOCK_MONOTONIC, 0)}
 		{
-			if(m_fd == nullptr) { throw exception{"create periodic timer", to_string(error_code{errno})}; }
+			if(m_fd == nullptr)
+			{
+				throw exception{"create periodic timer", to_string(error_code{errno})};
+			}
 
 			itimerspec spec{};
 			spec.it_interval = to_timespec(period);

@@ -5,6 +5,7 @@
 #include "./window.hpp"
 
 #include "engine/error_handling/exception.hpp"
+#include "engine/error_handling/common_causes.hpp"
 
 idis::wm::window_base::window_base(int width, int height, char const* title)
 {
@@ -15,6 +16,6 @@ idis::wm::window_base::window_base(int width, int height, char const* title)
 		char const* cause = nullptr;
 		glfwGetError(&cause);
 		throw exception{"Failed to create a new window",
-		                cause != nullptr ? cause : "Unknown error"};
+		                cause != nullptr ? cause : idis::unknown_error};
 	}
 }

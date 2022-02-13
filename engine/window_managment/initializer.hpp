@@ -4,6 +4,7 @@
 #define IDIS_WINDOWMANAGMENT_INITIALIZER_HPP
 
 #include "engine/error_handling/exception.hpp"
+#include "engine/error_handling/common_causes.hpp"
 #include <GLFW/glfw3.h>
 
 namespace idis::wm
@@ -24,7 +25,7 @@ namespace idis::wm
 				char const* cause = nullptr;
 				glfwGetError(&cause);
 				throw exception{"initialize the window manager",
-				                cause != nullptr ? cause : "Unknown error"};
+				                cause != nullptr ? cause : idis::unknown_error};
 			}
 
 			++m_instance_count;
