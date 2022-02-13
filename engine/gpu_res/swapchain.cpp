@@ -50,7 +50,8 @@ namespace
 		create_info.oldSwapchain   = VK_NULL_HANDLE;
 
 		VkSwapchainKHR swapchain{};
-		if(auto res = vkCreateSwapchainKHR(device.handle(), &create_info, nullptr, &swapchain); res != VK_SUCCESS)
+		if(auto res = vkCreateSwapchainKHR(device.handle(), &create_info, nullptr, &swapchain);
+		   res != VK_SUCCESS)
 		{
 			throw idis::exception{"create vulkan swapchain", to_string(idis::vk_init::error{res})};
 		}

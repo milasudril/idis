@@ -1,5 +1,5 @@
-#ifndef IDIS_HELPERS_INTEGERMIXIN_HPP
-#define IDIS_HELPERS_INTEGERMIXIN_HPP
+#ifndef IDIS_UTILS_INTEGERMIXIN_HPP
+#define IDIS_UTILS_INTEGERMIXIN_HPP
 
 #include <type_traits>
 #include <cmath>

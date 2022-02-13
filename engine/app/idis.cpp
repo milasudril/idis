@@ -7,7 +7,7 @@
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/sys/child_proc.hpp"
-#include "engine/helpers/algext.hpp"
+#include "engine/utils/algext.hpp"
 
 #include "fruit/lib/text_box.hpp"
 #include "fruit/lib/font_mapper.hpp"

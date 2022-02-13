@@ -3,7 +3,7 @@
 #include "./instance.hpp"
 
 #include "engine/error_handler/exception.hpp"
-#include "engine/helpers/hexformat.hpp"
+#include "engine/utils/hexformat.hpp"
 
 #include <algorithm>
 
@@ -45,7 +45,7 @@ namespace
 		create_info.enabledExtensionCount   = std::size(req_extensions);
 		create_info.ppEnabledExtensionNames = std::data(req_extensions);
 
-		create_info.enabledLayerCount          = 1;
+		create_info.enabledLayerCount          = 0;
 		constexpr char const* validation_layer = "VK_LAYER_KHRONOS_validation";
 		create_info.ppEnabledLayerNames        = &validation_layer;
 

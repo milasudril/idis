@@ -1,5 +1,5 @@
-#ifndef IDIS_HELPERS_HEXFORMAT_HPP
-#define IDIS_HELPERS_HEXFORMAT_HPP
+#ifndef IDIS_UTILS_HEXFORMAT_HPP
+#define IDIS_UTILS_HEXFORMAT_HPP
 
 #include <concepts>
 #include <string>

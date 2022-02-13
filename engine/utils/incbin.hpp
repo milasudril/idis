@@ -1,5 +1,5 @@
-#ifndef IDIS_HELPERS_INCBIN_HPP
-#define IDIS_HELPERS_INCBIN_HPP
+#ifndef IDIS_UTILS_INCBIN_HPP
+#define IDIS_UTILS_INCBIN_HPP
 
 #include <cstddef>
 #include <cstdint>

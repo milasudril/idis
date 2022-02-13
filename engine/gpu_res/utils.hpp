@@ -114,23 +114,21 @@ namespace idis::gpu_res
 	};
 
 	template<class OutOfDateHandler>
-	inline auto acquire_next_image(vk_init::device& dev, swapchain& swp, semaphore& sem, OutOfDateHandler&& on_out_of_date)
+	inline auto acquire_next_image(vk_init::device& dev,
+	                               swapchain& swp,
+	                               semaphore& sem,
+	                               OutOfDateHandler&& on_out_of_date)
 	{
 		while(true)
 		{
 			uint32_t ret{};
 			switch(vkAcquireNextImageKHR(
-		    dev.handle(), swp.handle(), UINT64_MAX, sem.handle(), VK_NULL_HANDLE, &ret))
+			    dev.handle(), swp.handle(), UINT64_MAX, sem.handle(), VK_NULL_HANDLE, &ret))
 			{
-				case VK_SUCCESS:
-					return ret;
-				case VK_SUBOPTIMAL_KHR:
-					return ret;
-				case VK_ERROR_OUT_OF_DATE_KHR:
-					on_out_of_date();
-					break;
-				default:
-					throw exception{"acquire next image", ""};
+				case VK_SUCCESS: return ret;
+				case VK_SUBOPTIMAL_KHR: return ret;
+				case VK_ERROR_OUT_OF_DATE_KHR: on_out_of_date(); break;
+				default: throw exception{"acquire next image", ""};
 			}
 		}
 	}

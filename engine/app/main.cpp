@@ -20,7 +20,7 @@
 #include "engine/shaders/repo.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
-#include "engine/helpers/algext.hpp"
+#include "engine/utils/algext.hpp"
 
 
 #include <algorithm>
@@ -109,9 +109,8 @@ namespace
 			auto const fence_handle = m_fences[k].handle();
 			vkWaitForFences(m_device.get().handle(), 1, &fence_handle, VK_TRUE, UINT64_MAX);
 			vkResetFences(m_device.get().handle(), 1, &fence_handle);
-			auto img_index = acquire_next_image(m_device, m_swapchain, m_image_available[k], [this](){
-				reconfigure();
-			});
+			auto img_index = acquire_next_image(
+			    m_device, m_swapchain, m_image_available[k], [this]() { reconfigure(); });
 
 			submit(m_device.get().graphics_queue(),
 			       m_command_buffers[img_index],
@@ -121,8 +120,7 @@ namespace
 			present(m_device.get().surface_queue(), m_swapchain, img_index, m_render_finished[k]);
 		}
 
-		void reconfigure_next_frame()
-		{ m_force_reconfigure = true; }
+		void reconfigure_next_frame() { m_force_reconfigure = true; }
 
 	private:
 		std::reference_wrapper<idis::vk_init::device> m_device;
@@ -155,8 +153,7 @@ namespace
 
 	void window_size_changed(engine_state& obj, window_action_tag, idis::wm::dimensions)
 	{
-		if(obj.r != nullptr)
-		{ obj.r->reconfigure_next_frame(); }
+		if(obj.r != nullptr) { obj.r->reconfigure_next_frame(); }
 	}
 }
 

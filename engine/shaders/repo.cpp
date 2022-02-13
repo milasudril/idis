@@ -7,7 +7,7 @@
 //@	}
 
 #include "./repo.hpp"
-#include "engine/helpers/incbin.hpp"
+#include "engine/utils/incbin.hpp"
 
 IDIS_INCBIN_U32(vertex_shader, MAIKE_BUILDINFO_TARGETDIR "/engine/shaders/testprog.vert.spv");
 

@@ -8,7 +8,7 @@
 #define IDIS_VKINIT_INSTANCE_HPP
 
 #include "engine/window_manager/initializer.hpp"
-#include "engine/helpers/sorted_sequence.hpp"
+#include "engine/utils/sorted_sequence.hpp"
 
 #include <memory>
 #include <vector>

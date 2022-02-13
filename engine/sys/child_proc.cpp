@@ -2,8 +2,8 @@
 
 #include "./child_proc.hpp"
 
-#include "engine/helpers/hexformat.hpp"
-#include "engine/helpers/case_ret_str.hpp"
+#include "engine/utils/hexformat.hpp"
+#include "engine/utils/case_ret_str.hpp"
 
 std::string idis::sys::to_string(proc_term_signal val)
 {
