@@ -4,8 +4,9 @@
 
 #include "engine/utils/hexformat.hpp"
 #include "engine/utils/case_ret_str.hpp"
+#include "engine/error_handling/common_causes.hpp"
 
-std::string idis::sys::to_string(proc_term_signal val)
+char const* idis::sys::to_string(proc_term_signal val)
 {
 	switch(val.value())
 	{
@@ -21,7 +22,7 @@ std::string idis::sys::to_string(proc_term_signal val)
 		CASE_RET_STR(SIGKILL);
 		CASE_RET_STR(SIGTRAP);
 
-		default: return "<UNKNOWN SIGNAL>";
+		default: return idis::unknown_error;
 	}
 }
 
@@ -43,7 +44,7 @@ void idis::sys::child_proc::fetch_result() const
 	m_pid = -1;
 }
 
-std::string idis::sys::to_string(signal_cause val)
+char const* idis::sys::to_string(signal_cause val)
 {
 	switch(val.value())
 	{
@@ -119,7 +120,7 @@ std::string idis::sys::to_string(signal_cause val)
 			break;
 	}
 
-	return "<UNKNOWN>";
+	return idis::unknown_error;
 }
 
 std::string idis::sys::to_string(signal_info const& info)

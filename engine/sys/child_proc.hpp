@@ -52,7 +52,7 @@ namespace idis::sys
 		int m_value;
 	};
 
-	std::string to_string(proc_term_signal val);
+	char const* to_string(proc_term_signal val);
 
 	inline auto has_error(proc_term_signal) { return true; }
 
@@ -87,7 +87,7 @@ namespace idis::sys
 	inline auto to_string(proc_wait_status status)
 	{
 		return std::visit(
-		    [](auto value)
+		    [](auto value) -> std::string
 		    {
 			    using std::to_string;
 			    return to_string(value);
@@ -144,7 +144,7 @@ namespace idis::sys
 		proc_term_signal m_signo;
 	};
 
-	std::string to_string(signal_cause val);
+	char const* to_string(signal_cause val);
 
 	struct signal_info
 	{

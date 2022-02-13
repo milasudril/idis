@@ -18,7 +18,7 @@ namespace idis::vk_init
 		VkResult m_value;
 	};
 
-	inline std::string to_string(error e)
+	inline char const* to_string(error e)
 	{
 		switch(e.value())
 		{
