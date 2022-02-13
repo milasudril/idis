@@ -6,6 +6,7 @@
 #define IDIS_GPURES_FENCE_HPP
 
 #include "engine/vk_init/device.hpp"
+#include "engine/vk_init/error.hpp"
 #include "engine/error_handling/exception.hpp"
 
 #include <type_traits>
@@ -37,9 +38,9 @@ namespace idis::gpu_res
 		fence_info.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		fence_info.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 		VkFence ret{};
-		if(vkCreateFence(device, &fence_info, nullptr, &ret) != VK_SUCCESS)
+		if(auto res = vkCreateFence(device, &fence_info, nullptr, &ret); res != VK_SUCCESS)
 		{
-			throw idis::exception{"create fence", ""};
+			throw idis::exception{"create fence", to_string(idis::vk_init::error{res})};
 		}
 
 		return fence_handle{ret, fence_deleter{device}};
@@ -50,7 +51,10 @@ namespace idis::gpu_res
 	public:
 		using handle_type = fence_handle;
 
-		explicit fence(vk_init::device& device): fence{device.handle()} {}
+		explicit fence(std::reference_wrapper<vk_init::device const> device)
+		    : fence{device.get().handle()}
+		{
+		}
 
 		explicit fence(VkDevice device): m_handle{create_fence(device)} {}
 
