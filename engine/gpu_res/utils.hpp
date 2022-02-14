@@ -50,6 +50,7 @@ namespace idis::gpu_res
 	public:
 		explicit command_recording_session(VkCommandBuffer handle): m_handle{handle}
 		{
+			vkResetCommandBuffer(handle, 0);
 			VkCommandBufferBeginInfo begin_info{};
 			begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 			if(auto res = vkBeginCommandBuffer(m_handle, &begin_info); res != VK_SUCCESS)

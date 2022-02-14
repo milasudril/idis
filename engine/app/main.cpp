@@ -39,11 +39,10 @@ namespace
 		explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
 		    : m_device{device}
 		    , m_surface{surface}
-		    , m_force_reconfigure{true}
-		    , m_render_finished{idis::gpu_res::semaphore{device}, idis::gpu_res::semaphore{device}}
-		    , m_image_available{idis::gpu_res::semaphore{device}, idis::gpu_res::semaphore{device}}
-		    , m_fences{idis::gpu_res::fence{device}, idis::gpu_res::fence{device}}
-		    , m_frame_index{0}
+		    , m_force_reconfigure{true}  //		    , m_frame_index{0}
+		    , m_render_fence{idis::gpu_res::fence{device}}
+		    , m_image_available{idis::gpu_res::semaphore{device}}
+		    , m_render_finished{idis::gpu_res::semaphore{device}}
 		    , m_command_pool{device}
 		    , m_shader_prog{
 		          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
@@ -77,18 +76,6 @@ namespace
 			auto new_command_buffers =
 			    idis::gpu_res::command_buffer_set{m_command_pool, std::size(new_framebuffers)};
 
-			idis::for_each(
-			    [rp       = new_render_pass.handle(),
-			     extent   = new_swapchain.extent(),
-			     pipeline = new_pipeline.handle()](auto cmd_buffer, auto const& fb)
-			    {
-				    idis::gpu_res::command_recording_session rec{cmd_buffer};
-				    idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
-				    rp_sec.bind(cmd_buffer, pipeline).draw(cmd_buffer, 3, 1, 0, 0);
-			    },
-			    new_command_buffers.buffers(),
-			    new_framebuffers);
-
 			m_swapchain       = std::move(new_swapchain);
 			m_img_views       = std::move(new_img_views);
 			m_render_pass     = std::move(new_render_pass);
@@ -105,19 +92,29 @@ namespace
 				m_force_reconfigure = false;
 			}
 
-			auto const k            = m_frame_index % s_frames_in_flight;
-			auto const fence_handle = m_fences[k].handle();
+			auto fence_handle = m_render_fence.handle();
 			vkWaitForFences(m_device.get().handle(), 1, &fence_handle, VK_TRUE, UINT64_MAX);
 			vkResetFences(m_device.get().handle(), 1, &fence_handle);
-			auto img_index = acquire_next_image(
-			    m_device, m_swapchain, m_image_available[k], [this]() { reconfigure(); });
+			auto const img_index = acquire_next_image(
+			    m_device, m_swapchain, m_image_available, [this]() { reconfigure(); });
+
+			{
+				auto rp         = m_render_pass.handle();
+				auto extent     = m_swapchain.extent();
+				auto cmd_buffer = m_command_buffers[img_index];
+				auto const& fb  = m_framebuffers[img_index];
+				idis::gpu_res::command_recording_session rec{cmd_buffer};
+				idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
+				rp_sec.bind(cmd_buffer, m_pipeline.handle()).draw(cmd_buffer, 3, 1, 0, 0);
+			}
+
 
 			submit(m_device.get().graphics_queue(),
 			       m_command_buffers[img_index],
-			       m_image_available[k],
-			       m_render_finished[k],
-			       m_fences[k]);
-			present(m_device.get().surface_queue(), m_swapchain, img_index, m_render_finished[k]);
+			       m_image_available,
+			       m_render_finished,
+			       m_render_fence);
+			present(m_device.get().surface_queue(), m_swapchain, img_index, m_render_finished);
 		}
 
 		void reconfigure_next_frame() { m_force_reconfigure = true; }
@@ -126,11 +123,11 @@ namespace
 		std::reference_wrapper<idis::vk_init::device> m_device;
 		std::reference_wrapper<idis::vk_init::surface> m_surface;
 		bool m_force_reconfigure;
-		static constexpr auto s_frames_in_flight = 2;
-		std::array<idis::gpu_res::semaphore, s_frames_in_flight> m_render_finished;
-		std::array<idis::gpu_res::semaphore, s_frames_in_flight> m_image_available;
-		std::array<idis::gpu_res::fence, s_frames_in_flight> m_fences;
-		size_t m_frame_index;
+		//	size_t m_frame_index;
+		idis::gpu_res::fence m_render_fence;
+		idis::gpu_res::semaphore m_image_available;
+		idis::gpu_res::semaphore m_render_finished;
+
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
