@@ -48,7 +48,7 @@ namespace idis::vk_init
 	{
 	public:
 		using queue_family_list = sorted_sequence<queue_family_info,
-		                                          std::vector<queue_family_info>,
+		                                          varlength_array<queue_family_info>,
 		                                          queue_family_info::cmp_dev_index>;
 
 		using queue_family_list_view =
