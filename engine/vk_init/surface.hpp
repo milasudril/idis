@@ -80,7 +80,7 @@ namespace idis::vk_init
 	{
 		uint32_t format_count{};
 		vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface.handle(), &format_count, nullptr);
-		std::vector<VkSurfaceFormatKHR> ret(format_count);
+		varlength_array<VkSurfaceFormatKHR> ret{format_count};
 		if(format_count != 0)
 		{
 			vkGetPhysicalDeviceSurfaceFormatsKHR(
@@ -93,7 +93,7 @@ namespace idis::vk_init
 	{
 		uint32_t count{};
 		vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface.handle(), &count, nullptr);
-		std::vector<VkPresentModeKHR> ret(count);
+		varlength_array<VkPresentModeKHR> ret{count};
 		if(count != 0)
 		{
 			vkGetPhysicalDeviceSurfacePresentModesKHR(

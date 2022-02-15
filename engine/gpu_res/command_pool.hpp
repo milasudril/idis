@@ -78,7 +78,7 @@ namespace idis::gpu_res
 		void clear() { m_storage.clear(); }
 
 	private:
-		std::vector<VkCommandBuffer> m_storage;
+		varlength_array<VkCommandBuffer> m_storage;
 		command_pool const* m_owner;
 	};
 }

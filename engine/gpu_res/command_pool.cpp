@@ -36,7 +36,7 @@ idis::gpu_res::command_pool::command_pool(std::reference_wrapper<idis::vk_init::
 
 idis::gpu_res::command_buffer_set::command_buffer_set(
     std::reference_wrapper<command_pool const> pool, size_t n)
-    : m_storage(n)
+    : m_storage{n}
     , m_owner{&pool.get()}
 {
 	VkCommandBufferAllocateInfo create_info{};

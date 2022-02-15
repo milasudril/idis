@@ -17,10 +17,10 @@
 
 namespace idis::gpu_res
 {
-	inline std::vector<image_view> create_image_views_from(
+	inline auto create_image_views_from(
 	    std::reference_wrapper<swapchain const> src)
 	{
-		std::vector<image_view> ret;
+		std::vector<image_view> ret{};
 		std::ranges::transform(
 		    get_images(src),
 		    std::back_inserter(ret),
@@ -30,11 +30,11 @@ namespace idis::gpu_res
 		return ret;
 	}
 
-	inline std::vector<framebuffer> create_framebuffers_from(render_pass const& matching_rp,
+	inline auto create_framebuffers_from(render_pass const& matching_rp,
 	                                                         VkExtent2D dim,
 	                                                         std::span<image_view const> img_views)
 	{
-		std::vector<framebuffer> ret;
+		std::vector<framebuffer> ret{};
 		std::ranges::transform(
 		    img_views,
 		    std::back_inserter(ret),

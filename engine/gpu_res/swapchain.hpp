@@ -59,11 +59,11 @@ namespace idis::gpu_res
 		std::tuple<handle_type, VkFormat, VkExtent2D> m_data;
 	};
 
-	inline std::vector<VkImage> get_images(std::reference_wrapper<swapchain const> swp)
+	inline auto get_images(std::reference_wrapper<swapchain const> swp)
 	{
 		uint32_t img_count{};
 		vkGetSwapchainImagesKHR(swp.get().device(), swp.get().handle(), &img_count, nullptr);
-		std::vector<VkImage> ret(img_count);
+		varlength_array<VkImage> ret{img_count};
 		vkGetSwapchainImagesKHR(swp.get().device(), swp.get().handle(), &img_count, std::data(ret));
 		return ret;
 	}

@@ -124,7 +124,7 @@ idis::vk_init::system::system(VkInstance instance)
 		throw exception{"collect information about Vulkan devices", "No physical device"};
 	}
 
-	std::vector<VkPhysicalDevice> devices(dev_count);
+	varlength_array<VkPhysicalDevice> devices{dev_count};
 	vkEnumeratePhysicalDevices(instance, &dev_count, std::data(devices));
 	std::ranges::transform(devices,
 	                       std::back_inserter(m_devices),
@@ -136,14 +136,14 @@ idis::vk_init::system::system(VkInstance instance)
 		                       return dev_info;
 	                       });
 
-	std::vector<queue_family_info> qf;
+	std::vector<queue_family_info> qf{};
 	std::ranges::for_each(
 	    devices,
 	    [&queue_families = qf, device_index = 0](auto device) mutable
 	    {
 		    uint32_t qf_count{};
 		    vkGetPhysicalDeviceQueueFamilyProperties(device, &qf_count, nullptr);
-		    std::vector<VkQueueFamilyProperties> qfs(qf_count);
+		    varlength_array<VkQueueFamilyProperties> qfs{qf_count};
 		    vkGetPhysicalDeviceQueueFamilyProperties(device, &qf_count, std::data(qfs));
 		    std::ranges::transform(
 		        qfs,
