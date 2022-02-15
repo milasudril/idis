@@ -64,7 +64,7 @@ namespace idis
 		template<std::ranges::range Range>
 		requires(!std::is_same_v<std::decay_t<Range>, varlength_array>) explicit varlength_array(
 		    Range&& src)
-		    : m_data{allocate_and_copy(src)}
+		    : m_data{allocate_and_copy<T>(src)}
 		    , m_size{std::size(src)}
 		{
 		}
@@ -133,11 +133,23 @@ namespace idis
 
 		bool empty() const { return m_data == nullptr; }
 
-
 	private:
 		T* m_data;
 		size_t m_size;
 	};
+
+	template<class T>
+	bool operator==(varlength_array<T> const& a, varlength_array<T> const& b)
+	{
+		return std::ranges::equal(a, b);
+	}
+
+
+	template<class T>
+	bool operator!=(varlength_array<T> const& a, varlength_array<T> const& b)
+	{
+		return !(a == b);
+	}
 }
 
 

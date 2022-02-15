@@ -1,12 +1,14 @@
 #ifndef IDIS_UTILS_SORTEDSEQUENCE_HPP
 #define IDIS_UTILS_SORTEDSEQUENCE_HPP
 
+#include "./varlength_array.hpp"
+
 #include <algorithm>
 
 namespace idis
 {
 	template<class T,
-	         class Container = std::vector<T>,
+	         class Container = varlength_array<T>,
 	         class Compare   = std::less<typename Container::value_type>>
 	class sorted_sequence
 	{

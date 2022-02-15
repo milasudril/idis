@@ -95,7 +95,6 @@ TESTCASE(idis_utils_varlength_array_construct_with_exception)
 	EXPECT_EQ(type_with_throwing_ctor::instance_counter, 0);
 }
 
-#if 0
 namespace
 {
 	struct holder
@@ -108,10 +107,9 @@ namespace
 
 TESTCASE(idis_utils_varlength_array_construct_from_range)
 {
-	std::array<int, 4> values{1,2, 3,4};
+	std::array<int, 4> values{1, 2, 3, 4};
 
 	idis::varlength_array<int> foo{values};
 
 	auto other = idis::varlength_array<holder>{foo};
 }
-#endif
