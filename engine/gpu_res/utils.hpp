@@ -17,8 +17,7 @@
 
 namespace idis::gpu_res
 {
-	inline auto create_image_views_from(
-	    std::reference_wrapper<swapchain const> src)
+	inline auto create_image_views_from(std::reference_wrapper<swapchain const> src)
 	{
 		std::vector<image_view> ret{};
 		std::ranges::transform(
@@ -31,8 +30,8 @@ namespace idis::gpu_res
 	}
 
 	inline auto create_framebuffers_from(render_pass const& matching_rp,
-	                                                         VkExtent2D dim,
-	                                                         std::span<image_view const> img_views)
+	                                     VkExtent2D dim,
+	                                     std::span<image_view const> img_views)
 	{
 		std::vector<framebuffer> ret{};
 		std::ranges::transform(
@@ -120,7 +119,7 @@ namespace idis::gpu_res
 	template<class OutOfDateHandler>
 	inline auto acquire_next_image(vk_init::device& dev,
 	                               swapchain& swp,
-	                               semaphore& sem,
+	                               signal_semaphore sem,
 	                               OutOfDateHandler&& on_out_of_date)
 	{
 		while(true)
@@ -140,9 +139,9 @@ namespace idis::gpu_res
 
 	inline auto submit(VkQueue queue,
 	                   VkCommandBuffer cmd_buffer,
-	                   semaphore& wait_for,
-	                   semaphore& signal,
-	                   fence& signal_fence)
+	                   wait_semaphore wait_for,
+	                   signal_semaphore signal,
+	                   signal_fence signal_fence)
 	{
 		VkSubmitInfo submit_info{};
 		submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -169,7 +168,10 @@ namespace idis::gpu_res
 		}
 	}
 
-	inline auto present(VkQueue queue, swapchain& swp, uint32_t image_index, semaphore& wait_for)
+	inline auto present(VkQueue queue,
+	                    swapchain& swp,
+	                    uint32_t image_index,
+	                    wait_semaphore wait_for)
 	{
 		VkPresentInfoKHR present_info{};
 		present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;

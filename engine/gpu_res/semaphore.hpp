@@ -61,6 +61,32 @@ namespace idis::gpu_res
 	private:
 		handle_type m_handle;
 	};
+
+	class wait_semaphore
+	{
+	public:
+		explicit wait_semaphore(std::reference_wrapper<semaphore const> obj): m_obj{obj} {}
+
+		decltype(auto) get() const { return m_obj.get(); }
+
+		decltype(auto) handle() const { return m_obj.get().handle(); }
+
+	private:
+		std::reference_wrapper<semaphore const> m_obj;
+	};
+
+	class signal_semaphore
+	{
+	public:
+		explicit signal_semaphore(std::reference_wrapper<semaphore const> obj): m_obj{obj} {}
+
+		decltype(auto) get() const { return m_obj.get(); }
+
+		decltype(auto) handle() const { return m_obj.get().handle(); }
+
+	private:
+		std::reference_wrapper<semaphore const> m_obj;
+	};
 }
 
 #endif

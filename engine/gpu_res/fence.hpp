@@ -65,6 +65,32 @@ namespace idis::gpu_res
 	private:
 		handle_type m_handle;
 	};
+
+	class wait_fence
+	{
+	public:
+		explicit wait_fence(std::reference_wrapper<fence const> obj): m_obj{obj} {}
+
+		decltype(auto) get() const { return m_obj.get(); }
+
+		decltype(auto) handle() const { return m_obj.get().handle(); }
+
+	private:
+		std::reference_wrapper<fence const> m_obj;
+	};
+
+	class signal_fence
+	{
+	public:
+		explicit signal_fence(std::reference_wrapper<fence const> obj): m_obj{obj} {}
+
+		decltype(auto) get() const { return m_obj.get(); }
+
+		decltype(auto) handle() const { return m_obj.get().handle(); }
+
+	private:
+		std::reference_wrapper<fence const> m_obj;
+	};
 }
 
 #endif

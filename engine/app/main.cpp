@@ -95,8 +95,11 @@ namespace
 			auto fence_handle = m_render_fence.handle();
 			vkWaitForFences(m_device.get().handle(), 1, &fence_handle, VK_TRUE, UINT64_MAX);
 			vkResetFences(m_device.get().handle(), 1, &fence_handle);
-			auto const img_index = acquire_next_image(
-			    m_device, m_swapchain, m_image_available, [this]() { reconfigure(); });
+			auto const img_index =
+			    acquire_next_image(m_device,
+			                       m_swapchain,
+			                       idis::gpu_res::signal_semaphore{m_image_available},
+			                       [this]() { reconfigure(); });
 
 			{
 				auto rp         = m_render_pass.handle();
@@ -108,13 +111,15 @@ namespace
 				rp_sec.bind(cmd_buffer, m_pipeline.handle()).draw(cmd_buffer, 3, 1, 0, 0);
 			}
 
-
 			submit(m_device.get().graphics_queue(),
 			       m_command_buffers[img_index],
-			       m_image_available,
-			       m_render_finished,
-			       m_render_fence);
-			present(m_device.get().surface_queue(), m_swapchain, img_index, m_render_finished);
+			       idis::gpu_res::wait_semaphore{m_image_available},
+			       idis::gpu_res::signal_semaphore{m_render_finished},
+			       idis::gpu_res::signal_fence{m_render_fence});
+			present(m_device.get().surface_queue(),
+			        m_swapchain,
+			        img_index,
+			        idis::gpu_res::wait_semaphore{m_render_finished});
 		}
 
 		void reconfigure_next_frame() { m_force_reconfigure = true; }
