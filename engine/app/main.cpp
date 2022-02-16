@@ -45,6 +45,8 @@ namespace
 		    , m_image_available{idis::gpu_res::semaphore{device}}
 		    , m_render_finished{idis::gpu_res::semaphore{device}}
 		    , m_command_pool{device}
+		    , m_command_buffers{idis::gpu_res::command_buffer_set{m_command_pool,
+		                                                          std::size(m_render_fence)}}
 		    , m_shader_prog{
 		          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
 		           idis::gpu_res::shader_module{m_device,
@@ -59,7 +61,6 @@ namespace
 			m_device.get().wait();
 
 			// Must remove all resources. Otherwise, the window is busy.
-			m_command_buffers.clear();
 			m_framebuffers.clear();
 			m_pipeline.reset();
 			m_render_pass.reset();
@@ -74,15 +75,12 @@ namespace
 			auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
 			auto new_framebuffers =
 			    create_framebuffers_from(new_render_pass, new_swapchain.extent(), new_img_views);
-			auto new_command_buffers =
-			    idis::gpu_res::command_buffer_set{m_command_pool, std::size(new_framebuffers)};
 
-			m_swapchain       = std::move(new_swapchain);
-			m_img_views       = std::move(new_img_views);
-			m_render_pass     = std::move(new_render_pass);
-			m_pipeline        = std::move(new_pipeline);
-			m_framebuffers    = std::move(new_framebuffers);
-			m_command_buffers = std::move(new_command_buffers);
+			m_swapchain    = std::move(new_swapchain);
+			m_img_views    = std::move(new_img_views);
+			m_render_pass  = std::move(new_render_pass);
+			m_pipeline     = std::move(new_pipeline);
+			m_framebuffers = std::move(new_framebuffers);
 		}
 
 		void draw_frame()
@@ -137,6 +135,7 @@ namespace
 		idis::gpu_res::semaphore m_render_finished;
 
 		idis::gpu_res::command_pool m_command_pool;
+		idis::gpu_res::command_buffer_set m_command_buffers;
 		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
 
@@ -145,7 +144,6 @@ namespace
 		idis::gpu_res::render_pass m_render_pass;
 		idis::gpu_res::pipeline m_pipeline;
 		std::vector<idis::gpu_res::framebuffer> m_framebuffers;
-		idis::gpu_res::command_buffer_set m_command_buffers;
 	};
 
 	struct engine_state
