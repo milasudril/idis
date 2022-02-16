@@ -93,7 +93,7 @@ namespace
 				m_force_reconfigure = false;
 			}
 
-			auto const k = m_frame_index % 2;
+			auto const k = m_frame_index % std::size(m_render_fence);
 
 			wait_and_reset(m_render_fence[k]);
 			auto const img_index =
