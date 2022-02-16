@@ -116,8 +116,15 @@ namespace idis::gpu_res
 		VkCommandBuffer m_handle;
 	};
 
+	inline void wait_and_reset(fence const& fence)
+	{
+		auto fence_handle = fence.handle();
+		vkWaitForFences(fence.device(), 1, &fence_handle, VK_TRUE, UINT64_MAX);
+		vkResetFences(fence.device(), 1, &fence_handle);
+	}
+
 	template<class OutOfDateHandler>
-	inline auto acquire_next_image(vk_init::device& dev,
+	auto acquire_next_image(vk_init::device& dev,
 	                               swapchain& swp,
 	                               signal_semaphore sem,
 	                               OutOfDateHandler&& on_out_of_date)

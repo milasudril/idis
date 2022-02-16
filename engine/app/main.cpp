@@ -92,9 +92,7 @@ namespace
 				m_force_reconfigure = false;
 			}
 
-			auto fence_handle = m_render_fence.handle();
-			vkWaitForFences(m_device.get().handle(), 1, &fence_handle, VK_TRUE, UINT64_MAX);
-			vkResetFences(m_device.get().handle(), 1, &fence_handle);
+			wait_and_reset(m_render_fence);
 			auto const img_index =
 			    acquire_next_image(m_device,
 			                       m_swapchain,
@@ -104,7 +102,7 @@ namespace
 			{
 				auto rp         = m_render_pass.handle();
 				auto extent     = m_swapchain.extent();
-				auto cmd_buffer = m_command_buffers[img_index];
+				auto cmd_buffer = m_command_buffers[0];
 				auto const& fb  = m_framebuffers[img_index];
 				idis::gpu_res::command_recording_session rec{cmd_buffer};
 				idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
@@ -112,7 +110,7 @@ namespace
 			}
 
 			submit(m_device.get().graphics_queue(),
-			       m_command_buffers[img_index],
+			       m_command_buffers[0],
 			       idis::gpu_res::wait_semaphore{m_image_available},
 			       idis::gpu_res::signal_semaphore{m_render_finished},
 			       idis::gpu_res::signal_fence{m_render_fence});
