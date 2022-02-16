@@ -21,6 +21,7 @@
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/utils/algext.hpp"
+#include "engine/vk_init/allocator.hpp"
 
 
 #include <algorithm>
@@ -170,6 +171,7 @@ int idis::app::main(int, char**)
 	mainwin.set_size_callback<window_action_tag>();
 	vk_init::surface surface{eyafjallajökull, mainwin};
 	vk_init::device device{select_device("", eyafjallajökull.system_info(), surface)};
+	vk_init::allocator alloc{device, eyafjallajökull.handle()};
 
 	renderer r{device, surface};
 	state.r = &r;

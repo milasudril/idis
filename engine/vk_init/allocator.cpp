@@ -1,5 +1,5 @@
 //@	{
-//@	"target": {"name":"vma_impl.o"},
+//@	"target": {"name":"allocator.o"},
 //@	"compiler":{"config":{"cflags":["-Wno-error"]}}
 //@	}
 
