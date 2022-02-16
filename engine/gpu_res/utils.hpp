@@ -125,9 +125,9 @@ namespace idis::gpu_res
 
 	template<class OutOfDateHandler>
 	auto acquire_next_image(vk_init::device& dev,
-	                               swapchain& swp,
-	                               signal_semaphore sem,
-	                               OutOfDateHandler&& on_out_of_date)
+	                        swapchain& swp,
+	                        signal_semaphore sem,
+	                        OutOfDateHandler&& on_out_of_date)
 	{
 		while(true)
 		{
