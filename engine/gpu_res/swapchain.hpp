@@ -43,7 +43,7 @@ namespace idis::gpu_res
 		}
 
 		explicit swapchain(std::reference_wrapper<vk_init::device const> device,
-		                   vk_init::surface& surface);
+		                   std::reference_wrapper<vk_init::surface const> surface);
 
 		VkSwapchainKHR handle() const { return std::get<0>(m_data).get(); }
 

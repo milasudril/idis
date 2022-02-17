@@ -18,6 +18,7 @@
 #include "engine/gpu_res/semaphore.hpp"
 #include "engine/gpu_res/fence.hpp"
 #include "engine/shaders/repo.hpp"
+#include "engine/gpu_res/buffer.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/utils/algext.hpp"
@@ -37,9 +38,12 @@ namespace
 	class renderer
 	{
 	public:
-		explicit renderer(idis::vk_init::device& device, idis::vk_init::surface& surface)
+		explicit renderer(idis::vk_init::device& device,
+		                  idis::vk_init::surface& surface,
+		                  idis::vk_init::allocator& allocator)
 		    : m_device{device}
 		    , m_surface{surface}
+		    , m_allocator{allocator}
 		    , m_force_reconfigure{true}
 		    , m_frame_index{0}
 		    , m_render_fence{idis::gpu_res::fence{device}, idis::gpu_res::fence{device}}
@@ -48,11 +52,12 @@ namespace
 		    , m_command_pool{device}
 		    , m_command_buffers{idis::gpu_res::command_buffer_set{m_command_pool,
 		                                                          std::size(m_render_fence)}}
-		    , m_shader_prog{
-		          {idis::gpu_res::shader_module{m_device, idis::shaders::repo::get_vertex_shader()},
-		           idis::gpu_res::shader_module{m_device,
-		                                        idis::shaders::repo::get_fragment_shader()}},
-		          idis::gpu_res::pipeline_layout{m_device}}
+		    , m_shader_prog{{idis::gpu_res::shader_module{m_device,
+		                                                  idis::shaders::repo::get_vertex_shader()},
+		                     idis::gpu_res::shader_module{
+		                         m_device, idis::shaders::repo::get_fragment_shader()}},
+		                    idis::gpu_res::pipeline_layout{m_device}}
+		    , m_vbo{idis::gpu_res::create_vertex_buffer(m_allocator.get(), 12)}
 		{
 			m_pipeline_info.shader_program(m_shader_prog);
 		}
@@ -127,8 +132,9 @@ namespace
 		void reconfigure_next_frame() { m_force_reconfigure = true; }
 
 	private:
-		std::reference_wrapper<idis::vk_init::device> m_device;
-		std::reference_wrapper<idis::vk_init::surface> m_surface;
+		std::reference_wrapper<idis::vk_init::device const> m_device;
+		std::reference_wrapper<idis::vk_init::surface const> m_surface;
+		std::reference_wrapper<idis::vk_init::allocator const> m_allocator;
 		bool m_force_reconfigure;
 		size_t m_frame_index;
 		std::array<idis::gpu_res::fence, 2> m_render_fence;
@@ -138,6 +144,7 @@ namespace
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::command_buffer_set m_command_buffers;
 		idis::gpu_res::shader_program_info m_shader_prog;
+		idis::gpu_res::buffer<VK_BUFFER_USAGE_VERTEX_BUFFER_BIT> m_vbo;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
 
 		idis::gpu_res::swapchain m_swapchain;
@@ -173,7 +180,7 @@ int idis::app::main(int, char**)
 	vk_init::device device{select_device("", eyafjallajökull.system_info(), surface)};
 	vk_init::allocator alloc{device, eyafjallajökull.handle()};
 
-	renderer r{device, surface};
+	renderer r{device, surface, alloc};
 	state.r = &r;
 
 	state.loop.set_pre_drain_callback(glfwPollEvents);

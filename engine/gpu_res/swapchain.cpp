@@ -9,19 +9,19 @@
 namespace
 {
 	auto create_swapchain(std::reference_wrapper<idis::vk_init::device const> device,
-	                      idis::vk_init::surface& surface)
+	                      std::reference_wrapper<idis::vk_init::surface const> surface)
 	{
 		auto const physical_device = device.get().device_info().device;
 		auto const surface_caps    = get_surface_capabilities(physical_device, surface);
 		auto const image_count     = idis::vk_init::get_image_count(surface_caps);
 		auto const surface_format  = select_surface_format(physical_device, surface);
-		auto const image_extent    = select_extent(surface_caps, surface.target_window());
+		auto const image_extent    = select_extent(surface_caps, surface.get().target_window());
 		auto const present_mode    = select_present_mode(physical_device, surface);
 		auto const transform       = surface_caps.currentTransform;
 
 		VkSwapchainCreateInfoKHR create_info{};
 		create_info.sType            = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-		create_info.surface          = surface.handle();
+		create_info.surface          = surface.get().handle();
 		create_info.minImageCount    = image_count;
 		create_info.imageFormat      = surface_format.format;
 		create_info.imageColorSpace  = surface_format.colorSpace;
@@ -66,7 +66,7 @@ namespace
 }
 
 idis::gpu_res::swapchain::swapchain(std::reference_wrapper<vk_init::device const> device,
-                                    vk_init::surface& surface)
+                                    std::reference_wrapper<vk_init::surface const> surface)
     : m_data{create_swapchain(device, surface)}
 {
 }
