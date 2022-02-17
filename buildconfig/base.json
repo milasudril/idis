@@ -136,7 +136,7 @@
                     "filename_ext_replacement_mode": "append",
                     "target_filename_ext": ".spv"
                 },
-                "loader": "generic"
+                "loader": "cxx_src_loader"
             }
         },
         "source_tree_loader": {
