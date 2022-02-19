@@ -9,6 +9,8 @@
 
 #include <type_traits>
 #include <memory>
+#include <cstring>
+#include <cassert>
 
 namespace idis::gpu_res
 {
@@ -28,6 +30,8 @@ namespace idis::gpu_res
 
 		VmaAllocation allocation() const { return m_allocation; }
 
+		VmaAllocator allocator() const { return m_allocator; }
+
 	private:
 		VmaAllocator m_allocator;
 		VmaAllocation m_allocation;
@@ -35,7 +39,7 @@ namespace idis::gpu_res
 
 	using buffer_handle = std::unique_ptr<std::remove_pointer_t<VkBuffer>, buffer_deleter>;
 
-	template<auto BufferUsage, auto AllocationUsage = VMA_MEMORY_USAGE_CPU_TO_GPU>
+	template<auto BufferUsage, auto AllocationFlags>
 	auto create_buffer(VmaAllocator allocator, size_t capacity)
 	{
 		VkBufferCreateInfo buffer_info{};
@@ -44,7 +48,8 @@ namespace idis::gpu_res
 		buffer_info.usage = BufferUsage;
 
 		VmaAllocationCreateInfo alloc_info{};
-		alloc_info.usage = AllocationUsage;
+		alloc_info.usage = VMA_MEMORY_USAGE_AUTO;
+		alloc_info.flags = AllocationFlags;
 
 		VkBuffer buffer{};
 		VmaAllocation allocation{};
@@ -58,13 +63,13 @@ namespace idis::gpu_res
 		return buffer_handle{buffer, buffer_deleter{allocator, allocation}};
 	}
 
-	template<auto BufferUsage, auto AllocationUsage = VMA_MEMORY_USAGE_CPU_TO_GPU>
+	template<auto BufferUsage, auto AllocationFlags>
 	class buffer
 	{
 	public:
-		using handle_type                      = buffer_handle;
-		static constexpr auto buffer_usage     = BufferUsage;
-		static constexpr auto allocation_usage = AllocationUsage;
+		using handle_type                             = buffer_handle;
+		static constexpr auto buffer_usage            = BufferUsage;
+		static constexpr auto allocation_requirements = AllocationFlags;
 
 		explicit buffer(std::reference_wrapper<vk_init::allocator const> allocator, size_t size)
 		    : buffer{allocator.get().handle(), size}
@@ -72,21 +77,57 @@ namespace idis::gpu_res
 		}
 
 		explicit buffer(VmaAllocator allocator, size_t size)
-		    : m_handle{create_buffer<BufferUsage, AllocationUsage>(allocator, size)}
+		    : m_handle{create_buffer<BufferUsage, AllocationFlags>(allocator, size)}
 		{
 		}
 
 		VkBuffer handle() const { return m_handle.get(); }
 
+		VmaAllocator allocator() const { return m_handle.get_deleter().allocator(); }
+
+		VmaAllocation allocation() const { return m_handle.get_deleter().allocation(); }
+
+		size_t capacity() const
+		{
+			VmaAllocationInfo alloc_info{};
+			vmaGetAllocationInfo(allocator(), allocation(), &alloc_info);
+			return alloc_info.size;
+		}
+
 	private:
 		handle_type m_handle;
 	};
 
-	template<auto AllocationUsage = VMA_MEMORY_USAGE_CPU_TO_GPU>
-	auto create_vertex_buffer(std::reference_wrapper<vk_init::allocator const> allocator,
-	                          size_t size)
+	template<auto AllocationFlags>
+	using vertex_buffer = buffer<VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, AllocationFlags>;
+
+	constexpr auto is_host_visible(VmaAllocationCreateFlagBits allocation_flags)
 	{
-		return buffer<VK_BUFFER_USAGE_VERTEX_BUFFER_BIT>{allocator, size};
+		return static_cast<bool>(allocation_flags
+		                         & VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT)
+		       || static_cast<bool>(allocation_flags
+		                            & VMA_ALLOCATION_CREATE_HOST_ACCESS_RANDOM_BIT);
+	}
+
+	template<auto BufferUsage, auto AllocationFlags, class SrcType>
+	requires(std::is_trivially_copyable_v<SrcType>&& is_host_visible(AllocationFlags)) size_t
+	    sync_transfer(buffer<BufferUsage, AllocationFlags> const& buffer,
+	                  std::span<SrcType const> data)
+	{
+		void* ptr{};
+		assert(buffer.capacity() >= sizeof(SrcType) * std::size(data));
+		vmaMapMemory(buffer.allocator(), buffer.allocation(), &ptr);
+		memcpy(ptr, std::data(std::as_const(data)), sizeof(SrcType) * std::size(data));
+		vmaUnmapMemory(buffer.allocator(), buffer.allocation());
+		return std::size(data);
+	}
+
+	template<auto BufferUsage, auto AllocationFlags, class SrcType, size_t N>
+	requires(std::is_trivially_copyable_v<SrcType>&& is_host_visible(AllocationFlags)) size_t
+	    sync_transfer(buffer<BufferUsage, AllocationFlags> const& buffer,
+	                  std::span<SrcType const, N> data)
+	{
+		return sync_transfer(buffer, std::span<SrcType const>{data});
 	}
 }
 

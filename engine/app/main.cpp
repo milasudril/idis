@@ -22,6 +22,7 @@
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/utils/algext.hpp"
+#include "engine/utils/pair.hpp"
 #include "engine/vk_init/allocator.hpp"
 
 
@@ -57,8 +58,12 @@ namespace
 		                     idis::gpu_res::shader_module{
 		                         m_device, idis::shaders::repo::get_fragment_shader()}},
 		                    idis::gpu_res::pipeline_layout{m_device}}
-		    , m_vbo{idis::gpu_res::create_vertex_buffer(m_allocator.get(), 12)}
+		    , m_vbo{idis::gpu_res::vertex_buffer<
+		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
 		{
+			std::array<idis::pair<float>, 3> const verts{
+			    idis::pair{0.5f, -0.5f}, idis::pair{0.5f, 0.5f}, idis::pair{-0.5f, 0.5f}};
+			sync_transfer(m_vbo, std::span{verts});
 			m_pipeline_info.shader_program(m_shader_prog);
 		}
 
@@ -144,7 +149,7 @@ namespace
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::command_buffer_set m_command_buffers;
 		idis::gpu_res::shader_program_info m_shader_prog;
-		idis::gpu_res::buffer<VK_BUFFER_USAGE_VERTEX_BUFFER_BIT> m_vbo;
+		idis::gpu_res::vertex_buffer<VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT> m_vbo;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
 
 		idis::gpu_res::swapchain m_swapchain;
