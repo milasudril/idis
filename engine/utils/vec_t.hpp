@@ -27,7 +27,7 @@ namespace idis
 	template<class T>
 	requires(is_native_vector<T>()) constexpr auto dot(T a, T b)
 	{
-		T ret{};
+		scalar_t<T> ret{};
 		for(size_t k = 0; k != vector_size_v<T>; ++k)
 		{
 			ret += a[k] * b[k];
