@@ -17,14 +17,13 @@
 #include "engine/gpu_res/pipeline.hpp"
 #include "engine/gpu_res/semaphore.hpp"
 #include "engine/gpu_res/fence.hpp"
-#include "engine/shaders/repo.hpp"
 #include "engine/gpu_res/buffer.hpp"
 #include "engine/event_sequencer/event_loop.hpp"
 #include "engine/sys/periodic_timer.hpp"
 #include "engine/utils/algext.hpp"
 #include "engine/utils/pair.hpp"
 #include "engine/vk_init/allocator.hpp"
-#include "engine/shaders/testprog.hpp"
+#include "engine/shaders/testprog_impl.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -54,9 +53,9 @@ namespace
 		    , m_command_buffers{idis::gpu_res::command_buffer_set{m_command_pool,
 		                                                          std::size(m_render_fence)}}
 		    , m_shader_prog{{idis::gpu_res::shader_module{m_device,
-		                                                  idis::shaders::repo::get_vertex_shader()},
+		                                                  idis::shaders::testprog::vertex_shader()},
 		                     idis::gpu_res::shader_module{
-		                         m_device, idis::shaders::repo::get_fragment_shader()}},
+		                         m_device, idis::shaders::testprog::fragment_shader()}},
 		                    idis::gpu_res::pipeline_layout{m_device}}
 		    , m_vbo{idis::gpu_res::vertex_buffer<
 		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}

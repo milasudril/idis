@@ -1,6 +1,6 @@
 //@{"target":{"name":"testprog.vert.spv"}}
 
-#include "./testprog.hpp"
+#include "./testprog_def.hpp"
 
 layout(location = 0) out vec3 fragColor;
 

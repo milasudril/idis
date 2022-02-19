@@ -1,9 +1,0 @@
-#ifndef IDIS_SHADERS_TESTPROG_HPP
-#define IDIS_SHADERS_TESTPROG_HPP
-
-#include "./portdecl.hpp"
-IDIS_BEGIN_SHADER_DESCRIPTOR(idis::shaders, testprog)
-IDIS_SHADER_INPUT(vec2, loc)
-IDIS_SHADER_INPUT(vec2, normal)
-IDIS_END_SHADER_DESCRIPTOR()
-#endif

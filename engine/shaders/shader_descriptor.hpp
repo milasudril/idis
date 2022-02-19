@@ -1,9 +1,11 @@
-#ifndef IDIS_SHADERS_PORTDECL_HPP
-#define IDIS_SHADERS_PORTDECL_HPP
+#ifndef IDIS_SHADERS_SHADERSDESCRIPTOR_HPP
+#define IDIS_SHADERS_SHADERSDESCRIPTOR_HPP
 
 #ifdef __cplusplus
+	#include "./shader_source.hpp"
 	#include "engine/utils/vec_t.hpp"
 	#include <tuple>
+	#include <span>
 
 	#define IDIS_BEGIN_SHADER_DESCRIPTOR(namespace_name, name)                                     \
 		namespace namespace_name                                                                   \
@@ -16,6 +18,8 @@
 
 	#define IDIS_END_SHADER_DESCRIPTOR()                                                           \
 		void > ;                                                                                   \
+		static vertex_shader_source<std::span<uint32_t const>> vertex_shader();                    \
+		static fragment_shader_source<std::span<uint32_t const>> fragment_shader();                \
 		}                                                                                          \
 		;                                                                                          \
 		}
