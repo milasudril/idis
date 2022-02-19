@@ -101,6 +101,15 @@ namespace idis::gpu_res
 		pipeline_layout layout;
 	};
 
+	template<class ShaderDescriptor>
+	shader_program_info make_shader_program_info(pipeline_layout&& layout)
+	{
+		return shader_program_info{
+		    {shader_module{layout.device(), ShaderDescriptor::vertex_shader()},
+		     shader_module{layout.device(), ShaderDescriptor::fragment_shader()}},
+		    std::move(layout)};
+	}
+
 	class pipeline_descriptor
 	{
 	public:

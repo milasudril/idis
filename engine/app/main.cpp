@@ -52,11 +52,8 @@ namespace
 		    , m_command_pool{device}
 		    , m_command_buffers{idis::gpu_res::command_buffer_set{m_command_pool,
 		                                                          std::size(m_render_fence)}}
-		    , m_shader_prog{{idis::gpu_res::shader_module{m_device,
-		                                                  idis::shaders::testprog::vertex_shader()},
-		                     idis::gpu_res::shader_module{
-		                         m_device, idis::shaders::testprog::fragment_shader()}},
-		                    idis::gpu_res::pipeline_layout{m_device}}
+		    , m_shader_prog{make_shader_program_info<idis::shaders::testprog>(
+		          idis::gpu_res::pipeline_layout{m_device})}
 		    , m_vbo{idis::gpu_res::vertex_buffer<
 		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
 		{

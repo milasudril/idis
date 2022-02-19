@@ -48,6 +48,8 @@ namespace idis::gpu_res
 
 		auto handle() const { return m_handle.get(); }
 
+		VkDevice device() const { return m_handle.get_deleter().device(); }
+
 	private:
 		handle_type m_handle;
 	};
