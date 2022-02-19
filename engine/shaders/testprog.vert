@@ -1,12 +1,6 @@
 //@{"target":{"name":"testprog.vert.spv"}}
 
-#version 450
-
-#extension GL_GOOGLE_include_directive:require
-
 #include "./testprog.hpp"
-
-//layout(location = IDIS_SHADERS_TESTPROG_VERTEXINPUT) in vec2 loc;
 
 layout(location = 0) out vec3 fragColor;
 

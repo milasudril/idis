@@ -24,7 +24,7 @@
 #include "engine/utils/algext.hpp"
 #include "engine/utils/pair.hpp"
 #include "engine/vk_init/allocator.hpp"
-
+#include "engine/shaders/testprog.hpp"
 
 #include <algorithm>
 #include <cstdio>
