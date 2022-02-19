@@ -3,6 +3,7 @@
 
 #include "./shader_module.hpp"
 #include "./pipeline_layout.hpp"
+#include "./input_binding_descriptor.hpp"
 
 namespace idis::gpu_res
 {
@@ -98,6 +99,8 @@ namespace idis::gpu_res
 	struct shader_program_info
 	{
 		shader_module_set<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> modules;
+		std::span<VkVertexInputBindingDescription const> input_bindings;
+		std::span<VkVertexInputAttributeDescription const> input_attributes;
 		pipeline_layout layout;
 	};
 
@@ -107,6 +110,8 @@ namespace idis::gpu_res
 		return shader_program_info{
 		    {shader_module{layout.device(), ShaderDescriptor::vertex_shader()},
 		     shader_module{layout.device(), ShaderDescriptor::fragment_shader()}},
+		    std::span{input_binding_descriptor<ShaderDescriptor>::bindings},
+		    std::span{input_binding_descriptor<ShaderDescriptor>::attributes},
 		    std::move(layout)};
 	}
 
@@ -131,6 +136,13 @@ namespace idis::gpu_res
 		pipeline_descriptor& shader_program(std::reference_wrapper<shader_program_info const> prg)
 		{
 			m_shader_program = &prg.get();
+			m_vertex_input.vertexBindingDescriptionCount =
+			    std::size(m_shader_program->input_bindings);
+			m_vertex_input.pVertexBindingDescriptions = std::data(m_shader_program->input_bindings);
+			m_vertex_input.vertexAttributeDescriptionCount =
+			    std::size(m_shader_program->input_attributes);
+			m_vertex_input.pVertexAttributeDescriptions =
+			    std::data(m_shader_program->input_attributes);
 			return *this;
 		}
 

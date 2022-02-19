@@ -8,6 +8,7 @@
 #include "./pipeline.hpp"
 #include "./semaphore.hpp"
 #include "./fence.hpp"
+#include "./buffer.hpp"
 
 #include "engine/error_handling/exception.hpp"
 #include "engine/vk_init/error.hpp"
@@ -105,7 +106,21 @@ namespace idis::gpu_res
 			return *this;
 		}
 
+		// TODO: Type-checked binding
+		template<auto BufferUsage, auto AllocationFlags>
+		requires(BufferUsage == VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) render_pass_section& bind(
+		    VkCommandBuffer cmdbuff,
+		    std::reference_wrapper<buffer<BufferUsage, AllocationFlags> const> buff,
+		    uint32_t binding = 0)
+		{
+			VkDeviceSize offsets{};
+			auto handle = buff.get().handle();
+			vkCmdBindVertexBuffers(cmdbuff, binding, 1u, &handle, &offsets);
+			return *this;
+		}
+
 		// FIXME: Strongly typed integers here
+		// TODO: use capacity of current buffer(s)
 		render_pass_section& draw(VkCommandBuffer buffer, int a, int b, int c, int d)
 		{
 			vkCmdDraw(buffer, a, b, c, d);
