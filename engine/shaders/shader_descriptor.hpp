@@ -14,12 +14,13 @@
 			{                                                                                      \
 				using port_types = std::tuple <
 
-	#define IDIS_SHADER_INPUT(type, name) type##f_t,
+	#define IDIS_SHADER_INPUT(type, name) ::idis::type##f_t,
 
 	#define IDIS_END_SHADER_DESCRIPTOR()                                                           \
-		void > ;                                                                                   \
-		static vertex_shader_source<std::span<uint32_t const>> vertex_shader();                    \
-		static fragment_shader_source<std::span<uint32_t const>> fragment_shader();                \
+		nullptr_t > ;                                                                              \
+		static ::idis::shaders::vertex_shader_source<std::span<uint32_t const>> vertex_shader();   \
+		static ::idis::shaders::fragment_shader_source<std::span<uint32_t const>>                  \
+		fragment_shader();                                                                         \
 		}                                                                                          \
 		;                                                                                          \
 		}
