@@ -39,13 +39,21 @@ namespace idis
 	requires(is_native_vector<T>()) constexpr auto length_squared(T a) { return dot(a, a); }
 
 	template<class T>
-	requires(is_native_vector<T>()) constexpr auto length(T a)
+	requires(is_native_vector<T>()
+	         && std::is_floating_point_v<scalar_t<T>>) constexpr auto length(T a)
 	{
 		return std::sqrt(length_squared(a));
 	}
 
 	template<class T>
-	requires(is_native_vector<T>()) constexpr auto normailzed(T a) { return a / length(a); }
+	requires(is_native_vector<T>()) constexpr auto normalized(T a) { return a / length(a); }
+
+	template<class T>
+	requires(is_native_vector<T>()
+	         && std::is_floating_point_v<scalar_t<T>>) constexpr auto lerp(T a, T b, scalar_t<T> t)
+	{
+		return (t - static_cast<scalar_t<T>>(1)) * a + t * b;
+	}
 
 	template<class To, class From>
 	requires(vector_size_v<To> == 4 && vector_size_v<From> == 4) constexpr auto vector_cast(From a)
@@ -61,7 +69,6 @@ namespace idis
 	{
 		return To{static_cast<scalar_t<To>>(a[0]), static_cast<scalar_t<To>>(a[1])};
 	}
-
 
 	template<class T>
 	using vec2_t = vec_t<T, 2>;
