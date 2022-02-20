@@ -63,21 +63,22 @@ namespace idis::gpu_res
 		return buffer_handle{buffer, buffer_deleter{allocator, allocation}};
 	}
 
-	template<auto BufferUsage, auto AllocationFlags>
+	template<class T, auto BufferUsage, auto AllocationFlags>
 	class buffer
 	{
 	public:
+		using value_type = T;
 		using handle_type                      = buffer_handle;
 		static constexpr auto buffer_usage     = BufferUsage;
 		static constexpr auto allocation_flags = AllocationFlags;
 
 		explicit buffer(std::reference_wrapper<vk_init::allocator const> allocator, size_t size)
-		    : buffer{allocator.get().handle(), size}
+		    : buffer{allocator.get().handle(), sizeof(T) * size}
 		{
 		}
 
 		explicit buffer(VmaAllocator allocator, size_t size)
-		    : m_handle{create_buffer<BufferUsage, AllocationFlags>(allocator, size)}
+		    : m_handle{create_buffer<BufferUsage, AllocationFlags>(allocator, sizeof(T)*size)}
 		{
 		}
 
@@ -91,15 +92,15 @@ namespace idis::gpu_res
 		{
 			VmaAllocationInfo alloc_info{};
 			vmaGetAllocationInfo(allocator(), allocation(), &alloc_info);
-			return alloc_info.size;
+			return alloc_info.size / sizeof(T);
 		}
 
 	private:
 		handle_type m_handle;
 	};
 
-	template<auto AllocationFlags>
-	using vertex_buffer = buffer<VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, AllocationFlags>;
+	template<class T, auto AllocationFlags>
+	using vertex_buffer = buffer<T, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, AllocationFlags>;
 
 	constexpr auto is_host_visible(VmaAllocationCreateFlagBits allocation_flags)
 	{
@@ -109,25 +110,25 @@ namespace idis::gpu_res
 		                            & VMA_ALLOCATION_CREATE_HOST_ACCESS_RANDOM_BIT);
 	}
 
-	template<auto BufferUsage, auto AllocationFlags, class SrcType>
-	requires(std::is_trivially_copyable_v<SrcType>&& is_host_visible(AllocationFlags)) size_t
-	    sync_transfer(buffer<BufferUsage, AllocationFlags> const& buffer,
-	                  std::span<SrcType const> data)
+	template<class T, auto BufferUsage, auto AllocationFlags>
+	requires(std::is_trivially_copyable_v<T>&& is_host_visible(AllocationFlags)) size_t
+	    sync_transfer(buffer<T, BufferUsage, AllocationFlags> const& buffer,
+	                  std::span<T const> data)
 	{
 		void* ptr{};
-		assert(buffer.capacity() >= sizeof(SrcType) * std::size(data));
+		assert(buffer.capacity() >= std::size(data));
 		vmaMapMemory(buffer.allocator(), buffer.allocation(), &ptr);
-		memcpy(ptr, std::data(std::as_const(data)), sizeof(SrcType) * std::size(data));
+		memcpy(ptr, std::data(std::as_const(data)), sizeof(T) * std::size(data));
 		vmaUnmapMemory(buffer.allocator(), buffer.allocation());
 		return std::size(data);
 	}
 
-	template<auto BufferUsage, auto AllocationFlags, class SrcType, size_t N>
-	requires(std::is_trivially_copyable_v<SrcType>&& is_host_visible(AllocationFlags)) size_t
-	    sync_transfer(buffer<BufferUsage, AllocationFlags> const& buffer,
-	                  std::span<SrcType const, N> data)
+	template<class T, auto BufferUsage, auto AllocationFlags, size_t N>
+	requires(std::is_trivially_copyable_v<T>&& is_host_visible(AllocationFlags)) size_t
+	    sync_transfer(buffer<T, BufferUsage, AllocationFlags> const& buffer,
+	                  std::span<T const, N> data)
 	{
-		return sync_transfer(buffer, std::span<SrcType const>{data});
+		return sync_transfer(buffer, std::span<T const>{data});
 	}
 }
 
