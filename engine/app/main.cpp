@@ -53,9 +53,11 @@ namespace
 		    , m_command_pool{device}
 		    , m_command_buffers{idis::gpu_res::command_buffer_set{m_command_pool,
 		                                                          std::size(m_render_fence)}}
-		    , m_vbo{idis::gpu_res::vertex_buffer<idis::pair<float>,
+		    , m_vbo{idis::gpu_res::vertex_buffer<
+		          idis::pair<float>,
 		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
-		    , m_colors{idis::gpu_res::vertex_buffer<idis::vec4f_t,
+		    , m_colors{idis::gpu_res::vertex_buffer<
+		          idis::vec4f_t,
 		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
 		{
 			std::array<idis::pair<float>, 3> const verts{
@@ -153,8 +155,11 @@ namespace
 
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::command_buffer_set m_command_buffers;
-		idis::gpu_res::vertex_buffer<idis::pair<float>, VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT> m_vbo;
-		idis::gpu_res::vertex_buffer<idis::vec4f_t, VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>
+		idis::gpu_res::vertex_buffer<idis::pair<float>,
+		                             VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>
+		    m_vbo;
+		idis::gpu_res::vertex_buffer<idis::vec4f_t,
+		                             VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>
 		    m_colors;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
 

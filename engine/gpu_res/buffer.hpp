@@ -39,17 +39,21 @@ namespace idis::gpu_res
 
 	using buffer_handle = std::unique_ptr<std::remove_pointer_t<VkBuffer>, buffer_deleter>;
 
-	template<auto BufferUsage, auto AllocationFlags>
-	auto create_buffer(VmaAllocator allocator, size_t capacity)
+	auto create_buffer(VmaAllocator allocator,
+	                   VmaAllocationCreateFlags alloc_flags,
+	                   VkMemoryPropertyFlags alloc_requirements,
+	                   size_t capacity,
+	                   VkBufferUsageFlags usage)
 	{
 		VkBufferCreateInfo buffer_info{};
 		buffer_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		buffer_info.size  = capacity;
-		buffer_info.usage = BufferUsage;
+		buffer_info.usage = usage;
 
 		VmaAllocationCreateInfo alloc_info{};
-		alloc_info.usage = VMA_MEMORY_USAGE_AUTO;
-		alloc_info.flags = AllocationFlags;
+		alloc_info.usage         = VMA_MEMORY_USAGE_AUTO;
+		alloc_info.flags         = alloc_flags;
+		alloc_info.requiredFlags = alloc_requirements;
 
 		VkBuffer buffer{};
 		VmaAllocation allocation{};
@@ -67,7 +71,7 @@ namespace idis::gpu_res
 	class buffer
 	{
 	public:
-		using value_type = T;
+		using value_type                       = T;
 		using handle_type                      = buffer_handle;
 		static constexpr auto buffer_usage     = BufferUsage;
 		static constexpr auto allocation_flags = AllocationFlags;
@@ -78,7 +82,7 @@ namespace idis::gpu_res
 		}
 
 		explicit buffer(VmaAllocator allocator, size_t size)
-		    : m_handle{create_buffer<BufferUsage, AllocationFlags>(allocator, sizeof(T)*size)}
+		    : m_handle{create_buffer(allocator, AllocationFlags, 0, sizeof(T) * size, BufferUsage)}
 		{
 		}
 
