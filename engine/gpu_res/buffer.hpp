@@ -67,9 +67,9 @@ namespace idis::gpu_res
 	class buffer
 	{
 	public:
-		using handle_type                             = buffer_handle;
-		static constexpr auto buffer_usage            = BufferUsage;
-		static constexpr auto allocation_requirements = AllocationFlags;
+		using handle_type                      = buffer_handle;
+		static constexpr auto buffer_usage     = BufferUsage;
+		static constexpr auto allocation_flags = AllocationFlags;
 
 		explicit buffer(std::reference_wrapper<vk_init::allocator const> allocator, size_t size)
 		    : buffer{allocator.get().handle(), size}

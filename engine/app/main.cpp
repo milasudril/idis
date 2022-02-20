@@ -24,6 +24,7 @@
 #include "engine/utils/pair.hpp"
 #include "engine/vk_init/allocator.hpp"
 #include "engine/shaders/testprog_impl.hpp"
+#include "engine/gpu_res/image.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -82,12 +83,15 @@ namespace
 			auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
 			auto new_framebuffers =
 			    create_framebuffers_from(new_render_pass, new_swapchain.extent(), new_img_views);
+			auto new_depth_buffer =
+			    idis::gpu_res::gpu_only_depth_buffer{m_allocator, new_swapchain.extent()};
 
 			m_swapchain    = std::move(new_swapchain);
 			m_img_views    = std::move(new_img_views);
 			m_render_pass  = std::move(new_render_pass);
 			m_pipeline     = std::move(new_pipeline);
 			m_framebuffers = std::move(new_framebuffers);
+			m_depth_buffer = std::move(new_depth_buffer);
 		}
 
 		void draw_frame()
@@ -152,6 +156,7 @@ namespace
 
 		idis::gpu_res::swapchain m_swapchain;
 		std::vector<idis::gpu_res::image_view> m_img_views;
+		idis::gpu_res::gpu_only_depth_buffer m_depth_buffer;
 		idis::gpu_res::render_pass m_render_pass;
 		idis::gpu_res::pipeline m_pipeline;
 		std::vector<idis::gpu_res::framebuffer> m_framebuffers;
