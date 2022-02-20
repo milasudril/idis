@@ -1,21 +1,13 @@
 #ifndef IDIS_GPURES_PIPELINEDESCRIPTOR_HPP
 #define IDIS_GPURES_PIPELINEDESCRIPTOR_HPP
 
-#include "./shader_module.hpp"
-#include "./pipeline_layout.hpp"
 #include "./input_binding_descriptor.hpp"
+
+#include <functional>
+#include <memory>
 
 namespace idis::gpu_res
 {
-	inline auto init_vertex_input()
-	{
-		VkPipelineVertexInputStateCreateInfo ret{};
-		ret.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		ret.vertexBindingDescriptionCount   = 0;
-		ret.vertexAttributeDescriptionCount = 0;
-		return ret;
-	}
-
 	inline auto init_input_assembly()
 	{
 		VkPipelineInputAssemblyStateCreateInfo ret{};
@@ -93,34 +85,12 @@ namespace idis::gpu_res
 		return ret;
 	}
 
-	template<auto... Tags>
-	using shader_module_set = std::tuple<shader_module<Tags>...>;
-
-	struct shader_program_info
-	{
-		shader_module_set<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> modules;
-		std::span<VkVertexInputBindingDescription const> input_bindings;
-		std::span<VkVertexInputAttributeDescription const> input_attributes;
-		pipeline_layout layout;
-	};
-
-	template<class ShaderDescriptor>
-	shader_program_info make_shader_program_info(pipeline_layout&& layout)
-	{
-		return shader_program_info{
-		    {shader_module{layout.device(), ShaderDescriptor::vertex_shader()},
-		     shader_module{layout.device(), ShaderDescriptor::fragment_shader()}},
-		    std::span{input_binding_descriptor<ShaderDescriptor>::bindings},
-		    std::span{input_binding_descriptor<ShaderDescriptor>::attributes},
-		    std::move(layout)};
-	}
 
 	class pipeline_descriptor
 	{
 	public:
 		pipeline_descriptor()
-		    : m_vertex_input{init_vertex_input()}
-		    , m_input_assembly{init_input_assembly()}
+		    : m_input_assembly{init_input_assembly()}
 		    , m_viewport{std::make_unique<VkViewport>(init_viewport())}
 		    , m_scissor{std::make_unique<VkRect2D>()}
 		    , m_viewport_state{init_viewport_state(*m_viewport, *m_scissor)}
@@ -129,21 +99,7 @@ namespace idis::gpu_res
 		    , m_color_blend_attachment_state{std::make_unique<VkPipelineColorBlendAttachmentState>(
 		          init_color_blend_attchment_state())}
 		    , m_color_blend_state{init_color_blend_state(*m_color_blend_attachment_state)}
-		    , m_shader_program{nullptr}
 		{
-		}
-
-		pipeline_descriptor& shader_program(std::reference_wrapper<shader_program_info const> prg)
-		{
-			m_shader_program = &prg.get();
-			m_vertex_input.vertexBindingDescriptionCount =
-			    std::size(m_shader_program->input_bindings);
-			m_vertex_input.pVertexBindingDescriptions = std::data(m_shader_program->input_bindings);
-			m_vertex_input.vertexAttributeDescriptionCount =
-			    std::size(m_shader_program->input_attributes);
-			m_vertex_input.pVertexAttributeDescriptions =
-			    std::data(m_shader_program->input_attributes);
-			return *this;
 		}
 
 		pipeline_descriptor& viewport(VkExtent2D dim)
@@ -160,10 +116,6 @@ namespace idis::gpu_res
 			return *this;
 		}
 
-		auto const& shader_program() const { return *m_shader_program; }
-
-		auto const& vertex_input() const { return m_vertex_input; }
-
 		auto const& input_assembly() const { return m_input_assembly; }
 
 		auto const& viewport_state() const { return m_viewport_state; }
@@ -175,7 +127,6 @@ namespace idis::gpu_res
 		auto const& color_blend_state() const { return m_color_blend_state; }
 
 	private:
-		VkPipelineVertexInputStateCreateInfo m_vertex_input;
 		VkPipelineInputAssemblyStateCreateInfo m_input_assembly;
 		std::unique_ptr<VkViewport> m_viewport;
 		std::unique_ptr<VkRect2D> m_scissor;
@@ -184,7 +135,6 @@ namespace idis::gpu_res
 		VkPipelineMultisampleStateCreateInfo m_multisample_state;
 		std::unique_ptr<VkPipelineColorBlendAttachmentState> m_color_blend_attachment_state;
 		VkPipelineColorBlendStateCreateInfo m_color_blend_state;
-		shader_program_info const* m_shader_program;
 	};
 }
 

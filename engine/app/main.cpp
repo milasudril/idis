@@ -53,8 +53,6 @@ namespace
 		    , m_command_pool{device}
 		    , m_command_buffers{idis::gpu_res::command_buffer_set{m_command_pool,
 		                                                          std::size(m_render_fence)}}
-		    , m_shader_prog{make_shader_program_info<idis::shaders::testprog>(
-		          idis::gpu_res::pipeline_layout{m_device})}
 		    , m_vbo{idis::gpu_res::vertex_buffer<
 		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
 		    , m_colors{idis::gpu_res::vertex_buffer<
@@ -68,7 +66,6 @@ namespace
 			                                          idis::vec4f_t{0.0f, 0.0f, 1.0f, 1.0f}};
 			sync_transfer(m_vbo, std::span{verts});
 			sync_transfer(m_colors, std::span{colors});
-			m_pipeline_info.shader_program(m_shader_prog);
 		}
 
 		void reconfigure()
@@ -83,19 +80,20 @@ namespace
 			auto new_render_pass =
 			    idis::gpu_res::render_pass{m_device, new_swapchain.image_format()};
 			m_pipeline_info.viewport(new_swapchain.extent()).scissor(new_swapchain.extent());
-			auto new_pipeline = idis::gpu_res::pipeline{m_device, m_pipeline_info, new_render_pass};
+			auto new_pipeline = idis::gpu_res::pipeline<idis::shaders::testprog>{
+			    m_device, m_pipeline_info, new_render_pass};
 			auto new_framebuffers =
 			    create_framebuffers_from(new_render_pass, new_swapchain.extent(), new_img_views);
 			auto new_depth_buffer =
 			    idis::gpu_res::gpu_only_depth_buffer{m_allocator, new_swapchain.extent()};
 			auto new_depth_buffer_view = idis::gpu_res::image_view{std::cref(new_depth_buffer)};
 
-			m_swapchain    = std::move(new_swapchain);
-			m_img_views    = std::move(new_img_views);
-			m_render_pass  = std::move(new_render_pass);
-			m_pipeline     = std::move(new_pipeline);
-			m_framebuffers = std::move(new_framebuffers);
-			m_depth_buffer = std::move(new_depth_buffer);
+			m_swapchain         = std::move(new_swapchain);
+			m_img_views         = std::move(new_img_views);
+			m_render_pass       = std::move(new_render_pass);
+			m_pipeline          = std::move(new_pipeline);
+			m_framebuffers      = std::move(new_framebuffers);
+			m_depth_buffer      = std::move(new_depth_buffer);
 			m_depth_buffer_view = std::move(new_depth_buffer_view);
 		}
 
@@ -156,7 +154,6 @@ namespace
 
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::command_buffer_set m_command_buffers;
-		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::vertex_buffer<VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT> m_vbo;
 		idis::gpu_res::vertex_buffer<VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>
 		    m_colors;
@@ -167,7 +164,7 @@ namespace
 		idis::gpu_res::gpu_only_depth_buffer m_depth_buffer;
 		idis::gpu_res::image_view m_depth_buffer_view;
 		idis::gpu_res::render_pass m_render_pass;
-		idis::gpu_res::pipeline m_pipeline;
+		idis::gpu_res::pipeline<idis::shaders::testprog> m_pipeline;
 		std::vector<idis::gpu_res::framebuffer> m_framebuffers;
 	};
 

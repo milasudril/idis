@@ -6,18 +6,23 @@
 
 namespace
 {
-	auto create_image_view(VkDevice device, VkImage image, idis::gpu_res::image_descriptor const& descriptor)
+	auto create_image_view(VkDevice device,
+	                       VkImage image,
+	                       idis::gpu_res::image_descriptor const& descriptor)
 	{
 		VkImageViewCreateInfo create_info{};
-		create_info.sType                           = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		create_info.image                           = image;
-		create_info.viewType                        = VK_IMAGE_VIEW_TYPE_2D;
-		create_info.format                          = descriptor.format;
-		create_info.components.r                    = VK_COMPONENT_SWIZZLE_IDENTITY;
-		create_info.components.g                    = VK_COMPONENT_SWIZZLE_IDENTITY;
-		create_info.components.b                    = VK_COMPONENT_SWIZZLE_IDENTITY;
-		create_info.components.a                    = VK_COMPONENT_SWIZZLE_IDENTITY;
-		create_info.subresourceRange.aspectMask     = (descriptor.usage & VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT)?VK_IMAGE_ASPECT_DEPTH_BIT:VK_IMAGE_ASPECT_COLOR_BIT;
+		create_info.sType        = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		create_info.image        = image;
+		create_info.viewType     = VK_IMAGE_VIEW_TYPE_2D;
+		create_info.format       = descriptor.format;
+		create_info.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+		create_info.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+		create_info.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+		create_info.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+		create_info.subresourceRange.aspectMask =
+		    (descriptor.usage & VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT)
+		        ? VK_IMAGE_ASPECT_DEPTH_BIT
+		        : VK_IMAGE_ASPECT_COLOR_BIT;
 		create_info.subresourceRange.baseMipLevel   = 0;
 		create_info.subresourceRange.levelCount     = 1;
 		create_info.subresourceRange.baseArrayLayer = 0;
@@ -38,7 +43,7 @@ namespace
 	{
 		idis::gpu_res::image_descriptor descriptor;
 		descriptor.format = format;
-		descriptor.usage = static_cast<VkImageUsageFlagBits>(0);
+		descriptor.usage  = static_cast<VkImageUsageFlagBits>(0);
 		return create_image_view(device, image, descriptor);
 	}
 }
@@ -49,6 +54,9 @@ idis::gpu_res::image_view::image_view(VkDevice device, VkImage image, VkFormat f
 {
 }
 
-idis::gpu_res::image_view::image_view(VkDevice device, VkImage image, image_descriptor const& descriptor):
-	m_handle{create_image_view(device, image, descriptor)}
-{}
+idis::gpu_res::image_view::image_view(VkDevice device,
+                                      VkImage image,
+                                      image_descriptor const& descriptor)
+    : m_handle{create_image_view(device, image, descriptor)}
+{
+}

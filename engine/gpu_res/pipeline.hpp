@@ -9,12 +9,36 @@
 
 #include "./pipeline_descriptor.hpp"
 #include "./render_pass.hpp"
+#include "./shader_module.hpp"
+#include "./pipeline_layout.hpp"
 
 #include <type_traits>
 #include <memory>
 
 namespace idis::gpu_res
 {
+	template<auto... Tags>
+	using shader_module_set = std::tuple<shader_module<Tags>...>;
+
+	struct shader_program_info
+	{
+		shader_module_set<VK_SHADER_STAGE_VERTEX_BIT, VK_SHADER_STAGE_FRAGMENT_BIT> modules;
+		std::span<VkVertexInputBindingDescription const> input_bindings;
+		std::span<VkVertexInputAttributeDescription const> input_attributes;
+		pipeline_layout layout;
+	};
+
+	template<class ShaderDescriptor>
+	shader_program_info make_shader_program_info(pipeline_layout&& layout)
+	{
+		return shader_program_info{
+		    {shader_module{layout.device(), ShaderDescriptor::vertex_shader()},
+		     shader_module{layout.device(), ShaderDescriptor::fragment_shader()}},
+		    std::span{input_binding_descriptor<ShaderDescriptor>::bindings},
+		    std::span{input_binding_descriptor<ShaderDescriptor>::attributes},
+		    std::move(layout)};
+	}
+
 	class pipeline_deleter
 	{
 	public:
@@ -31,11 +55,19 @@ namespace idis::gpu_res
 		VkDevice m_device;
 	};
 
+	using pipeline_handle_type =
+	    std::unique_ptr<std::remove_pointer_t<VkPipeline>, pipeline_deleter>;
+
+	pipeline_handle_type create_pipeline(VkDevice device,
+	                                     pipeline_descriptor const& descriptor,
+	                                     shader_program_info const& shader_program,
+	                                     VkRenderPass matching_rp);
+
+	template<class ShaderDescriptor>
 	class pipeline
 	{
 	public:
-		using handle_type = std::unique_ptr<std::remove_pointer_t<VkPipeline>, pipeline_deleter>;
-		;
+		using handle_type = pipeline_handle_type;
 
 		pipeline(): m_handle{nullptr, pipeline_deleter{nullptr}} {}
 
@@ -43,13 +75,13 @@ namespace idis::gpu_res
 		explicit pipeline(std::reference_wrapper<vk_init::device const> device,
 		                  pipeline_descriptor const& descriptor,
 		                  render_pass const& matching_rp)
-		    : pipeline{device.get().handle(), descriptor, matching_rp.handle()}
+		    : m_handle{
+		        create_pipeline(device.get().handle(),
+		                        descriptor,
+		                        make_shader_program_info<ShaderDescriptor>(pipeline_layout{device}),
+		                        matching_rp.handle())}
 		{
 		}
-
-		explicit pipeline(VkDevice device,
-		                  pipeline_descriptor const& descriptor,
-		                  VkRenderPass matching_rp);
 
 		auto handle() const { return m_handle.get(); }
 
