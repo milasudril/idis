@@ -67,7 +67,7 @@ namespace idis::gpu_res
 	class pipeline
 	{
 	public:
-		using handle_type = pipeline_handle_type;
+		using handle_type       = pipeline_handle_type;
 		using shader_descriptor = ShaderDescriptor;
 
 		pipeline(): m_handle{nullptr, pipeline_deleter{nullptr}} {}

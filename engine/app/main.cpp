@@ -121,9 +121,8 @@ namespace
 				auto const& fb  = m_framebuffers[img_index];
 				idis::gpu_res::command_recording_session rec{cmd_buffer};
 				idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
-				rp_sec.bind(cmd_buffer, std::cref(m_vbo))
-				    .bind(cmd_buffer, std::cref(m_colors), 1)
-				    .bind(cmd_buffer, std::cref(m_pipeline))
+				rp_sec
+				    .bind(cmd_buffer, std::cref(m_pipeline), std::cref(m_vbo), std::cref(m_colors))
 				    .draw(cmd_buffer, 3, 1, 0, 0);
 			}
 

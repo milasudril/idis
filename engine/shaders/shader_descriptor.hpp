@@ -21,6 +21,8 @@
 		static ::idis::shaders::vertex_shader_source<std::span<uint32_t const>> vertex_shader();   \
 		static ::idis::shaders::fragment_shader_source<std::span<uint32_t const>>                  \
 		fragment_shader();                                                                         \
+                                                                                                   \
+		static constexpr auto num_inputs = std::tuple_size_v<port_types> - 1;                      \
 		}                                                                                          \
 		;                                                                                          \
 		}

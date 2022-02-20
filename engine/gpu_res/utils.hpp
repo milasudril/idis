@@ -100,23 +100,19 @@ namespace idis::gpu_res
 		render_pass_section(render_pass_section&&)                 = delete;
 		render_pass_section& operator=(render_pass_section&&) = delete;
 
-		template<class ShaderDescriptor>
-		render_pass_section& bind(VkCommandBuffer buffer, std::reference_wrapper<pipeline<ShaderDescriptor> const> pipeline)
-		{
-			vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.get().handle());
-			return *this;
-		}
-
 		// TODO: Type-checked binding
-		template<auto BufferUsage, auto AllocationFlags>
-		requires(BufferUsage == VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) render_pass_section& bind(
-		    VkCommandBuffer cmdbuff,
-		    std::reference_wrapper<buffer<BufferUsage, AllocationFlags> const> buff,
-		    uint32_t binding = 0)
+		template<class ShaderDescriptor, class... Buffers>
+		render_pass_section& bind(VkCommandBuffer cmdbuff,
+		                          std::reference_wrapper<pipeline<ShaderDescriptor> const> pipeline,
+		                          std::reference_wrapper<Buffers const>... buffers)
 		{
-			VkDeviceSize offsets{};
-			auto handle = buff.get().handle();
-			vkCmdBindVertexBuffers(cmdbuff, binding, 1u, &handle, &offsets);
+			static_assert(((Buffers::buffer_usage & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) && ...)
+			              && sizeof...(Buffers) == ShaderDescriptor::num_inputs);
+			std::array<VkBuffer, sizeof...(Buffers)> handles{buffers.get().handle()...};
+			std::array<VkDeviceSize, sizeof...(Buffers)> offsets{};
+			vkCmdBindVertexBuffers(
+			    cmdbuff, 0, std::size(handles), std::data(handles), std::data(offsets));
+			vkCmdBindPipeline(cmdbuff, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.get().handle());
 			return *this;
 		}
 
