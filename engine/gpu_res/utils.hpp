@@ -100,9 +100,10 @@ namespace idis::gpu_res
 		render_pass_section(render_pass_section&&)                 = delete;
 		render_pass_section& operator=(render_pass_section&&) = delete;
 
-		render_pass_section& bind(VkCommandBuffer buffer, VkPipeline pipeline)
+		template<class ShaderDescriptor>
+		render_pass_section& bind(VkCommandBuffer buffer, std::reference_wrapper<pipeline<ShaderDescriptor> const> pipeline)
 		{
-			vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
+			vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.get().handle());
 			return *this;
 		}
 

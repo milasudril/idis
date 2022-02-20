@@ -123,7 +123,7 @@ namespace
 				idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
 				rp_sec.bind(cmd_buffer, std::cref(m_vbo))
 				    .bind(cmd_buffer, std::cref(m_colors), 1)
-				    .bind(cmd_buffer, m_pipeline.handle())
+				    .bind(cmd_buffer, std::cref(m_pipeline))
 				    .draw(cmd_buffer, 3, 1, 0, 0);
 			}
 
