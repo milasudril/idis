@@ -92,7 +92,11 @@ namespace idis::gpu_res
 			bool is_ok = true;
 			if(ImageUsage & VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT)
 			{
-				is_ok = is_ok && std::is_same_v<PixelType, float>;
+				is_ok =
+				    is_ok
+				    && std::is_same_v<
+				        PixelType,
+				        float> && (AllocationRequirements & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 			}
 
 			if((AllocationFlags & VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT)
