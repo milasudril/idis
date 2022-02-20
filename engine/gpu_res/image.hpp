@@ -107,11 +107,11 @@ namespace idis::gpu_res
 
 		VmaAllocation allocation() const { return m_handle.get_deleter().allocation(); }
 
-		size_t capacity() const
+		VkDevice device() const
 		{
-			VmaAllocationInfo alloc_info{};
-			vmaGetAllocationInfo(allocator(), allocation(), &alloc_info);
-			return alloc_info.size;
+			VmaAllocatorInfo info{};
+			vmaGetAllocatorInfo(m_handle.get_deleter().allocator(), &info);
+			return info.device;
 		}
 
 	private:

@@ -7,6 +7,8 @@
 #ifndef IDIS_GPURES_VKIMAGEVIEW_HPP
 #define IDIS_GPURES_VKIMAGEVIEW_HPP
 
+#include "./image.hpp"
+
 #include "engine/vk_init/device.hpp"
 
 #include <type_traits>
@@ -35,7 +37,7 @@ namespace idis::gpu_res
 	public:
 		using handle_type = std::unique_ptr<std::remove_pointer_t<VkImageView>, image_view_deleter>;
 
-		image_view() = default;
+		image_view():m_handle{nullptr, image_view_deleter{nullptr}}{}
 
 		explicit image_view(std::reference_wrapper<vk_init::device const> device,
 		                    VkImage image,
@@ -44,7 +46,15 @@ namespace idis::gpu_res
 		{
 		}
 
+		template<image_descriptor Descriptor, auto AllocationFlags, auto AllocationRequirements>
+		explicit image_view(std::reference_wrapper<image<Descriptor, AllocationFlags, AllocationRequirements> const> img):
+		image_view{img.get().device(), img.get().handle(), img.get().descriptor}
+		{
+		}
+
 		explicit image_view(VkDevice device, VkImage image, VkFormat format);
+
+		explicit image_view(VkDevice device, VkImage image, image_descriptor const& descriptor);
 
 		auto handle() const { return m_handle.get(); }
 

@@ -75,11 +75,7 @@ namespace
 		{
 			m_device.get().wait();
 
-			// Must remove all resources. Otherwise, the window is busy.
-			m_framebuffers.clear();
-			m_pipeline.reset();
-			m_render_pass.reset();
-			m_img_views.clear();
+			// Must remove old swapchain. Otherwise, the window is busy.
 			m_swapchain.reset();
 
 			auto new_swapchain = idis::gpu_res::swapchain{m_device, m_surface};
@@ -92,6 +88,7 @@ namespace
 			    create_framebuffers_from(new_render_pass, new_swapchain.extent(), new_img_views);
 			auto new_depth_buffer =
 			    idis::gpu_res::gpu_only_depth_buffer{m_allocator, new_swapchain.extent()};
+			auto new_depth_buffer_view = idis::gpu_res::image_view{std::cref(new_depth_buffer)};
 
 			m_swapchain    = std::move(new_swapchain);
 			m_img_views    = std::move(new_img_views);
@@ -99,6 +96,7 @@ namespace
 			m_pipeline     = std::move(new_pipeline);
 			m_framebuffers = std::move(new_framebuffers);
 			m_depth_buffer = std::move(new_depth_buffer);
+			m_depth_buffer_view = std::move(new_depth_buffer_view);
 		}
 
 		void draw_frame()
@@ -167,6 +165,7 @@ namespace
 		idis::gpu_res::swapchain m_swapchain;
 		std::vector<idis::gpu_res::image_view> m_img_views;
 		idis::gpu_res::gpu_only_depth_buffer m_depth_buffer;
+		idis::gpu_res::image_view m_depth_buffer_view;
 		idis::gpu_res::render_pass m_render_pass;
 		idis::gpu_res::pipeline m_pipeline;
 		std::vector<idis::gpu_res::framebuffer> m_framebuffers;
