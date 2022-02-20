@@ -52,6 +52,20 @@ namespace idis::gpu_res
 	{
 		using type = vec4f_t;
 	};
+
+	struct depth_value
+	{
+		float value;
+	};
+
+	template<>
+	constexpr auto format_id_v<depth_value> = VK_FORMAT_D32_SFLOAT;
+
+	template<>
+	struct format<VK_FORMAT_D32_SFLOAT>
+	{
+		using type = depth_value;
+	};
 }
 
 #endif
