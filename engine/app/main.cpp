@@ -54,14 +54,14 @@ namespace
 		    , m_command_buffers{idis::gpu_res::command_buffer_set{m_command_pool,
 		                                                          std::size(m_render_fence)}}
 		    , m_vbo{idis::gpu_res::vertex_buffer<
-		          idis::pair<float>,
-		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
+		          idis::vec2f_t,
+		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 3)}
 		    , m_colors{idis::gpu_res::vertex_buffer<
 		          idis::vec4f_t,
-		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
+		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 3)}
 		{
-			std::array<idis::pair<float>, 3> const verts{
-			    idis::pair{0.5f, -0.5f}, idis::pair{0.5f, 0.5f}, idis::pair{-0.5f, 0.5f}};
+			std::array<idis::vec2f_t, 3> const verts{
+			    idis::vec2f_t{0.5f, -0.5f}, idis::vec2f_t{0.5f, 0.5f}, idis::vec2f_t{-0.5f, 0.5f}};
 
 			std::array<idis::vec4f_t, 3> const colors{idis::vec4f_t{1.0f, 0.0f, 0.0f, 1.0f},
 			                                          idis::vec4f_t{0.0f, 1.0f, 0.0f, 1.0f},
@@ -155,7 +155,7 @@ namespace
 
 		idis::gpu_res::command_pool m_command_pool;
 		idis::gpu_res::command_buffer_set m_command_buffers;
-		idis::gpu_res::vertex_buffer<idis::pair<float>,
+		idis::gpu_res::vertex_buffer<idis::vec2f_t,
 		                             VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>
 		    m_vbo;
 		idis::gpu_res::vertex_buffer<idis::vec4f_t,

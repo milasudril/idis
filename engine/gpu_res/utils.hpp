@@ -100,14 +100,15 @@ namespace idis::gpu_res
 		render_pass_section(render_pass_section&&)                 = delete;
 		render_pass_section& operator=(render_pass_section&&) = delete;
 
-		// TODO: Type-checked binding
 		template<class ShaderDescriptor, class... Buffers>
 		render_pass_section& bind(VkCommandBuffer cmdbuff,
 		                          std::reference_wrapper<pipeline<ShaderDescriptor> const> pipeline,
 		                          std::reference_wrapper<Buffers const>... buffers)
 		{
-			static_assert(((Buffers::buffer_usage & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) && ...)
-			              && sizeof...(Buffers) == ShaderDescriptor::num_inputs);
+			static_assert(((Buffers::buffer_usage & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) && ...));
+			static_assert(sizeof...(Buffers) == ShaderDescriptor::num_inputs);
+			static_assert(std::is_same_v<std::tuple<typename Buffers::value_type..., nullptr_t>,
+			                             typename ShaderDescriptor::port_types>);
 			std::array<VkBuffer, sizeof...(Buffers)> handles{buffers.get().handle()...};
 			std::array<VkDeviceSize, sizeof...(Buffers)> offsets{};
 			vkCmdBindVertexBuffers(
