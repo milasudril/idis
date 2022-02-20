@@ -57,10 +57,18 @@ namespace
 		          idis::gpu_res::pipeline_layout{m_device})}
 		    , m_vbo{idis::gpu_res::vertex_buffer<
 		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
+		    , m_colors{idis::gpu_res::vertex_buffer<
+		          VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT>(m_allocator.get(), 12)}
 		{
 			std::array<idis::pair<float>, 3> const verts{
 			    idis::pair{0.5f, -0.5f}, idis::pair{0.5f, 0.5f}, idis::pair{-0.5f, 0.5f}};
+
+			std::array<idis::vec4f_t, 3> const colors{
+				idis::vec4f_t{1.0f, 0.0f, 0.0f, 1.0f},
+				idis::vec4f_t{0.0f, 1.0f, 0.0f, 1.0f},
+				idis::vec4f_t{0.0f, 0.0f, 1.0f, 1.0f}};
 			sync_transfer(m_vbo, std::span{verts});
+			sync_transfer(m_colors, std::span{colors});
 			m_pipeline_info.shader_program(m_shader_prog);
 		}
 
@@ -119,6 +127,7 @@ namespace
 				idis::gpu_res::command_recording_session rec{cmd_buffer};
 				idis::gpu_res::render_pass_section rp_sec{rec, fb.handle(), rp, extent};
 				rp_sec.bind(cmd_buffer, std::cref(m_vbo))
+				    .bind(cmd_buffer, std::cref(m_colors), 1)
 				    .bind(cmd_buffer, m_pipeline.handle())
 				    .draw(cmd_buffer, 3, 1, 0, 0);
 			}
@@ -152,6 +161,7 @@ namespace
 		idis::gpu_res::command_buffer_set m_command_buffers;
 		idis::gpu_res::shader_program_info m_shader_prog;
 		idis::gpu_res::vertex_buffer<VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT> m_vbo;
+		idis::gpu_res::vertex_buffer<VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT> m_colors;
 		idis::gpu_res::pipeline_descriptor m_pipeline_info;
 
 		idis::gpu_res::swapchain m_swapchain;

@@ -5,6 +5,7 @@
 
 IDIS_BEGIN_SHADER_DESCRIPTOR(idis::shaders, testprog)
 IDIS_SHADER_INPUT(vec2, loc)
+IDIS_SHADER_INPUT(vec4, vert_color)
 IDIS_END_SHADER_DESCRIPTOR()
 
 #endif
