@@ -25,6 +25,7 @@
 #include "engine/vk_init/allocator.hpp"
 #include "engine/shaders/testprog_impl.hpp"
 #include "engine/gpu_res/image.hpp"
+#include "engine/gpu_res/descriptor_pool.hpp"
 
 #include <algorithm>
 #include <cstdio>
@@ -45,6 +46,10 @@ namespace
 		    : m_device{device}
 		    , m_surface{surface}
 		    , m_allocator{allocator}
+		    , m_descriptor_pool{std::ref(device),
+		                        4u,
+		                        std::array<VkDescriptorPoolSize, 1>{
+		                            VkDescriptorPoolSize{VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1}}}
 		    , m_force_reconfigure{true}
 		    , m_frame_index{0}
 		    , m_render_fence{idis::gpu_res::fence{device}, idis::gpu_res::fence{device}}
@@ -147,6 +152,8 @@ namespace
 		std::reference_wrapper<idis::vk_init::device const> m_device;
 		std::reference_wrapper<idis::vk_init::surface const> m_surface;
 		std::reference_wrapper<idis::vk_init::allocator const> m_allocator;
+		idis::gpu_res::descriptor_pool m_descriptor_pool;
+
 		bool m_force_reconfigure;
 		size_t m_frame_index;
 		std::array<idis::gpu_res::fence, 2> m_render_fence;
