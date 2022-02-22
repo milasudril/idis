@@ -16,7 +16,7 @@ idis::gpu_res::descriptor_pool_handle idis::gpu_res::create_descriptor_pool(
 	VkDescriptorPool ret;
 	if(auto res = vkCreateDescriptorPool(device, &create_info, nullptr, &ret); res != VK_SUCCESS)
 	{
-		throw idis::exception{"create render pass", to_string(idis::vk_init::error{res})};
+		throw idis::exception{"create descriptor pool", to_string(idis::vk_init::error{res})};
 	}
 
 	return idis::gpu_res::descriptor_pool_handle{ret,
