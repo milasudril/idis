@@ -26,7 +26,6 @@
 #include "engine/shaders/testprog_impl.hpp"
 #include "engine/gpu_res/image.hpp"
 #include "engine/gpu_res/descriptor_pool.hpp"
-#include "engine/gpu_res/descriptor_set_layout.hpp"
 
 #include <algorithm>
 #include <cstdio>

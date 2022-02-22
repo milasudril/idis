@@ -7,6 +7,7 @@
 #ifndef IDIS_GPURES_PIPELINELAYOUT_HPP
 #define IDIS_GPURES_PIPELINELAYOUT_HPP
 
+#include "./descriptor_set_layout.hpp"
 #include "engine/vk_init/device.hpp"
 
 #include <type_traits>
@@ -39,12 +40,14 @@ namespace idis::gpu_res
 
 		pipeline_layout(): m_handle{nullptr, pipeline_layout_deleter{nullptr}} {}
 
-		explicit pipeline_layout(std::reference_wrapper<vk_init::device const> device)
-		    : pipeline_layout{device.get().handle()}
+		explicit pipeline_layout(std::reference_wrapper<vk_init::device const> device,
+		                         std::span<descriptor_set_layout const> set_layouts)
+		    : pipeline_layout{device.get().handle(), set_layouts}
 		{
 		}
 
-		explicit pipeline_layout(VkDevice device);
+		explicit pipeline_layout(VkDevice device,
+		                         std::span<descriptor_set_layout const> set_layouts);
 
 		auto handle() const { return m_handle.get(); }
 

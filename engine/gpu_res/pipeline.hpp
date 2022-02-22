@@ -11,6 +11,7 @@
 #include "./render_pass.hpp"
 #include "./shader_module.hpp"
 #include "./pipeline_layout.hpp"
+#include "./descriptor_set_layout.hpp"
 
 #include <type_traits>
 #include <memory>
@@ -29,14 +30,15 @@ namespace idis::gpu_res
 	};
 
 	template<class ShaderDescriptor>
-	shader_program_info make_shader_program_info(pipeline_layout&& layout)
+	shader_program_info make_shader_program_info(
+	    std::reference_wrapper<vk_init::device const> device)
 	{
 		return shader_program_info{
-		    {shader_module{layout.device(), ShaderDescriptor::vertex_shader()},
-		     shader_module{layout.device(), ShaderDescriptor::fragment_shader()}},
+		    {shader_module{device, ShaderDescriptor::vertex_shader()},
+		     shader_module{device, ShaderDescriptor::fragment_shader()}},
 		    std::span{input_binding_descriptor<ShaderDescriptor>::bindings},
 		    std::span{input_binding_descriptor<ShaderDescriptor>::attributes},
-		    std::move(layout)};
+		    pipeline_layout{device, std::span<descriptor_set_layout>{}}};
 	}
 
 	class pipeline_deleter
@@ -76,11 +78,10 @@ namespace idis::gpu_res
 		explicit pipeline(std::reference_wrapper<vk_init::device const> device,
 		                  pipeline_descriptor const& descriptor,
 		                  render_pass const& matching_rp)
-		    : m_handle{
-		        create_pipeline(device.get().handle(),
-		                        descriptor,
-		                        make_shader_program_info<ShaderDescriptor>(pipeline_layout{device}),
-		                        matching_rp.handle())}
+		    : m_handle{create_pipeline(device.get().handle(),
+		                               descriptor,
+		                               make_shader_program_info<ShaderDescriptor>(device),
+		                               matching_rp.handle())}
 		{
 		}
 
