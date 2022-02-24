@@ -78,10 +78,9 @@ namespace idis::gpu_res
 		explicit pipeline(std::reference_wrapper<vk_init::device const> device,
 		                  pipeline_descriptor const& descriptor,
 		                  render_pass const& matching_rp)
-		    : m_handle{create_pipeline(device.get().handle(),
-		                               descriptor,
-		                               make_shader_program_info<ShaderDescriptor>(device),
-		                               matching_rp.handle())}
+		    : m_shader_program{make_shader_program_info<ShaderDescriptor>(device)}
+		    , m_handle{create_pipeline(
+		          device.get().handle(), descriptor, m_shader_program, matching_rp.handle())}
 		{
 		}
 
@@ -90,6 +89,7 @@ namespace idis::gpu_res
 		void reset() { m_handle.reset(); }
 
 	private:
+		shader_program_info m_shader_program;
 		handle_type m_handle;
 	};
 }
