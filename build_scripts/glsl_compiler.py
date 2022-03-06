@@ -7,6 +7,7 @@ import json
 import subprocess
 import tempfile
 import os
+import anonpy
 
 def compile(args):
 	targets = args['targets']
@@ -26,5 +27,9 @@ def compile(args):
 	return result.returncode
 
 if __name__ == '__main__':
+	if len(sys.argv) == 1:
+		src = anonpy.load_from_path('engine/shaders/testprog.glsl.anon')
+		print(src)
+		exit(0)
 	if sys.argv[1] == 'compile':
 		exit(compile(json.loads(sys.argv[2])))

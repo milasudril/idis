@@ -1,0 +1,34 @@
+obj{
+	vertex_shader: obj{
+		inputs: obj...{
+			name: str{loc\}
+			type: str{vec2\}\;
+
+			name: str{vert_color\}
+			type: str{vec4\}
+		\}
+		outputs: obj...{
+			name: str{frag_color\}
+			type: str{vec4\}
+		\}
+		code: str{void main()
+{
+	gl_Position = vec4(loc, 0.0, 1.0);
+	frag_color = vert_color;
+}\}
+	\}
+	fragment_shader:obj {
+		inputs: obj...{
+			name: str{frag_color\}
+			type: str{vec4\}
+		\}
+		outputs: obj...{
+			name: str{out_color\}
+			type: str{vec4\}
+		\}
+		code: str{void main()
+{
+	out_color = frag_color;
+}\}
+	\}
+\}
