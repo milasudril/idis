@@ -125,17 +125,13 @@
         },
         "loader": "generic"
       },
-      "glsl": {
+      "glsl_anon": {
         "compiler": {
           "config": {},
-          "recipe": "build_scripts/glsl_compiler.py",
-          "use_get_tags": 0
+          "recipe": "build_scripts/anon_glsl_compiler.py",
+          "use_get_tags": 1
         },
-        "config": {
-          "filename_ext_replacement_mode": "append",
-          "target_filename_ext": ".spv"
-        },
-        "loader": "cxx_src_loader"
+        "loader": "extension"
       }
     },
     "source_tree_loader": {
@@ -147,8 +143,7 @@
         ".py": "extension",
         ".sass": "sass2css",
         ".test.cpp": "cxx_test",
-        ".vert": "glsl",
-        ".frag": "glsl"
+        ".glsl.anon": "glsl_anon"
       },
       "input_filter": [
         "^\\.",
