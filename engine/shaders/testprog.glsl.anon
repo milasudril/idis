@@ -1,4 +1,5 @@
 obj{
+	namespaces: str...{idis\;shaders\}
 	vertex_shader: obj{
 		inputs: obj...{
 			name: str{loc\}

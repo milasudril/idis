@@ -10,6 +10,45 @@ import os
 import anonpy
 from string import Template
 
+def gen_header(src, prog_name, task_id):
+	header_source = Template('''#ifndef $include_guard
+#define $include_guard
+
+#include "engine/shaders/shader_source.hpp"
+#include "engine/utils/vec_t.hpp"
+
+#include <tuple>
+#include <span>
+
+namespace $namespaces
+{
+	struct $prog_name
+	{
+		using input_port_types = std::tuple<$input_port_types>;
+		static ::idis::shaders::vertex_shader_source<std::span<uint32_t const>> vertex_shader();
+		static ::idis::shaders::vertex_shader_source<std::span<uint32_t const>> fragment_shader();
+		static constexpr auto num_inputs = std::tuple_size_v<input_port_types>;
+	};
+}
+
+#endif
+''')
+	subst = dict()
+	subst['include_guard'] = 'GEN_shader_%s_%s_HPP'%(prog_name, task_id)
+	subst['namespaces'] = '::'.join(src['namespaces'])
+	subst['prog_name'] = prog_name
+	inputs = []
+	for obj in src['vertex_shader']['inputs']:
+		inputs.append('::idis::%s_t'%obj['type'])
+	subst['input_port_types'] = ', '.join(inputs)
+
+	return header_source.substitute(subst)
+
+def write_header(src, filename):
+	with open(filename, 'wb') as output:
+		output.write(src.encode())
+	return 0
+
 def gen_shader_source(shader):
 	glsl_input = Template('layout(location = $index) in $type $name;')
 	glsl_output = Template('layout(location = $index) out $type $name;')
@@ -55,6 +94,7 @@ def compile(args):
 		src = anonpy.load_from_path(source_file)
 		prog_name = os.path.basename(source_file).split('.')[0]
 		results = []
+		results.append(write_header(gen_header(src, prog_name, args['task_id']), targets[0]))
 		results.append(compile_shader_src(gen_shader_source(src['vertex_shader']), prog_name + '.vert', tmpdir, targets[1]))
 		results.append(compile_shader_src(gen_shader_source(src['fragment_shader']), prog_name + '.frag', tmpdir, targets[2]))
 		if any(results):
@@ -65,7 +105,7 @@ def get_tags(args):
 	source_file = args['source_file']
 	ret = dict()
 	prog_name = os.path.basename(source_file).split('.')[0]
-	ret['targets'] = [{'name': prog_name + '.hpp'}, {'name': prog_name + '.vert.spv'}, {'name': prog_name + '.frag.spv'}]
+	ret['targets'] = [{'name': prog_name + '.gen.hpp'}, {'name': prog_name + '.vert.spv'}, {'name': prog_name + '.frag.spv'}]
 	print(json.dumps(ret))
 	return 0
 
