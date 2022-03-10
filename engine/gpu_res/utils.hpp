@@ -107,8 +107,8 @@ namespace idis::gpu_res
 		{
 			static_assert(((Buffers::buffer_usage & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) && ...));
 			static_assert(sizeof...(Buffers) == ShaderDescriptor::num_inputs);
-			static_assert(std::is_same_v<std::tuple<typename Buffers::value_type..., nullptr_t>,
-			                             typename ShaderDescriptor::port_types>);
+			static_assert(std::is_same_v<std::tuple<typename Buffers::value_type...>,
+			                             typename ShaderDescriptor::input_port_types>);
 			std::array<VkBuffer, sizeof...(Buffers)> handles{buffers.get().handle()...};
 			std::array<VkDeviceSize, sizeof...(Buffers)> offsets{};
 			vkCmdBindVertexBuffers(

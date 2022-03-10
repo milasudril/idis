@@ -2,19 +2,21 @@
 
 #include "./input_binding_descriptor.hpp"
 
-#include "engine/shaders/shader_descriptor.hpp"
-
 #include "testfwk/testfwk.hpp"
 
-IDIS_BEGIN_SHADER_DESCRIPTOR(binding_test, testprog)
-IDIS_SHADER_INPUT(vec2, foo)
-IDIS_SHADER_INPUT(vec4, bar)
-IDIS_END_SHADER_DESCRIPTOR()
+#include <tuple>
 
+namespace
+{
+	struct testprog
+	{
+		using input_port_types = std::tuple<idis::vec2f_t, idis::vec4f_t>;
+	};
+}
 
 TESTCASE(idis_gpures_multi_input_binding_descriptor)
 {
-	idis::gpu_res::input_binding_descriptor<binding_test::testprog> obj;
+	idis::gpu_res::input_binding_descriptor<testprog> obj;
 	EXPECT_EQ(obj.num_inputs, 2);
 
 	auto const bindings = obj.bindings;

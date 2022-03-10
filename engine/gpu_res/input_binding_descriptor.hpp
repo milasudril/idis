@@ -13,9 +13,8 @@
 namespace idis::gpu_res
 {
 	template<size_t K, class Tuple>
-	constexpr void build(
-	    empty<Tuple>,
-	    std::array<VkVertexInputBindingDescription, std::tuple_size_v<Tuple> - 1>& ret)
+	constexpr void build(empty<Tuple>,
+	                     std::array<VkVertexInputBindingDescription, std::tuple_size_v<Tuple>>& ret)
 	{
 		if constexpr(K != 0)
 		{
@@ -26,18 +25,17 @@ namespace idis::gpu_res
 	}
 
 	template<class Tuple>
-	constexpr std::array<VkVertexInputBindingDescription, std::tuple_size_v<Tuple> - 1>
-	    get_bindings(empty<Tuple>)
+	constexpr std::array<VkVertexInputBindingDescription, std::tuple_size_v<Tuple>> get_bindings(
+	    empty<Tuple>)
 	{
-		std::array<VkVertexInputBindingDescription, std::tuple_size_v<Tuple> - 1> ret{};
-		build<std::tuple_size_v<Tuple> - 1>(empty<Tuple>{}, ret);
+		std::array<VkVertexInputBindingDescription, std::tuple_size_v<Tuple>> ret{};
+		build<std::tuple_size_v<Tuple>>(empty<Tuple>{}, ret);
 		return ret;
 	}
 
 	template<size_t K, class Tuple>
 	constexpr void build(
-	    empty<Tuple>,
-	    std::array<VkVertexInputAttributeDescription, std::tuple_size_v<Tuple> - 1>& ret)
+	    empty<Tuple>, std::array<VkVertexInputAttributeDescription, std::tuple_size_v<Tuple>>& ret)
 	{
 		if constexpr(K != 0)
 		{
@@ -48,19 +46,19 @@ namespace idis::gpu_res
 	}
 
 	template<class Tuple>
-	constexpr std::array<VkVertexInputAttributeDescription, std::tuple_size_v<Tuple> - 1>
+	constexpr std::array<VkVertexInputAttributeDescription, std::tuple_size_v<Tuple>>
 	    get_attributes(empty<Tuple>)
 	{
-		std::array<VkVertexInputAttributeDescription, std::tuple_size_v<Tuple> - 1> ret{};
-		build<std::tuple_size_v<Tuple> - 1>(empty<Tuple>{}, ret);
+		std::array<VkVertexInputAttributeDescription, std::tuple_size_v<Tuple>> ret{};
+		build<std::tuple_size_v<Tuple>>(empty<Tuple>{}, ret);
 		return ret;
 	}
 
 	template<class ShaderDescriptor>
 	struct input_binding_descriptor
 	{
-		using port_types                 = typename ShaderDescriptor::port_types;
-		static constexpr auto num_inputs = std::tuple_size_v<port_types> - 1;
+		using port_types                 = typename ShaderDescriptor::input_port_types;
+		static constexpr auto num_inputs = std::tuple_size_v<port_types>;
 		static constexpr std::array<VkVertexInputBindingDescription, num_inputs> bindings =
 		    get_bindings(empty<port_types>{});
 		static constexpr std::array<VkVertexInputAttributeDescription, num_inputs> attributes =

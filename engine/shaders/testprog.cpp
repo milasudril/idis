@@ -6,7 +6,7 @@
 //@		]
 //@	}
 
-#include "./testprog_def.hpp"
+#include "./testprog.gen.hpp"
 
 #include "engine/utils/incbin.hpp"
 

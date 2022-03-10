@@ -26,7 +26,7 @@ namespace $namespaces
 	{
 		using input_port_types = std::tuple<$input_port_types>;
 		static ::idis::shaders::vertex_shader_source<std::span<uint32_t const>> vertex_shader();
-		static ::idis::shaders::vertex_shader_source<std::span<uint32_t const>> fragment_shader();
+		static ::idis::shaders::fragment_shader_source<std::span<uint32_t const>> fragment_shader();
 		static constexpr auto num_inputs = std::tuple_size_v<input_port_types>;
 	};
 }
@@ -39,7 +39,7 @@ namespace $namespaces
 	subst['prog_name'] = prog_name
 	inputs = []
 	for obj in src['vertex_shader']['inputs']:
-		inputs.append('::idis::%s_t'%obj['type'])
+		inputs.append('::idis::%sf_t'%obj['type'])
 	subst['input_port_types'] = ', '.join(inputs)
 
 	return header_source.substitute(subst)

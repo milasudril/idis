@@ -3,6 +3,6 @@
 #ifndef IDIS_SHADERS_TESTPROGIMPL_HPP
 #define IDIS_SHADERS_TESTPROGIMPL_HPP
 
-#include "./testprog_def.hpp"
+#include "engine/shaders/testprog.gen.hpp"
 
 #endif
