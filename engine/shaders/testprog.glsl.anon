@@ -32,4 +32,16 @@ obj{
 	out_color = frag_color;
 }\}
 	\}
+	uniform_types: obj...{
+		name: str{my_object_type\}
+		members: obj...{
+			name: str{vertex_color\}
+			type: str{vec4\}
+		\}
+	\}
+	uniforms: obj...{
+		name: str{my_object\}
+		type: str{my_object_type\}
+		descriptor_set: i32{0\}
+	\}
 \}

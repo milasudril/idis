@@ -49,14 +49,48 @@ def write_header(src, filename):
 		output.write(src.encode())
 	return 0
 
-def gen_shader_source(shader):
+def gen_uniform_type_str(uniform_type):
+	glsl_uniform_member = Template('$type $name;')
+	glsl_uniform_type = Template('''struct $name
+{
+	$members
+};''')
+
+	members = []
+	for member in uniform_type['members']:
+		members.append(glsl_uniform_member.substitute(member))
+
+	subst = dict()
+	subst['name'] = uniform_type['name']
+	subst['members'] = '\n'.join(members)
+
+	return glsl_uniform_type.substitute(subst)
+
+def gen_uniform_types_str(uniform_types):
+	ret = []
+	for obj in uniform_types:
+		ret.append(gen_uniform_type_str(obj))
+	return ret
+
+def gen_uniforms_str(uniforms):
+	ret = []
+	for obj in uniforms:
+		ret.append('%s %s;'%(obj['type'], obj['name']));
+	return ret
+
+def gen_shader_source(shader, uniform_types_str, uniforms_str):
 	glsl_input = Template('layout(location = $index) in $type $name;')
 	glsl_output = Template('layout(location = $index) out $type $name;')
+
 	glsl_source = Template('''#version 450
 
 $inputs
 
 $outputs
+
+$uniform_types
+
+$uniforms
 
 $code
 ''')
@@ -76,9 +110,13 @@ $code
 	subst = dict()
 	subst['inputs'] = '\n'.join(inputs)
 	subst['outputs'] = '\n'.join(outputs)
+	subst['uniform_types'] = '\n'.join(uniform_types_str)
+	subst['uniforms'] = '\n'.join(uniforms_str)
 	subst['code'] = shader['code']
 
-	return glsl_source.substitute(subst)
+	ret = glsl_source.substitute(subst)
+	print(ret)
+	return ret
 
 def compile_shader_src(src, name, dir, output):
 	source_file = dir + '/' + name
@@ -93,10 +131,12 @@ def compile(args):
 	with tempfile.TemporaryDirectory(suffix = None, prefix = 'maike_' + args['build_info']['build_id']) as tmpdir:
 		src = anonpy.load_from_path(source_file)
 		prog_name = os.path.basename(source_file).split('.')[0]
+		uniform_types_str = gen_uniform_types_str(src['uniform_types'])
+		uniforms_str = gen_uniforms_str(src['uniforms'])
 		results = []
 		results.append(write_header(gen_header(src, prog_name, args['task_id']), targets[0]))
-		results.append(compile_shader_src(gen_shader_source(src['vertex_shader']), prog_name + '.vert', tmpdir, targets[1]))
-		results.append(compile_shader_src(gen_shader_source(src['fragment_shader']), prog_name + '.frag', tmpdir, targets[2]))
+		results.append(compile_shader_src(gen_shader_source(src['vertex_shader'], uniform_types_str, uniforms_str), prog_name + '.vert', tmpdir, targets[1]))
+		results.append(compile_shader_src(gen_shader_source(src['fragment_shader'], uniform_types_str, uniforms_str), prog_name + '.frag', tmpdir, targets[2]))
 		if any(results):
 			return 1
 	return 0
