@@ -99,8 +99,8 @@ def gen_uniform_types_str(uniform_types):
 
 def gen_uniforms_str(uniforms):
 	ret = []
-	for obj in uniforms:
-		ret.append('%s %s;'%(obj['type'], obj['name']));
+	for k, obj in enumerate(uniforms):
+		ret.append('layout(set = %d, binding = %d) uniform dummy_%d{%s content;} %s;'%(obj['descriptor_set'], k, k, obj['type'], obj['name']));
 	return ret
 
 def gen_shader_source(shader, uniform_types_str, uniforms_str):
