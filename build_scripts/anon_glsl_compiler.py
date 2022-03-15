@@ -10,6 +10,23 @@ import os
 import anonpy
 from string import Template
 
+def gen_header_uniform_type(uniform_type):
+	glsl_uniform_type = Template('''struct $name
+{
+	$members
+};''')
+
+	members = []
+	for member in uniform_type['members']:
+		members.append('::idis::%sf_t %s;'%(member['type'], member['name']))
+
+	subst = dict()
+	subst['name'] = uniform_type['name']
+	subst['members'] = '\n'.join(members)
+
+	return glsl_uniform_type.substitute(subst)
+
+
 def gen_header(src, prog_name, task_id):
 	header_source = Template('''#ifndef $include_guard
 #define $include_guard
@@ -28,6 +45,8 @@ namespace $namespaces
 		static ::idis::shaders::vertex_shader_source<std::span<uint32_t const>> vertex_shader();
 		static ::idis::shaders::fragment_shader_source<std::span<uint32_t const>> fragment_shader();
 		static constexpr auto num_inputs = std::tuple_size_v<input_port_types>;
+
+		$uniform_types
 	};
 }
 
@@ -41,6 +60,12 @@ namespace $namespaces
 	for obj in src['vertex_shader']['inputs']:
 		inputs.append('::idis::%sf_t'%obj['type'])
 	subst['input_port_types'] = ', '.join(inputs)
+
+	uniform_types = []
+	for obj in src['uniform_types']:
+		uniform_types.append(gen_header_uniform_type(obj))
+
+	subst['uniform_types'] = '\n'.join(uniform_types)
 
 	return header_source.substitute(subst)
 
